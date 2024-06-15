@@ -49,9 +49,6 @@ def main():
     batsman_names = data['StrikerName'].unique()
     batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
 
-    batsman_names = data['StrikerName'].unique()
-    batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
-
     if batsman_name in data['StrikerName'].values:
         batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
 
