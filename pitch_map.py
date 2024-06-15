@@ -52,7 +52,7 @@ def main():
     batsmen_name = st.selectbox('Select a Striker', unique_striker_names, key='unique_striker_selectbox')
 
     # Check if the selected striker is in the DataFrame and display their batting type
-    if selected_striker:
+    if batsmen_name:
         batting_type = data.loc[data['StrikerName'] == batsmen_name, 'BattingType'].iloc[0]
         st.write(f'The batting type of {selected_striker} is {batting_type}')
 
