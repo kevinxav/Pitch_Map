@@ -49,7 +49,7 @@ def main():
     unique_striker_names = data['StrikerName'].unique()
 
     # Create a selectbox with the unique striker names
-    selected_striker = st.selectbox('Select a Striker', unique_striker_names)
+    selected_striker = st.selectbox('Select a Striker', unique_striker_names, key='unique_striker_selectbox')
 
     # Check if the selected striker is in the DataFrame and display their batting type
     if selected_striker:
