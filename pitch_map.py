@@ -44,12 +44,25 @@ def main():
     st.title("Cricket Pitch Map Visualization")
 
     csv_path = "Ausvsnz.csv"
-    data = pd.read_csv(csv_path)
+    try:
+        data = pd.read_csv(csv_path)
+    except FileNotFoundError:
+        st.error(f"File {csv_path} not found.")
+        return
+    except Exception as e:
+        st.error(f"Error reading {csv_path}: {e}")
+        return
 
-    team = data['BatTeam'].unique()
-    selected_team = st.selectbox("Select the team:", team)
+    if 'BatTeam' not in data.columns:
+        st.error(f"Column 'BatTeam' not found in the data. Available columns: {', '.join(data.columns)}")
+        return
 
-    team_data = data['BatTeam'] == selected_team
+    teams = data['BatTeam'].unique()
+    selected_team = st.selectbox("Select the team:", teams)
+
+    team_data = data[data['BatTeam'] == selected_team]
+    batsman_names = team_data['StrikerName'].unique()
+    batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
 
     batsman_names = data['StrikerName'].unique()
     batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
