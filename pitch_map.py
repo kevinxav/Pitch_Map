@@ -46,7 +46,8 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
-    batsman_name = st.text_input("Enter the batsman's name:")
+    batsman_names = data['StrikerName'].unique()
+    batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
 
     if batsman_name in data['StrikerName'].values:
         batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
@@ -163,4 +164,3 @@ pitch_map_end_x2p = 769
 
 if __name__ == "__main__":
     main()
-
