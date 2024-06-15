@@ -46,6 +46,11 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
+    team = data['BatTeam'].unique()
+    selected_team = st.selectbox("Select the team:", team)
+
+    team_data = data[data['BatTeam'] == selected_team]
+
     batsman_names = data['StrikerName'].unique()
     batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
 
