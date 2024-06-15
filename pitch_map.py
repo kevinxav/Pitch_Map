@@ -46,15 +46,10 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
-    unique_striker_names = data['StrikerName'].unique()
+    batsman_name = st.text_input("Enter the batsman's name:")
 
-    # Create a selectbox with the unique striker names
-    batsmen_name = st.selectbox('Select a Striker', unique_striker_names, key='unique_striker_selectbox')
-
-    # Check if the selected striker is in the DataFrame and display their batting type
-    if batsmen_name:
-        batting_type = data.loc[data['StrikerName'] == batsmen_name, 'BattingType'].iloc[0]
-        st.write(f'The batting type of {batsmen_name} is {batting_type}')
+    if batsman_name in data['StrikerName'].values:
+        batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
 
         if batting_type == 'RHB':
             image_path = 'pitchR.jpg'
