@@ -58,19 +58,20 @@ def main():
             
         spin_or_pace = st.selectbox("Choose bowler type", ['Pace', 'Spin', 'Both'])
 
-        bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'Both': 3}
-        bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 7}
-
+        if spin_or_pace == 'Pace':
+            bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2}
+            pace_type = st.selectbox("Choose pace type", list(bowler_type_mapping_pace.keys()))
+        elif spin_or_pace == 'Spin':
+            bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 7}
+            spin_type = st.selectbox("Choose spin type", list(bowler_type_mapping_spin.keys()))
+        
         overs_phase = st.selectbox("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
-
         specific_runs = st.selectbox("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'])
 
         if st.button("Apply Filter"):
             if spin_or_pace == 'Pace':
-                pace_type = st.selectbox("Choose pace type", list(bowler_type_mapping_pace.keys()))
                 filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 1) & (data['BowlerType'] == bowler_type_mapping_pace[pace_type])]
             elif spin_or_pace == 'Spin':
-                spin_type = st.selectbox("Choose spin type", list(bowler_type_mapping_spin.keys()))
                 if spin_type == 'All':
                     filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 2)]
                 else:
@@ -152,10 +153,4 @@ pitch_map_6m_x1p = 316
 pitch_map_6m_x2p = 729
 pitch_map_8m_x1p = 306
 pitch_map_8m_x2p = 742
-pitch_map_10m_x1p = 294
-pitch_map_10m_x2p = 752
-pitch_map_end_x1p = 277
-pitch_map_end_x2p = 769
-
-if __name__ == "__main__":
-    main()
+pitch_map_10
