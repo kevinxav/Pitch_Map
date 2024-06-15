@@ -1,3 +1,4 @@
+pip install matplotlib
 import streamlit as st
 import matplotlib.pyplot as plt
 from PIL import Image
