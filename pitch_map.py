@@ -1,4 +1,4 @@
-pip install matplotlib
+pip install -r .\requirements.txt
 import streamlit as st
 import matplotlib.pyplot as plt
 from PIL import Image
