@@ -153,4 +153,11 @@ pitch_map_6m_x1p = 316
 pitch_map_6m_x2p = 729
 pitch_map_8m_x1p = 306
 pitch_map_8m_x2p = 742
-pitch_map_10
+pitch_map_10_x1p = 294
+pitch_map_10m_x2p = 752
+pitch_map_end_x1p = 277
+pitch_map_end_x2p = 769
+
+if __name__ == "__main__":
+    main()
+
