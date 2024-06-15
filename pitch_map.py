@@ -60,15 +60,7 @@ def main():
             image_path = 'pitchR.jpg'
         elif batting_type == 'LHB':
             image_path = 'pitchL.jpg'
-        unique_striker_names = data['StrikerName'].unique()
-
-    # Create a selectbox with the unique striker names
-    selected_striker = st.selectbox('Select a Striker', unique_striker_names)
-
-    # Check if the selected striker is in the DataFrame and display their batting type
-    if selected_striker:
-        batting_type = data.loc[data['StrikerName'] == selected_striker, 'BattingType'].iloc[0]
-        st.write(f'The batting type of {selected_striker} is {batting_type}')
+            
         spin_or_pace = st.selectbox("Choose bowler type", ['Pace', 'Spin', 'Both'])
 
         bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'Both': 3}
