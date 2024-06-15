@@ -47,7 +47,7 @@ def main():
     data = pd.read_csv(csv_path)
 
     striker_names = data['StrikerName'].unique()
-    selected_striker = st.selectbox('Select a Striker', striker_names)
+    batsmen_name= st.selectbox('Select a Striker', striker_names)
 
     if batsman_name in data['StrikerName'].values:
         batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
