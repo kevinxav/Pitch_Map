@@ -54,7 +54,7 @@ def main():
     # Check if the selected striker is in the DataFrame and display their batting type
     if batsmen_name:
         batting_type = data.loc[data['StrikerName'] == batsmen_name, 'BattingType'].iloc[0]
-        st.write(f'The batting type of {selected_striker} is {batting_type}')
+        st.write(f'The batting type of {batsmen_name} is {batting_type}')
 
         if batting_type == 'RHB':
             image_path = 'pitchR.jpg'
