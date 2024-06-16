@@ -7,7 +7,9 @@ def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1
     x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
     y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
     
-    if is_1s == 1:
+    if is_batwkts == 1:
+        color = 'azure'
+    elif is_1s == 1:
         color = 'goldenrod'
     elif is_2s == 1:
         color = 'blue'
