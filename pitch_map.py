@@ -46,20 +46,20 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
-    batsman_names = data['StrikerName'].unique()
-    batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=batsman_names)
-
-    bat_club_names = data['BatClubName'].unique()
-    bat_club_name = st.multiselect("Select the batsman's club name:", ['All'] + list(bat_club_names), default=['All'])
-
     date_range = st.date_input("Select date range", [])
     
     match_formats = data['Format'].unique()
     match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
-
+    
+    bat_club_names = data['BatClubName'].unique()
+    bat_club_name = st.multiselect("Select the batsman's club name:", ['All'] + list(bat_club_names), default=['All'])
+    
     competitions = data['Competition'].unique()
     competition = st.multiselect("Select competition:", ['All'] + list(competitions), default=['All'])
 
+    batsman_names = data['StrikerName'].unique()
+    batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=batsman_names)
+    
     spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'], default=['Both'])
 
     specific_runs = st.multiselect("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'], default=['all'])
