@@ -162,13 +162,18 @@ def main():
                         plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
                         plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
                         ]
-                    ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
-                    
-                    st.pyplot(fig)
-                else:
-                    st.write(f"No data found for the selected filters for batsman: {batsman}")
-    else:
-        st.write("Please select at least one batsman.")
+                    ax.legend(handles=legend_elements, loc='upper left')
+
+                    jpg_filename = f"{output_dir}/{batsman}.jpg"
+                    fig.savefig(jpg_filename)
+                    plt.close(fig)
+
+                    zip_file.write(jpg_filename, os.path.basename(jpg_filename))
+            
+            zip_file.close()
+
+            with open('pitch_maps.zip', 'rb') as f:
+                st.download_button('Download ZIP', f, file_name='pitch_maps.zip')
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
