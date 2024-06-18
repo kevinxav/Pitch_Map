@@ -46,25 +46,25 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path, parse_dates=['Date'])
 
+    years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
+    
+    match_formats = data['Format'].unique()
+    match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
+    
+    competitions = data['Competition'].unique()
+    competition = st.multiselect("Select competition:", ['All'] + list(competitions), default=['All'])
+    
     batsman_names = data['StrikerName'].unique()
     batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=batsman_names)
 
     bat_club_names = data['BatClubName'].unique()
     bat_club_name = st.multiselect("Select the batsman's club name:", ['All'] + list(bat_club_names), default=['All'])
 
-    years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
-
-    match_formats = data['Format'].unique()
-    match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
-
-    competitions = data['Competition'].unique()
-    competition = st.multiselect("Select competition:", ['All'] + list(competitions), default=['All'])
-
     spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'], default=['Both'])
 
-    specific_runs = st.multiselect("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'], default=['all'])
-
     overs_phase = st.selectbox("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
+    
+    specific_runs = st.multiselect("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'], default=['all'])
 
     if st.button("Apply Filter"):
         filtered_data = data[data['StrikerName'].isin(batsman_name)]
