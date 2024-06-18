@@ -134,9 +134,9 @@ def main():
                     batting_type = filtered_data['BattingType'].iloc[0]
 
                     if batting_type == 'RHB':
-                        image_path = 'pitchR.jpg'
+                        image_path = 'pitchR.png'
                     elif batting_type == 'LHB':
-                        image_path = 'pitchL.jpg'
+                        image_path = 'pitchL.png'
                     
                     img = Image.open(image_path)
                     img_array = plt.imread(image_path)
@@ -167,11 +167,11 @@ def main():
                         ]
                     ax.legend(handles=legend_elements, loc='upper left')
 
-                    jpg_filename = f"{output_dir}/{batsman}.jpg"
-                    fig.savefig(jpg_filename)
+                    png_filename = f"{output_dir}/{batsman}.png"
+                    fig.savefig(png_filename)
                     plt.close(fig)
 
-                    zip_file.write(jpg_filename, os.path.basename(jpg_filename))
+                    zip_file.write(png_filename, os.path.basename(png_filename))
             
             zip_file.close()
 
