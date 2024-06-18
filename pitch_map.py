@@ -19,8 +19,6 @@ def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1
         color = 'red'
     elif is_0s == 1:
         color = 'black'
-    elif is_batwkts == 1:
-        color = 'azure'
     else:
         color = 'brown'
     
@@ -49,82 +47,97 @@ def main():
     data = pd.read_csv(csv_path)
 
     batsman_names = data['StrikerName'].unique()
-    batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
+    batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=batsman_names)
 
-    if batsman_name in data['StrikerName'].values:
-        batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
+    bat_club_names = data['BatClubName'].unique()
+    bat_club_name = st.multiselect("Select the batsman's club name:", ['All'] + list(bat_club_names), default=['All'])
 
-        if batting_type == 'RHB':
-            image_path = 'pitchR.jpg'
-        elif batting_type == 'LHB':
-            image_path = 'pitchL.jpg'
+    date_range = st.date_input("Select date range", [])
+    
+    match_formats = data['Format'].unique()
+    match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
+
+    competitions = data['Competition'].unique()
+    competition = st.multiselect("Select competition:", ['All'] + list(competitions), default=['All'])
+
+    spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'], default=['Both'])
+
+    specific_runs = st.multiselect("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'], default=['all'])
+
+    overs_phase = st.selectbox("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
+
+    if st.button("Apply Filter"):
+        filtered_data = data[data['StrikerName'].isin(batsman_name)]
+
+        if 'All' not in bat_club_name:
+            filtered_data = filtered_data[filtered_data['BatClubName'].isin(bat_club_name)]
+
+        if date_range:
+            start_date, end_date = date_range
+            filtered_data = filtered_data[(filtered_data['Date'] >= start_date) & (filtered_data['Date'] <= end_date)]
+
+        if 'All' not in match_format:
+            filtered_data = filtered_data[filtered_data['Format'].isin(match_format)]
+
+        if 'All' not in competition:
+            filtered_data = filtered_data[filtered_data['Competition'].isin(competition)]
+
+        if 'Both' not in spin_or_pace:
+            if 'Pace' in spin_or_pace:
+                filtered_data = filtered_data[filtered_data['PaceOrSpin'] == 1]
+            if 'Spin' in spin_or_pace:
+                filtered_data = filtered_data[filtered_data['PaceOrSpin'] == 2]
+
+        filtered_data = filter_data_by_overs(filtered_data, overs_phase)
+
+        if 'all' not in specific_runs:
+            conditions = [(filtered_data[run] == 1) for run in specific_runs if run in filtered_data.columns]
+            if conditions:
+                filtered_data = filtered_data[conditions[0]]
+                for condition in conditions[1:]:
+                    filtered_data = filtered_data | condition
+
+        if not filtered_data.empty:
+            batting_type = filtered_data['BattingType'].iloc[0]
+            if batting_type == 'RHB':
+                image_path = 'pitchR.jpg'
+            elif batting_type == 'LHB':
+                image_path = 'pitchL.jpg'
             
-        spin_or_pace = st.selectbox("Choose bowler type", ['Pace', 'Spin', 'Both'])
+            img = Image.open(image_path)
+            img_array = plt.imread(image_path)
+            height, width, _ = img_array.shape
+            origin_x, origin_y = 0, 0
 
-        if spin_or_pace == 'Pace':
-            bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'All': 0}
-            pace_type = st.selectbox("Choose pace type", list(bowler_type_mapping_pace.keys()))
-        elif spin_or_pace == 'Spin':
-            bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 0}
-            spin_type = st.selectbox("Choose spin type", list(bowler_type_mapping_spin.keys()))
-        
-        overs_phase = st.selectbox("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
-        specific_runs = st.selectbox("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'])
+            fig, ax = plt.subplots()
+            ax.imshow(img_array, extent=[0, width, 0, height])
 
-        if st.button("Apply Filter"):
-            if spin_or_pace == 'Pace':
-                if pace_type == 'All':
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 1)]
-                else:
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 1) & (data['BowlerType'] == bowler_type_mapping_pace[pace_type])]
-            elif spin_or_pace == 'Spin':
-                if spin_type == 'All':
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 2)]
-                else:
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 2) & (data['BowlerType'] == bowler_type_mapping_spin[spin_type])]
-            else:
-                filtered_data = data[data['StrikerName'] == batsman_name]
+            for i in range(len(filtered_data)):
+                pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(filtered_data['X'].iloc[i], filtered_data['Y'].iloc[i], origin_x, origin_y, 
+                                                                    filtered_data['1s'].iloc[i], filtered_data['2s'].iloc[i], filtered_data['4s'].iloc[i], filtered_data['6s'].iloc[i],
+                                                                    filtered_data['0s'].iloc[i], filtered_data['batwkts'].iloc[i])
+                ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
-            filtered_data = filter_data_by_overs(filtered_data, overs_phase)
+            ax.set_title("PitchMap of selected batsman(s)")
+            ax.set_xticks([])
+            ax.set_yticks([])
 
-            if specific_runs != 'all':
-                filtered_data = filtered_data[filtered_data[specific_runs] == 1]
-
-            if not filtered_data.empty:
-                img = Image.open(image_path)
-                img_array = plt.imread(image_path)
-                height, width, _ = img_array.shape
-                origin_x, origin_y = 0, 0
-
-                fig, ax = plt.subplots()
-                ax.imshow(img_array, extent=[0, width, 0, height])
-
-                for i in range(len(filtered_data)):
-                    pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(filtered_data['X'].iloc[i], filtered_data['Y'].iloc[i], origin_x, origin_y, 
-                                                                        filtered_data['1s'].iloc[i], filtered_data['2s'].iloc[i], filtered_data['4s'].iloc[i], filtered_data['6s'].iloc[i],
-                                                                        filtered_data['0s'].iloc[i], filtered_data['batwkts'].iloc[i])
-                    ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
-
-                ax.set_title("PitchMap of " + batsman_name)
-                ax.set_xticks([])
-                ax.set_yticks([])
-
-                legend_elements = [
-                    plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='blue', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
-                ]
-                ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
-                
-                st.pyplot(fig)
-            else:
-                st.write("No data found for the selected filters.")
+            legend_elements = [
+                plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
+                plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
+                plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='blue', markersize=10),
+                plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
+                plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
+                plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
+                plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
+            ]
+            ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
+            
+            st.pyplot(fig)
+        else:
+            st.write("No data found for the selected filters.")
     else:
-        st.write(f"Batsman with name '{batsman_name}' not found in the data.")
+        st.write(f"No batsman selected.")
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
