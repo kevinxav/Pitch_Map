@@ -47,7 +47,7 @@ def main():
     data = pd.read_csv(csv_path)
 
     # Convert 'Date' column to datetime if not already
-    #data['Year'] = pd.to_datetime(data['Year'], errors='coerce')
+    data['date'] = pd.to_datetime(data['date'], errors='coerce')
 
     years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
 
