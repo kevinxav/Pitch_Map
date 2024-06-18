@@ -57,14 +57,14 @@ def main():
     years = ['All'] + sorted(data['Date'].dt.year.unique().tolist())
     selected_years = st.multiselect("Select year(s)", years, default=['All'])
 
-    match_formats = data['Format'].unique()
-    match_format = st.multiselect("Select match format:", list(match_formats), default=['T20I'])
+    match_formats = ['All'] + list(data['Format'].unique())
+    selected_match_format = st.multiselect("Select match format:", match_formats, default=['T20I'])
 
-    competitions = data['Competition'].unique()
-    competition = st.multiselect("Select competition:", list(competitions) + ['All'], default=['All'])
+    competitions = ['All'] + list(data['Competition'].unique())
+    selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
 
-    bat_club_names = data['BatClubName'].unique()
-    selected_bat_club_name = st.multiselect("Select the batsman's club name:", list(bat_club_names) + ['All'])
+    bat_club_names = ['All'] + list(data['BatClubName'].unique())
+    selected_bat_club_name = st.multiselect("Select the batsman's club name:", bat_club_names)
 
     if selected_bat_club_name and 'All' not in selected_bat_club_name:
         batsman_names = data[data['BatClubName'].isin(selected_bat_club_name)]['StrikerName'].unique()
@@ -92,17 +92,19 @@ def main():
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
             
+            zip_file = zipfile.ZipFile('pitch_maps.zip', 'w')
+
             for batsman in selected_batsman_name:
                 filtered_data = data
 
                 if 'All' not in selected_years:
                     filtered_data = filtered_data[filtered_data['Date'].dt.year.isin(selected_years)]
                 
-                if 'All' not in match_format:
-                    filtered_data = filtered_data[filtered_data['Format'].isin(match_format)]
+                if 'All' not in selected_match_format:
+                    filtered_data = filtered_data[filtered_data['Format'].isin(selected_match_format)]
 
-                if 'All' not in competition:
-                    filtered_data = filtered_data[filtered_data['Competition'].isin(competition)]
+                if 'All' not in selected_competition:
+                    filtered_data = filtered_data[filtered_data['Competition'].isin(selected_competition)]
 
                 if 'All' not in selected_bat_club_name:
                     filtered_data = filtered_data[filtered_data['BatClubName'].isin(selected_bat_club_name)]
