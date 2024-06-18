@@ -48,8 +48,19 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
+    years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
+
+    match_formats = data['Format'].unique()
+    match_format = st.multiselect("Select match format:",list(match_formats), default=['T20I'])
+
+    competitions = data['Competition'].unique()
+    competition = st.multiselect("Select competition:",list(competitions)  + ['All'], default=['All'])
+
+    bat_club_names = data['BatClubName'].unique()
+    bat_club_name = st.multiselect("Select the batsman's club name:", list(bat_club_names) + ['All'])
+    
     batsman_names = data['StrikerName'].unique()
-    batsman_name = st.selectbox("Select the batsman's name:", batsman_names)
+    batsman_name = st.multiselect("Select the batsman's name:", batsman_names)
 
     if batsman_name in data['StrikerName'].values:
         batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
@@ -59,19 +70,31 @@ def main():
         elif batting_type == 'LHB':
             image_path = 'pitchL.jpg'
             
-        spin_or_pace = st.selectbox("Choose bowler type", ['Pace', 'Spin', 'Both'])
+        spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
 
         if spin_or_pace == 'Pace':
             bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'All': 0}
-            pace_type = st.selectbox("Choose pace type", list(bowler_type_mapping_pace.keys()))
+            pace_type = st.multiselect("Choose pace type", list(bowler_type_mapping_pace.keys()))
         elif spin_or_pace == 'Spin':
             bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 0}
-            spin_type = st.selectbox("Choose spin type", list(bowler_type_mapping_spin.keys()))
+            spin_type = st.multiselect("Choose spin type", list(bowler_type_mapping_spin.keys()))
         
-        overs_phase = st.selectbox("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
-        specific_runs = st.selectbox("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'])
+        overs_phase = st.multiselect("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
+        specific_runs = st.multiselect("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'])
 
         if st.button("Apply Filter"):
+            if years:
+                filtered_data = filtered_data[filtered_data['Date'].dt.year.isin(years)]
+            
+            if 'All' not in match_format:
+                filtered_data = filtered_data[filtered_data['Format'].isin(match_format)]
+
+             if 'All' not in competition:
+                filtered_data = filtered_data[filtered_data['Competition'].isin(competition)]
+
+            if 'All' not in bat_club_name:
+                filtered_data = filtered_data[filtered_data['BatClubName'].isin(bat_club_name)]
+            
             if spin_or_pace == 'Pace':
                 if pace_type == 'All':
                     filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 1)]
