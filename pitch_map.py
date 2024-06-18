@@ -48,14 +48,8 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
-    # Convert 'Date' column to datetime if not already
-    data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
-
-    # Filter out invalid dates
-    data = data[data['Date'].notna() & (data['Date'].dt.year > 1900)]
-
-    years = ['All'] + sorted(data['Date'].dt.year.unique().tolist())
-    selected_years = st.multiselect("Select year(s)", years, default=['All'])
+    years = ['All'] + sorted(data['Year'].unique())
+    selected_years = st.multiselect("Select year:", years, default=['All'])
 
     match_formats = ['All'] + list(data['Format'].unique())
     selected_match_format = st.multiselect("Select match format:", match_formats, default=['T20I'])
@@ -64,14 +58,14 @@ def main():
     selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
 
     bat_club_names = ['All'] + list(data['BatClubName'].unique())
-    selected_bat_club_name = st.multiselect("Select the batsman's club name:", bat_club_names)
+    selected_bat_club_name = st.multiselect("Select the batsman's club name:", bat_club_names, default=['All'])
 
     if selected_bat_club_name and 'All' not in selected_bat_club_name:
         batsman_names = data[data['BatClubName'].isin(selected_bat_club_name)]['StrikerName'].unique()
     else:
         batsman_names = data['StrikerName'].unique()
         
-    selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names)
+    selected_batsman_name = st.multiselect("Select the batsman's name:", ['All'] + list(batsman_names), default=['All'])
 
     if selected_batsman_name:
         spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
@@ -96,10 +90,10 @@ def main():
 
             for batsman in selected_batsman_name:
                 filtered_data = data
-
-                if 'All' not in selected_years:
-                    filtered_data = filtered_data[filtered_data['Date'].dt.year.isin(selected_years)]
                 
+                if 'All' not in selected_years:
+                    filtered_data = filtered_data[filtered_data['Year'].isin(selected_years)]
+                    
                 if 'All' not in selected_match_format:
                     filtered_data = filtered_data[filtered_data['Format'].isin(selected_match_format)]
 
