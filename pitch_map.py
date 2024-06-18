@@ -19,8 +19,6 @@ def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1
         color = 'red'
     elif is_0s == 1:
         color = 'black'
-    elif is_batwkts == 1:
-        color = 'azure'
     else:
         color = 'brown'
     
@@ -48,13 +46,16 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
+    # Convert 'Date' column to datetime if not already
+    data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
+
     years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
 
     match_formats = data['Format'].unique()
-    match_format = st.multiselect("Select match format:",list(match_formats), default=['T20I'])
+    match_format = st.multiselect("Select match format:", list(match_formats), default=['T20I'])
 
     competitions = data['Competition'].unique()
-    competition = st.multiselect("Select competition:",list(competitions)  + ['All'], default=['All'])
+    competition = st.multiselect("Select competition:", list(competitions)  + ['All'], default=['All'])
 
     bat_club_names = data['BatClubName'].unique()
     bat_club_name = st.multiselect("Select the batsman's club name:", list(bat_club_names) + ['All'])
@@ -62,8 +63,8 @@ def main():
     batsman_names = data['StrikerName'].unique()
     batsman_name = st.multiselect("Select the batsman's name:", batsman_names)
 
-    if batsman_name in data['StrikerName'].values:
-        batting_type = data.loc[data['StrikerName'] == batsman_name, 'BattingType'].iloc[0]
+    if batsman_name:
+        batting_type = data.loc[data['StrikerName'].isin(batsman_name), 'BattingType'].iloc[0]
 
         if batting_type == 'RHB':
             image_path = 'pitchR.jpg'
@@ -72,46 +73,49 @@ def main():
             
         spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
 
-        if spin_or_pace == 'Pace':
-            bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'All': 0}
+        bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'All': 0}
+        bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 0}
+
+        if 'Pace' in spin_or_pace:
             pace_type = st.multiselect("Choose pace type", list(bowler_type_mapping_pace.keys()))
-        elif spin_or_pace == 'Spin':
-            bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 0}
+        if 'Spin' in spin_or_pace:
             spin_type = st.multiselect("Choose spin type", list(bowler_type_mapping_spin.keys()))
         
         overs_phase = st.multiselect("Choose overs phase", ['Power Play (1-6)', 'Middle Overs (7-15)', 'Death Overs (16-20)', 'All'])
         specific_runs = st.multiselect("Choose specific runs", ['0s', '1s', '2s', '3s', '4s', '6s', 'batwkts', 'all'])
 
         if st.button("Apply Filter"):
+            filtered_data = data
+
             if years:
                 filtered_data = filtered_data[filtered_data['Date'].dt.year.isin(years)]
             
             if 'All' not in match_format:
                 filtered_data = filtered_data[filtered_data['Format'].isin(match_format)]
 
-             if 'All' not in competition:
+            if 'All' not in competition:
                 filtered_data = filtered_data[filtered_data['Competition'].isin(competition)]
 
             if 'All' not in bat_club_name:
                 filtered_data = filtered_data[filtered_data['BatClubName'].isin(bat_club_name)]
             
-            if spin_or_pace == 'Pace':
-                if pace_type == 'All':
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 1)]
+            if 'Pace' in spin_or_pace:
+                if 'All' in pace_type:
+                    filtered_data = filtered_data[(filtered_data['StrikerName'].isin(batsman_name)) & (filtered_data['PaceOrSpin'] == 1)]
                 else:
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 1) & (data['BowlerType'] == bowler_type_mapping_pace[pace_type])]
-            elif spin_or_pace == 'Spin':
-                if spin_type == 'All':
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 2)]
+                    filtered_data = filtered_data[(filtered_data['StrikerName'].isin(batsman_name)) & (filtered_data['PaceOrSpin'] == 1) & (filtered_data['BowlerType'].isin([bowler_type_mapping_pace[ptype] for ptype in pace_type]))]
+            elif 'Spin' in spin_or_pace:
+                if 'All' in spin_type:
+                    filtered_data = filtered_data[(filtered_data['StrikerName'].isin(batsman_name)) & (filtered_data['PaceOrSpin'] == 2)]
                 else:
-                    filtered_data = data[(data['StrikerName'] == batsman_name) & (data['PaceOrSpin'] == 2) & (data['BowlerType'] == bowler_type_mapping_spin[spin_type])]
+                    filtered_data = filtered_data[(filtered_data['StrikerName'].isin(batsman_name)) & (filtered_data['PaceOrSpin'] == 2) & (filtered_data['BowlerType'].isin([bowler_type_mapping_spin[stype] for stype in spin_type]))]
             else:
-                filtered_data = data[data['StrikerName'] == batsman_name]
+                filtered_data = filtered_data[filtered_data['StrikerName'].isin(batsman_name)]
 
-            filtered_data = filter_data_by_overs(filtered_data, overs_phase)
+            filtered_data = filter_data_by_overs(filtered_data, overs_phase[0])
 
-            if specific_runs != 'all':
-                filtered_data = filtered_data[filtered_data[specific_runs] == 1]
+            if 'all' not in specific_runs:
+                filtered_data = filtered_data[(filtered_data[specific_runs].sum(axis=1)) > 0]
 
             if not filtered_data.empty:
                 img = Image.open(image_path)
@@ -128,7 +132,7 @@ def main():
                                                                         filtered_data['0s'].iloc[i], filtered_data['batwkts'].iloc[i])
                     ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
-                ax.set_title("PitchMap of " + batsman_name)
+                ax.set_title("PitchMap of " + ", ".join(batsman_name))
                 ax.set_xticks([])
                 ax.set_yticks([])
 
