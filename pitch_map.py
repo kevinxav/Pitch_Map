@@ -53,23 +53,22 @@ def main():
     data['Year'] = data['Date'].dt.year
     data = data[data['Year'] == 2021]  # Filter to keep only the year 2021
 
-    year_options = ['All', 2021]
-    years = st.multiselect("Select year(s)", year_options, default=['All'])
+    years = st.multiselect("Select year(s)", ['All', 2021], default=['All'])
 
-    match_formats = list(data['Format'].unique())
-    match_format = st.multiselect("Select match format:", match_formats, default=match_formats)
+    match_formats = data['Format'].unique()
+    match_format = st.multiselect("Select match format:", list(match_formats), default=['T20I'])
 
-    competitions = list(data['Competition'].unique())
-    competition = st.multiselect("Select competition:", competitions + ['All'], default=['All'])
+    competitions = data['Competition'].unique()
+    competition = st.multiselect("Select competition:", list(competitions) + ['All'], default=['All'])
 
-    bat_club_names = list(data['BatClubName'].unique())
-    bat_club_name = st.multiselect("Select the batsman's club name:", bat_club_names + ['All'])
+    bat_club_names = data['BatClubName'].unique()
+    bat_club_name = st.multiselect("Select the batsman's club name:", list(bat_club_names) + ['All'])
 
     if 'All' not in bat_club_name and bat_club_name:
         filtered_data_club = data[data['BatClubName'].isin(bat_club_name)]
-        batsman_names = list(filtered_data_club['StrikerName'].unique())
+        batsman_names = filtered_data_club['StrikerName'].unique()
     else:
-        batsman_names = list(data['StrikerName'].unique())
+        batsman_names = data['StrikerName'].unique()
     
     batsman_name = st.multiselect("Select the batsman's name:", batsman_names)
 
@@ -147,6 +146,15 @@ def main():
                         ax.set_title("PitchMap of " + batsman)
                         ax.set_xticks([])
                         ax.set_yticks([])
+
+                        legend_elements = [
+                            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
+                            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
+                            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='blue', markersize=10),
+                            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
+                            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
+                            plt.Line2D([0], [0], marker='
+
                         
                         legend_elements = [
                             plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
