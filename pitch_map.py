@@ -46,19 +46,19 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path, parse_dates=['Date'])
 
-    years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
-    
-    match_formats = data['Format'].unique()
-    match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
-    
-    competitions = data['Competition'].unique()
-    competition = st.multiselect("Select competition:", ['All'] + list(competitions), default=['All'])
-    
-    bat_club_names = data['BatClubName'].unique()
-    bat_club_name = st.multiselect("Select the batsman's club name:", ['All'] + list(bat_club_names), default=['All'])
-    
     batsman_names = data['StrikerName'].unique()
     batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=batsman_names)
+
+    bat_club_names = data['BatClubName'].unique()
+    bat_club_name = st.multiselect("Select the batsman's club name:", ['All'] + list(bat_club_names), default=['All'])
+
+    years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
+
+    match_formats = data['Format'].unique()
+    match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
+
+    competitions = data['Competition'].unique()
+    competition = st.multiselect("Select competition:", ['All'] + list(competitions), default=['All'])
 
     spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'], default=['Both'])
 
@@ -90,11 +90,11 @@ def main():
         filtered_data = filter_data_by_overs(filtered_data, overs_phase)
 
         if 'all' not in specific_runs:
-            conditions = [(filtered_data[run] == 1) for run in specific_runs if run in filtered_data.columns]
-            if conditions:
-                filtered_data = filtered_data[conditions[0]]
-                for condition in conditions[1:]:
-                    filtered_data = filtered_data | condition
+            condition = pd.Series([False] * len(filtered_data))
+            for run in specific_runs:
+                if run in filtered_data.columns:
+                    condition = condition | (filtered_data[run] == 1)
+            filtered_data = filtered_data[condition]
 
         if not filtered_data.empty:
             batting_type = filtered_data['BattingType'].iloc[0]
