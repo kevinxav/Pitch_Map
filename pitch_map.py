@@ -51,9 +51,9 @@ def main():
     # Convert 'Date' column to datetime if not already
     data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
     data['Year'] = data['Date'].dt.year
-    #data = data[data['Year'] == 2021]  # Filter to keep only the year 2021
+    data = data[data['Year']]  # Filter to keep only the year 2021
 
-    #years = st.multiselect("Select year(s)", ['All', 2021])
+    years = st.multiselect("Select year(s)", ['All',data['Year']])
 
     match_formats = data['Format'].unique()
     match_format = st.multiselect("Select match format:", list(match_formats), default=['T20I'])
