@@ -51,7 +51,7 @@ def main():
     # Convert 'Date' column to datetime if not already
     data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
     data['Year'] = data['Date'].dt.year
-    data = data[data['Year']]  # Filter to keep only the year 2021
+    #data = data[data['Year']==2021]  # Filter to keep only the year 2021
 
     years = st.multiselect("Select year(s)", ['All',data['Year']])
 
@@ -92,7 +92,7 @@ def main():
                     filtered_data = data
 
                     if 'All' not in years:
-                        filtered_data = filtered_data[filtered_data['Year'].isin([Date])]
+                        filtered_data = filtered_data[filtered_data['Year'].isin([Year])]
                     
                     if 'All' not in match_format:
                         filtered_data = filtered_data[filtered_data['Format'].isin(match_format)]
