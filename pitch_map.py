@@ -53,7 +53,7 @@ def main():
     data['Year'] = data['Date'].dt.year
     data = data[data['Year'] == 2021]  # Filter to keep only the year 2021
 
-    years = st.multiselect("Select year(s)", ['All', 2021], default=['All'])
+    years = st.multiselect("Select year(s)", ['All', 2021])
 
     match_formats = data['Format'].unique()
     match_format = st.multiselect("Select match format:", list(match_formats), default=['T20I'])
