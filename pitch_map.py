@@ -51,7 +51,7 @@ def main():
     # Convert 'Date' column to datetime if not already
     data['Date'] = pd.to_datetime(data['Date'], errors='coerce')
     data['Year'] = data['Date'].dt.year
-    #data = data[data['Year']]  # Filter to keep only the year 2021
+    data = data[data['Year']]  # Filter to keep only the year 2021
 
     years = st.multiselect("Select year(s)", ['All',data['Year']])
 
