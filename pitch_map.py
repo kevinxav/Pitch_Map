@@ -48,8 +48,8 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
-    years = ['All'] + sorted(data['Year'].unique())
-    selected_years = st.multiselect("Select year:", years, default=['All'])
+    Dates = ['All'] + sorted(data['Date'].unique())
+    selected_Dates = st.multiselect("Select Date:", Dates, default=['All'])
 
     match_formats = ['All'] + list(data['Format'].unique())
     selected_match_format = st.multiselect("Select match format:", match_formats, default=['T20I'])
@@ -100,8 +100,8 @@ def main():
             for batsman in batsmen_to_plot:
                 filtered_data = data
                 
-                if 'All' not in selected_years:
-                    filtered_data = filtered_data[filtered_data['Year'].isin(selected_years)]
+                if 'All' not in selected_Dates:
+                    filtered_data = filtered_data[filtered_data['Date'].isin(selected_Dates)]
                     
                 if 'All' not in selected_match_format:
                     filtered_data = filtered_data[filtered_data['Format'].isin(selected_match_format)]
