@@ -46,7 +46,7 @@ def main():
     csv_path = "Ausvsnz.csv"
     data = pd.read_csv(csv_path)
 
-    date_range = st.date_input("Select date range", [])
+    years = st.multiselect("Select year(s)", sorted(data['Date'].dt.year.unique()), default=sorted(data['Date'].dt.year.unique()))
     
     match_formats = data['Format'].unique()
     match_format = st.multiselect("Select match format:", ['All'] + list(match_formats), default=['All'])
@@ -72,9 +72,8 @@ def main():
         if 'All' not in bat_club_name:
             filtered_data = filtered_data[filtered_data['BatClubName'].isin(bat_club_name)]
 
-        if date_range:
-            start_date, end_date = date_range
-            filtered_data = filtered_data[(filtered_data['Date'] >= start_date) & (filtered_data['Date'] <= end_date)]
+        if years:
+            filtered_data = filtered_data[filtered_data['Date'].dt.year.isin(years)]
 
         if 'All' not in match_format:
             filtered_data = filtered_data[filtered_data['Format'].isin(match_format)]
