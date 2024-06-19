@@ -99,16 +99,11 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
 
-    data['Date'] = pd.to_datetime(data['date']).dt.strftime('%d-%m-%Y')
-    data['Format'] = data['MatchtypeId'].map(match_type_mapping)
+  
     data['Date'] = pd.to_datetime(data['Date'])
-
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
-
-    Dates = ['All'] + sorted(data['Date'].unique())
-    selected_Dates = st.multiselect("Select Year:", Dates, default=['All'])
 
     match_formats = ['All'] + list(data['Format'].unique())
     selected_match_format = st.multiselect("Select match format:", match_formats, default=['Twenty20 International'])
