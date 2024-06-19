@@ -157,9 +157,9 @@ def main():
                 filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
             
             if 'Pace' in spin_or_pace:
-                filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceOrSpin'] == 1)]
+                filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceorSpin'] == 1)]
             elif 'Spin' in spin_or_pace:
-                filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceOrSpin'] == 2)]
+                filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceorSpin'] == 2)]
             else:
                 filtered_data = filtered_data[filtered_data['StrikerName'] == batsman]
 
