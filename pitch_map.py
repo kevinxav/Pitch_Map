@@ -49,7 +49,7 @@ def main():
     data = pd.read_csv(csv_path)
 
     Dates = ['All'] + sorted(data['Date'].unique())
-    selected_Dates = st.multiselect("Select Date:", Dates, default=['All'])
+    selected_Dates = st.multiselect("Select Year:", Dates, default=['All'])
 
     match_formats = ['All'] + list(data['Format'].unique())
     selected_match_format = st.multiselect("Select match format:", match_formats, default=['T20I'])
