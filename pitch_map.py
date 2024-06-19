@@ -72,8 +72,9 @@ def main():
 
         bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'All': 0}
         bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 0}
+        
 
-            if not os.path.exists(output_dir):
+        if not os.path.exists(output_dir):
                 os.makedirs(output_dir)
             
             zip_file = zipfile.ZipFile('pitch_maps.zip', 'w')
