@@ -121,38 +121,38 @@ def main():
                     else:
                         st.warning("Column 'PaceorSpin' not found in the dataset.")
                     
-                    if 'BowlerType' in filtered_data_batsman.columns:
+                    if 'BowlingTypeGroup' in filtered_data_batsman.columns:
                         if 'RAP' in pace_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAP']
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'RAP']
                         elif 'LAP' in pace_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAP']
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'LAP']
                         elif 'Both' in pace_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'].isin(['RAP', 'LAP'])]
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'].isin(['RAP', 'LAP'])]
                     else:
-                        st.warning("Column 'BowlerType' not found in the dataset.")
+                        st.warning("Column 'BowlingTypeGroup' not found in the dataset.")
                 elif 'Spin' in spin_or_pace:
                     if 'PaceorSpin' in filtered_data_batsman.columns:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
                     else:
                         st.warning("Column 'PaceorSpin' not found in the dataset.")
                     
-                    if 'BowlerType' in filtered_data_batsman.columns:
+                    if 'BowlingTypeGroup' in filtered_data_batsman.columns:
                         if 'RAO' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAO']
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'RAO']
                         elif 'SLAO' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'SLAO']
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'SLAO']
                         elif 'RALB' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RALB']
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'RALB']
                         elif 'LAC' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'LAC']
                         elif 'Both' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'].isin(['RAO', 'SLAO', 'RALB', 'LAC'])]
+                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'].isin(['RAO', 'SLAO', 'RALB', 'LAC'])]
                     else:
-                        st.warning("Column 'BowlerType' not found in the dataset.")
+                        st.warning("Column 'BowlingTypeGroup' not found in the dataset.")
 
                 # Debugging: Check the filtered data for Pace types
-                if 'BowlerType' in filtered_data_batsman.columns and 'PaceorSpin' in filtered_data_batsman.columns:
-                    st.write("Filtered data for selected pace type:", filtered_data_batsman[['BowlerType', 'PaceorSpin']].drop_duplicates())
+                if 'BowlingTypeGroup' in filtered_data_batsman.columns and 'PaceorSpin' in filtered_data_batsman.columns:
+                    st.write("Filtered data for selected pace type:", filtered_data_batsman[['BowlingTypeGroup', 'PaceorSpin']].drop_duplicates())
 
                 # Filter run types
                 if 'All' not in run_types:
