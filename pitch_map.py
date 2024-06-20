@@ -104,7 +104,15 @@ def main():
         91: "The 6ixty"
     }
     data['Format'] = data['MatchtypeId'].map(match_type_mapping)
-    
+
+    # Debugging: Ensure 'Format' column is correctly created
+    st.write("Data columns:", data.columns)
+    st.write("Unique formats in data:", data['Format'].unique())
+
+    if 'Format' not in data.columns:
+        st.error("The 'Format' column is missing from the data.")
+        return
+
     match_formats = ['All'] + list(data['Format'].unique())
     selected_match_format = st.multiselect("Select match format:", match_formats, default=['Twenty20 International'])
 
