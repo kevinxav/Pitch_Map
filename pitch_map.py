@@ -105,7 +105,11 @@ def main():
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
 
+    match_type_mapping = {
+        # Add your match type mappings here
+    }
     data['Format'] = data['MatchtypeId'].map(match_type_mapping)
+    
     match_formats = ['All'] + list(data['Format'].unique())
     selected_match_format = st.multiselect("Select match format:", match_formats, default=['Twenty20 International'])
 
