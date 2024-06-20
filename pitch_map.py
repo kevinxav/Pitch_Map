@@ -112,6 +112,11 @@ def main():
     competitions = ['All'] + list(data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
 
+    match_ids = ['All'] + list(data['MatchId'].unique())
+    if 'All' not in selected_competition:
+        match_ids = ['All'] + list(data[data['CompName'].isin(selected_competition)]['MatchId'].unique())
+    selected_match_id = st.multiselect("Select match ID:", match_ids, default=['All'])
+
     bat_club_names = ['All'] + list(data['battingclubid'].unique())
     selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names, default=['All'])
 
@@ -155,6 +160,9 @@ def main():
 
             if 'All' not in selected_competition:
                 filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
+
+            if 'All' not in selected_match_id:
+                filtered_data = filtered_data[filtered_data['MatchId'].isin(selected_match_id)]
 
             if 'All' not in selected_bat_club_name:
                 filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
@@ -236,7 +244,8 @@ def main():
         zip_file.close()
 
         with open('pitch_maps.zip', 'rb') as f:
-            st.download_button('Download ZIP', f, file_name='pitch_maps.zip')
+            st.download_button('Download ZIP', f,
+
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
