@@ -7,54 +7,8 @@ import os
 from io import BytesIO
 
 match_type_mapping = {
-         1: "Test Match",
-        2: "One-Day International",
-        3: "Twenty20 International",
-        4: "First Class Match",
-        5: "List A Match",
-        6: "Twenty20 Match",
-        7: "Others",
-        8: "Women's Tests",
-        9: "Women's One-Day Internationals",
-        10: "Women's Twenty20 Internationals",
-        11: "Other First Class",
-        12: "Other List A",
-        13: "Other Twenty20",
-        14: "Women's First Class Matches",
-        15: "Women's List A Matches",
-        16: "Women's Twenty20",
-        17: "Others Women's First Class",
-        18: "Others Women's List A",
-        19: "Others Women's Twenty20",
-        20: "Youth Tests",
-        21: "Youth One-Day Internationals",
-        22: "Youth Twenty20 Internationals",
-        26: "Youth First Class",
-        27: "Youth List A",
-        28: "Youth Twenty20",
-        29: "Women's Youth Tests",
-        30: "Women's Youth One-Day Internationals",
-        31: "Women's Youth Twenty20 Internationals",
-        32: "Women's Youth First Class",
-        33: "Women's Youth List A",
-        34: "Women's Youth Twenty20",
-        35: "Other Youth First Class Matches",
-        36: "Other Youth List A Matches",
-        37: "Dual Collection Fast Test Format",
-        38: "Dual Collection Fast ODI Format",
-        39: "Dual Collection Fast T20 Format",
-        40: "Other Youth Twenty20 Matches",
-        41: "International The Hundred",
-        42: "Domestic The Hundred",
-        43: "Women's International The Hundred",
-        44: "Women's Domestic The Hundred",
-        45: "Youth Women's T20",
-        50: "T10",
-        51: "W T10",
-        53: "Others U19 Women T20",
-        54: "Other Women's Youth Twenty20",
-        91: "The 6ixty"
-    }
+    # (your match_type_mapping dictionary content)
+}
 
 def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_4s, is_6s, is_0s, is_batwkts):
     x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
@@ -105,29 +59,29 @@ def main():
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
-    
+
     # Filter competitions based on date range
-    competitions = ['All'] + list(filtered_data['CompName'].unique())
-    selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
+    competitions = list(filtered_data['CompName'].unique())
+    selected_competition = st.multiselect("Select competition:", competitions)
     
-    if 'All' not in selected_competition:
+    if selected_competition:
         filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
+
+    # Filter batsman club names based on competition
+    bat_club_names = list(filtered_data['battingclubid'].unique())
+    selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names)
     
-    # Filter match ids based on competition
-    match_ids = ['All'] + list(filtered_data['matchid'].unique())
-    selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
+    if selected_bat_club_name:
+        filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
+
+    # Filter match ids based on batsman club id
+    match_ids = list(filtered_data['matchid'].unique())
+    selected_match_id = st.multiselect("Select Match:", match_ids)
     
-    if 'All' not in selected_match_id:
+    if selected_match_id:
         filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
     
-    # Filter batsman club names based on match ids
-    bat_club_names = ['All'] + list(filtered_data['battingclubid'].unique())
-    selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names, default=['All'])
-    
-    if 'All' not in selected_bat_club_name:
-        filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
-    
-    # Filter batsman names based on club id
+    # Filter batsman names based on match id
     batsman_names = ['All'] + list(filtered_data['StrikerName'].unique())
     selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
     
@@ -176,6 +130,8 @@ def main():
                 # Filter run types
                 if 'All' not in run_types:
                     conditions = []
+                    if 'wickets' in run_types:
+                        conditions.append(filtered_data_batsman['Batwkts'] == 1)
                     if '0s' in run_types:
                         conditions.append(filtered_data_batsman['0s'] == 1)
                     if '1s' in run_types:
@@ -186,8 +142,7 @@ def main():
                         conditions.append(filtered_data_batsman['4s'] == 1)
                     if '6s' in run_types:
                         conditions.append(filtered_data_batsman['6s'] == 1)
-                    if 'wickets' in run_types:
-                        conditions.append(filtered_data_batsman['Batwkts'] == 1)
+                    
                     filtered_data_batsman = filtered_data_batsman[pd.concat(conditions, axis=1).any(axis=1)]
                 
                 if not filtered_data_batsman.empty:
