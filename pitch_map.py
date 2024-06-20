@@ -112,10 +112,10 @@ def main():
     competitions = ['All'] + list(data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
 
-    match_ids = ['All'] + list(data['MatchId'].unique())
+    match_ids = ['All'] + list(data['matchid'].unique())
     if 'All' not in selected_competition:
-        match_ids = ['All'] + list(data[data['CompName'].isin(selected_competition)]['MatchId'].unique())
-    selected_match_id = st.multiselect("Select match ID:", match_ids, default=['All'])
+        match_ids = ['All'] + list(data[data['CompName'].isin(selected_competition)]['matchid'].unique())
+    selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
 
     bat_club_names = ['All'] + list(data['battingclubid'].unique())
     selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names, default=['All'])
