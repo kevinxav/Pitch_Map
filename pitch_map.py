@@ -161,19 +161,19 @@ def main():
             
             if 'Pace' in spin_or_pace:
                 filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceorSpin'] == 1)]
-                if 'RAP' in bowler_type:
+                if 'RAP' in bowler_type and 'BowlerType' in filtered_data.columns:
                     filtered_data = filtered_data[filtered_data['BowlerType'] == 'RAP']
-                if 'LAP' in bowler_type:
+                if 'LAP' in bowler_type and 'BowlerType' in filtered_data.columns:
                     filtered_data = filtered_data[filtered_data['BowlerType'] == 'LAP']
             elif 'Spin' in spin_or_pace:
                 filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceorSpin'] == 2)]
-                if 'RAO' in bowler_type:
+                if 'RAO' in bowler_type and 'BowlerType' in filtered_data.columns:
                     filtered_data = filtered_data[filtered_data['BowlerType'] == 'RAO']
-                if 'SLAO' in bowler_type:
+                if 'SLAO' in bowler_type and 'BowlerType' in filtered_data.columns:
                     filtered_data = filtered_data[filtered_data['BowlerType'] == 'SLAO']
-                if 'RALB' in bowler_type:
+                if 'RALB' in bowler_type and 'BowlerType' in filtered_data.columns:
                     filtered_data = filtered_data[filtered_data['BowlerType'] == 'RALB']
-                if 'LAC' in bowler_type:
+                if 'LAC' in bowler_type and 'BowlerType' in filtered_data.columns:
                     filtered_data = filtered_data[filtered_data['BowlerType'] == 'LAC']
             else:
                 filtered_data = filtered_data[filtered_data['StrikerName'] == batsman]
