@@ -7,7 +7,7 @@ import os
 from io import BytesIO
 
 match_type_mapping = {
-     1: "Test Match",
+         1: "Test Match",
         2: "One-Day International",
         3: "Twenty20 International",
         4: "First Class Match",
@@ -54,8 +54,7 @@ match_type_mapping = {
         53: "Others U19 Women T20",
         54: "Other Women's Youth Twenty20",
         91: "The 6ixty"
-
-}
+    }
 
 def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_4s, is_6s, is_0s, is_batwkts):
     x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
@@ -106,162 +105,52 @@ def main():
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
-
+    
     # Filter competitions based on date range
-    competitions = list(filtered_data['CompName'].unique())
-    selected_competition = st.multiselect("Select competition:", competitions)
+    competitions = ['All'] + list(filtered_data['CompName'].unique())
+    selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
     
-    if selected_competition:
+    if 'All' not in selected_competition:
         filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
-
-    # Filter batsman club names based on competition
-    bat_club_names = list(filtered_data['battingclubid'].unique())
-    selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names)
     
-    if selected_bat_club_name:
-        filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
-
-    # Filter match ids based on batsman club id
-    match_ids = list(filtered_data['matchid'].unique())
-    selected_match_id = st.multiselect("Select Match:", match_ids)
+    # Filter match ids based on competition
+    match_ids = ['All'] + list(filtered_data['matchid'].unique())
+    selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
     
-    if selected_match_id:
+    if 'All' not in selected_match_id:
         filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
     
-    # Filter batsman names based on match id
-    batsman_names = ['All'] + list(filtered_data['StrikerName'].unique())
-    selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
-    
-    if selected_batsman_name:
-        spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
-        
-        pace_type = []
-        spin_type = []
+    # Filter batsman club names based on match ids
+                            origin_y, 
+                            filtered_data_batsman['1s'].iloc[i], 
+                            filtered_data_batsman['2s'].iloc[i], 
+                            filtered_data_batsman['4s'].iloc[i], 
+                            filtered_data_batsman['6s'].iloc[i],
+                            filtered_data_batsman['0s'].iloc[i], 
+                            filtered_data_batsman['Batwkts'].iloc[i]
+                        )
+                        ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
-        if 'Pace' in spin_or_pace:
-            pace_type = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
-        if 'Spin' in spin_or_pace:
-            spin_type = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
-        
-        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '4s', '6s', 'wickets', 'All'], default=['All'])
-        
-        output_dir = 'output'
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        
-        zip_buffer = BytesIO()
-        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            if 'All' in selected_batsman_name:
-                batsmen_to_plot = filtered_data['StrikerName'].unique()
-            else:
-                batsmen_to_plot = selected_batsman_name
-            
-            for batsman in batsmen_to_plot:
-                filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
-                
-                # Debugging: Print available columns
-                st.write("Available columns:", filtered_data_batsman.columns)
-                
-                if 'Pace' in spin_or_pace:
-                    if 'PaceorSpin' in filtered_data_batsman.columns:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
-                    else:
-                        st.warning("Column 'PaceorSpin' not found in the dataset.")
-                    
-                    if 'BowlingTypeGroup' in filtered_data_batsman.columns:
-                        if 'RAP' in pace_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'RAP']
-                        elif 'LAP' in pace_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'LAP']
-                        elif 'Both' in pace_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'].isin(['RAP', 'LAP'])]
-                    else:
-                        st.warning("Column 'BowlingTypeGroup' not found in the dataset.")
-                elif 'Spin' in spin_or_pace:
-                    if 'PaceorSpin' in filtered_data_batsman.columns:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
-                    else:
-                        st.warning("Column 'PaceorSpin' not found in the dataset.")
-                    
-                    if 'BowlingTypeGroup' in filtered_data_batsman.columns:
-                        if 'RAO' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'RAO']
-                        elif 'SLAO' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'SLAO']
-                        elif 'RALB' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'RALB']
-                        elif 'LAC' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'] == 'LAC']
-                        elif 'Both' in spin_type:
-                            filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlingTypeGroup'].isin(['RAO', 'SLAO', 'RALB', 'LAC'])]
-                    else:
-                        st.warning("Column 'BowlingTypeGroup' not found in the dataset.")
+                    ax.set_title("PitchMap of " + batsman)
+                    ax.set_xticks([])
+                    ax.set_yticks([])
+                        
+                    legend_elements = [
+                        plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
+                        plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
+                        plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='blue', markersize=10),
+                        plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
+                        plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
+                        plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
+                        plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
+                        ]
+                    ax.legend(handles=legend_elements, loc='upper left')
 
-                # Debugging: Check the filtered data for Pace types
-                if 'BowlingTypeGroup' in filtered_data_batsman.columns and 'PaceorSpin' in filtered_data_batsman.columns:
-                    st.write("Filtered data for selected pace type:", filtered_data_batsman[['BowlingTypeGroup', 'PaceorSpin']].drop_duplicates())
+                    png_filename = f"{output_dir}/{batsman}.png"
+                    fig.savefig(png_filename)
+                    plt.close(fig)
 
-                # Filter run types
-                if 'All' not in run_types:
-                    conditions = []
-                    if '0s' in run_types:
-                        conditions.append(filtered_data_batsman['0s'] == 1)
-                    if '1s' in run_types:
-                        conditions.append(filtered_data_batsman['1s'] == 1)
-                    if '2s' in run_types:
-                        conditions.append(filtered_data_batsman['2s'] == 1)
-                    if '4s' in run_types:
-                        conditions.append(filtered_data_batsman['4s'] == 1)
-                    if '6s' in run_types:
-                        conditions.append(filtered_data_batsman['6s'] == 1)
-                    if 'wickets' in run_types:
-                        conditions.append(filtered_data_batsman['Batwkts'] == 1)
-                    
-                    if conditions:
-                        combined_condition = conditions.pop()
-                        for condition in conditions:
-                            combined_condition |= condition
-                        filtered_data_batsman = filtered_data_batsman[combined_condition]
-
-                fig, ax = plt.subplots()
-                pitch_map_image = Image.open('pitch.png')
-                ax.imshow(pitch_map_image, extent=[0, pitch_map_weight, 0, pitch_map_height])
-
-                for i in range(len(filtered_data_batsman)):
-                    pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
-                        filtered_data_batsman['LengthX'].iloc[i], 
-                        filtered_data_batsman['LengthY'].iloc[i], 
-                        pitch_map_start_x1p, 
-                        pitch_map_start_y,
-                        filtered_data_batsman['1s'].iloc[i],
-                        filtered_data_batsman['2s'].iloc[i],
-                        filtered_data_batsman['4s'].iloc[i],
-                        filtered_data_batsman['6s'].iloc[i],
-                        filtered_data_batsman['0s'].iloc[i],
-                        filtered_data_batsman['Batwkts'].iloc[i]
-                    )
-                    ax.scatter(pitch_x, pitch_y, color=point_color)
-
-                ax.set_title("PitchMap of " + batsman)
-                ax.set_xticks([])
-                ax.set_yticks([])
-
-                legend_elements = [
-                    plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='blue', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
-                    plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
-                ]
-                ax.legend(handles=legend_elements, loc='upper left')
-
-                png_filename = f"{output_dir}/{batsman}.png"
-                fig.savefig(png_filename)
-                plt.close(fig)
-
-                zip_file.write(png_filename, os.path.basename(png_filename))
+                    zip_file.write(png_filename, os.path.basename(png_filename))
         
         st.download_button('Download ZIP', data=zip_buffer.getvalue(), file_name='pitch_maps.zip', mime='application/zip')
 
