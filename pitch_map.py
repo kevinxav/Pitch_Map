@@ -133,7 +133,10 @@ def main():
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
                     elif 'Both' in spin_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'].isin(['RAO', 'SLAO', 'RALB', 'LAC'])]
-                
+
+                # Debugging: Check the filtered data for Pace types
+                st.write("Filtered data for selected pace type:", filtered_data_batsman[['BowlerType', 'PaceorSpin']].drop_duplicates())
+
                 # Filter run types
                 if 'All' not in run_types:
                     conditions = []
@@ -165,7 +168,7 @@ def main():
                     origin_x, origin_y = 0, 0
 
                     fig, ax = plt.subplots()
-                    ax.imshow(img_array, extent=[0, width, 0, height])
+                    ax.imshow(img, extent=[0, width, 0, height])
 
                     for i in range(len(filtered_data_batsman)):
                         pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
