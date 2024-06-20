@@ -158,20 +158,22 @@ def main():
             
             if 'Pace' in spin_or_pace:
                 filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
-                if 'RAP' in bowler_type:
-                    filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAP']
-                if 'LAP' in bowler_type:
-                    filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAP']
+                if 'BowlerType' in filtered_data_batsman.columns:
+                    if 'RAP' in bowler_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAP']
+                    if 'LAP' in bowler_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAP']
             elif 'Spin' in spin_or_pace:
                 filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
-                if 'RAO' in bowler_type:
-                    filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAO']
-                if 'SLAO' in bowler_type:
-                    filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'SLAO']
-                if 'RALB' in bowler_type:
-                    filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RALB']
-                if 'LAC' in bowler_type:
-                    filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
+                if 'BowlerType' in filtered_data_batsman.columns:
+                    if 'RAO' in bowler_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAO']
+                    if 'SLAO' in bowler_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'SLAO']
+                    if 'RALB' in bowler_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RALB']
+                    if 'LAC' in bowler_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
             
             # Filter run types
             if 'All' not in run_types:
@@ -188,7 +190,8 @@ def main():
                     conditions.append(filtered_data_batsman['6s'] == 1)
                 if 'wickets' in run_types:
                     conditions.append(filtered_data_batsman['Batwkts'] == 1)
-                filtered_data_batsman = filtered_data_batsman[any(conditions)]
+                if conditions:
+                    filtered_data_batsman = filtered_data_batsman[pd.concat(conditions, axis=1).any(axis=1)]
             
             if not filtered_data_batsman.empty:
                 batting_type = filtered_data_batsman['StrikerBattingType'].iloc[0]
@@ -235,6 +238,10 @@ def main():
                     plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
                     ]
                 ax.legend(handles=legend_elements, loc='upper left')
+
+                png_filename = f"{output_dir}/{batsman}.png"
+                fig.savefig(png_filename)
+                plt.close(fig)    
 
                 png_filename = f"{output_dir}/{batsman}.png"
                 fig.savefig(png_filename)
