@@ -89,6 +89,9 @@ def main():
         spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
         
         bowler_type = []
+        pace_type = []
+        spin_type = []
+
         if 'Pace' in spin_or_pace:
             pace_type = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
         if 'Spin' in spin_or_pace:
@@ -114,24 +117,26 @@ def main():
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
                     if 'RAP' in pace_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAP']
-                    if 'LAP' in pace_type:
+                    elif 'LAP' in pace_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAP']
+                    elif 'Both' in pace_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'].isin(['RAP', 'LAP'])]
                 elif 'Spin' in spin_or_pace and 'BowlerType' in filtered_data_batsman.columns:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
                     if 'RAO' in spin_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAO']
-                    if 'SLAO' in spin_type:
+                    elif 'SLAO' in spin_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'SLAO']
-                    if 'RALB' in spin_type:
+                    elif 'RALB' in spin_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RALB']
-                    if 'LAC' in spin_type:
+                    elif 'LAC' in spin_type:
                         filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
+                    elif 'Both' in spin_type:
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'].isin(['RAO', 'SLAO', 'RALB', 'LAC'])]
                 
                 # Filter run types
                 if 'All' not in run_types:
                     conditions = []
-                    if 'wickets' in run_types:
-                        conditions.append(filtered_data_batsman['Batwkts'] == 1)
                     if '0s' in run_types:
                         conditions.append(filtered_data_batsman['0s'] == 1)
                     if '1s' in run_types:
@@ -142,7 +147,8 @@ def main():
                         conditions.append(filtered_data_batsman['4s'] == 1)
                     if '6s' in run_types:
                         conditions.append(filtered_data_batsman['6s'] == 1)
-                    
+                    if 'wickets' in run_types:
+                        conditions.append(filtered_data_batsman['Batwkts'] == 1)
                     filtered_data_batsman = filtered_data_batsman[pd.concat(conditions, axis=1).any(axis=1)]
                 
                 if not filtered_data_batsman.empty:
@@ -166,15 +172,15 @@ def main():
                             filtered_data_batsman['LengthX'].iloc[i], 
                             filtered_data_batsman['LengthY'].iloc[i], 
                             origin_x, 
-                            origin_y, 
-                            filtered_data_batsman['1s'].iloc[i], 
-                            filtered_data_batsman['2s'].iloc[i], 
-                            filtered_data_batsman['4s'].iloc[i], 
+                            origin_y,
+                            filtered_data_batsman['1s'].iloc[i],
+                            filtered_data_batsman['2s'].iloc[i],
+                            filtered_data_batsman['4s'].iloc[i],
                             filtered_data_batsman['6s'].iloc[i],
-                            filtered_data_batsman['0s'].iloc[i], 
+                            filtered_data_batsman['0s'].iloc[i],
                             filtered_data_batsman['Batwkts'].iloc[i]
                         )
-                        ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
+                        ax.scatter(pitch_x, pitch_y, color=point_color)
 
                     ax.set_title("PitchMap of " + batsman)
                     ax.set_xticks([])
@@ -188,7 +194,7 @@ def main():
                         plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
                         plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
                         plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
-                        ]
+                    ]
                     ax.legend(handles=legend_elements, loc='upper left')
 
                     png_filename = f"{output_dir}/{batsman}.png"
