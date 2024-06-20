@@ -104,29 +104,29 @@ def main():
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
-    
-    # Filter batsman club names based on date range
-    bat_club_names = list(filtered_data['battingclubid'].unique())
-    selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names)
-    
-    if selected_bat_club_name:
-        filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
-    
-    # Filter competitions based on batsman club id
+
+    # Filter competitions based on date range
     competitions = list(filtered_data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions)
     
     if selected_competition:
         filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
+
+    # Filter batsman club names based on competition
+    bat_club_names = list(filtered_data['battingclubid'].unique())
+    selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names)
     
-    # Filter match ids based on competition
-    match_ids = ['All'] + list(filtered_data['matchid'].unique())
-    selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
+    if selected_bat_club_name:
+        filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
+
+    # Filter match ids based on batsman club id
+    match_ids = list(filtered_data['matchid'].unique())
+    selected_match_id = st.multiselect("Select Match:", match_ids)
     
-    if 'All' not in selected_match_id:
+    if selected_match_id:
         filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
     
-    # Filter batsman names based on club id
+    # Filter batsman names based on match id
     batsman_names = ['All'] + list(filtered_data['StrikerName'].unique())
     selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
     
