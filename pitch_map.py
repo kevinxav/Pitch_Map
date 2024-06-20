@@ -244,8 +244,10 @@ def main():
         zip_file.close()
 
         with open('pitch_maps.zip', 'rb') as f:
-            st.download_button('Download ZIP', f,
+            st.download_button('Download ZIP', f, file_name='pitch_maps.zip')
 
+if __name__ == "__main__":
+    main()
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
