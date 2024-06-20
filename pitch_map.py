@@ -162,7 +162,7 @@ def main():
                 filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
 
             if 'All' not in selected_match_id:
-                filtered_data = filtered_data[filtered_data['MatchId'].isin(selected_match_id)]
+                filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
 
             if 'All' not in selected_bat_club_name:
                 filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
