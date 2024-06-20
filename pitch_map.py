@@ -158,22 +158,22 @@ def main():
             
             if 'Pace' in spin_or_pace:
                 filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
-                if 'BowlerType' in filtered_data_batsman.columns:
+                if 'bowlerType' in filtered_data_batsman.columns:
                     if 'RAP' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAP']
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'RAP']
                     if 'LAP' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAP']
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'LAP']
             elif 'Spin' in spin_or_pace:
                 filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
-                if 'BowlerType' in filtered_data_batsman.columns:
+                if 'bowlerType' in filtered_data_batsman.columns:
                     if 'RAO' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAO']
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'RAO']
                     if 'SLAO' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'SLAO']
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'SLAO']
                     if 'RALB' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RALB']
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'RALB']
                     if 'LAC' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
+                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'LAC']
             
             # Filter run types
             if 'All' not in run_types:
