@@ -134,9 +134,9 @@ def main():
         
         bowler_type = []
         if 'Pace' in spin_or_pace:
-            bowler_type = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
+            pace_type = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
         if 'Spin' in spin_or_pace:
-            bowler_type = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
+            spin_type = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
         
         run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '4s', '6s', 'wickets', 'All'], default=['All'])
         
@@ -154,21 +154,21 @@ def main():
         for batsman in batsmen_to_plot:
             filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
             
-            if 'Pace' in spin_or_pace:
+            if 'Pace' in spin_or_pace and 'BowlerType' in filtered_data_batsman.columns:
                 filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
-                if 'RAP' in bowler_type:
+                if 'RAP' in pace_type:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAP']
-                if 'LAP' in bowler_type:
+                if 'LAP' in pace_type:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAP']
-            elif 'Spin' in spin_or_pace:
+            elif 'Spin' in spin_or_pace and 'BowlerType' in filtered_data_batsman.columns:
                 filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
-                if 'RAO' in bowler_type:
+                if 'RAO' in spin_type:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RAO']
-                if 'SLAO' in bowler_type:
+                if 'SLAO' in spin_type:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'SLAO']
-                if 'RALB' in bowler_type:
+                if 'RALB' in spin_type:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'RALB']
-                if 'LAC' in bowler_type:
+                if 'LAC' in spin_type:
                     filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['BowlerType'] == 'LAC']
             
             # Filter run types
@@ -186,7 +186,7 @@ def main():
                     conditions.append(filtered_data_batsman['6s'] == 1)
                 if 'wickets' in run_types:
                     conditions.append(filtered_data_batsman['Batwkts'] == 1)
-                filtered_data_batsman = filtered_data_batsman[any(conditions)]
+                filtered_data_batsman = filtered_data_batsman[pd.concat(conditions, axis=1).any(axis=1)]
             
             if not filtered_data_batsman.empty:
                 batting_type = filtered_data_batsman['StrikerBattingType'].iloc[0]
