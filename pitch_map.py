@@ -112,10 +112,10 @@ def main():
     competitions = ['All'] + list(data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
 
-    match_ids = ['All'] + list(data['matchid'].unique())
+    match_ids = ['All'] + list(data['MatchId'].unique())
     if 'All' not in selected_competition:
-        match_ids = ['All'] + list(data[data['CompName'].isin(selected_competition)]['matchid'].unique())
-    selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
+        match_ids = ['All'] + list(data[data['CompName'].isin(selected_competition)]['MatchId'].unique())
+    selected_match_id = st.multiselect("Select match ID:", match_ids, default=['All'])
 
     bat_club_names = ['All'] + list(data['battingclubid'].unique())
     selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names, default=['All'])
@@ -188,16 +188,6 @@ def main():
 
             filtered_data = filter_data_by_overs(filtered_data, 'All')
 
-            if 'All' not in run_types:
-                filtered_data = filtered_data[
-                    ((filtered_data['0s'] == 1) & ('0s' in run_types)) |
-                    ((filtered_data['1s'] == 1) & ('1s' in run_types)) |
-                    ((filtered_data['2s'] == 1) & ('2s' in run_types)) |
-                    ((filtered_data['4s'] == 1) & ('4s' in run_types)) |
-                    ((filtered_data['6s'] == 1) & ('6s' in run_types)) |
-                    ((filtered_data['Batwkts'] == 1) & ('wickets' in run_types))
-                ]
-
             if not filtered_data.empty:
                 batting_type = filtered_data['StrikerBattingType'].iloc[0]
 
@@ -246,9 +236,7 @@ def main():
         with open('pitch_maps.zip', 'rb') as f:
             st.download_button('Download ZIP', f, file_name='pitch_maps.zip')
 
-if __name__ == "__main__":
-    main()
-
+# Constants for pitch map calculations
 old_reg_start_y = 0
 old_reg_stump_y = 101
 old_reg_2m_y = 263
