@@ -4,7 +4,8 @@ from PIL import Image
 import pandas as pd
 import zipfile
 import os
-from io import Bytes10
+from io import BytesIO
+
 match_type_mapping = {
          1: "Test Match",
         2: "One-Day International",
