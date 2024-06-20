@@ -124,10 +124,15 @@ def main():
 
     if selected_batsman_name:
         spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
-
-        bowler_type_mapping_pace = {'RAP': 1, 'LAP': 2, 'All': 0}
-        bowler_type_mapping_spin = {'RAO': 3, 'SLAO': 4, 'RALB': 5, 'LAC': 6, 'All': 0}
         
+        bowler_type = []
+        if 'Pace' in spin_or_pace:
+            bowler_type = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
+        if 'Spin' in spin_or_pace:
+            bowler_type = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
+
+        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '4s', '6s', 'wickets', 'All'], default=['All'])
+
         output_dir = 'output'
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
@@ -156,12 +161,34 @@ def main():
             
             if 'Pace' in spin_or_pace:
                 filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceorSpin'] == 1)]
+                if 'RAP' in bowler_type:
+                    filtered_data = filtered_data[filtered_data['BowlerType'] == 'RAP']
+                if 'LAP' in bowler_type:
+                    filtered_data = filtered_data[filtered_data['BowlerType'] == 'LAP']
             elif 'Spin' in spin_or_pace:
                 filtered_data = filtered_data[(filtered_data['StrikerName'] == batsman) & (filtered_data['PaceorSpin'] == 2)]
+                if 'RAO' in bowler_type:
+                    filtered_data = filtered_data[filtered_data['BowlerType'] == 'RAO']
+                if 'SLAO' in bowler_type:
+                    filtered_data = filtered_data[filtered_data['BowlerType'] == 'SLAO']
+                if 'RALB' in bowler_type:
+                    filtered_data = filtered_data[filtered_data['BowlerType'] == 'RALB']
+                if 'LAC' in bowler_type:
+                    filtered_data = filtered_data[filtered_data['BowlerType'] == 'LAC']
             else:
                 filtered_data = filtered_data[filtered_data['StrikerName'] == batsman]
 
             filtered_data = filter_data_by_overs(filtered_data, 'All')
+
+            if 'All' not in run_types:
+                filtered_data = filtered_data[
+                    ((filtered_data['0s'] == 1) & ('0s' in run_types)) |
+                    ((filtered_data['1s'] == 1) & ('1s' in run_types)) |
+                    ((filtered_data['2s'] == 1) & ('2s' in run_types)) |
+                    ((filtered_data['4s'] == 1) & ('4s' in run_types)) |
+                    ((filtered_data['6s'] == 1) & ('6s' in run_types)) |
+                    ((filtered_data['Batwkts'] == 1) & ('wickets' in run_types))
+                ]
 
             if not filtered_data.empty:
                 batting_type = filtered_data['StrikerBattingType'].iloc[0]
