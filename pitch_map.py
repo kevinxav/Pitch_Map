@@ -99,134 +99,146 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
-    
+
     data['Date'] = pd.to_datetime(data['date'])
-    
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
-    
-    # Filter competitions based on date range
-    competitions = ['All'] + list(filtered_data['CompName'].unique())
+
+    data['Format'] = data['MatchtypeId'].map(match_type_mapping)
+    match_formats = ['All'] + list(data['Format'].unique())
+    selected_match_format = st.multiselect("Select match format:", match_formats, default=['Twenty20 International'])
+
+    competitions = ['All'] + list(data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions, default=['All'])
-    
+
+    match_ids = ['All'] + list(data['matchid'].unique())
     if 'All' not in selected_competition:
-        filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
-    
-    # Filter match ids based on competition
-    match_ids = ['All'] + list(filtered_data['matchid'].unique())
+        match_ids = ['All'] + list(data[data['CompName'].isin(selected_competition)]['matchid'].unique())
     selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
-    
-    if 'All' not in selected_match_id:
-        filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
-    
-    # Filter batsman club names based on match ids
-    bat_club_names = ['All'] + list(filtered_data['battingclubid'].unique())
+
+    bat_club_names = ['All'] + list(data['battingclubid'].unique())
     selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names, default=['All'])
-    
-    if 'All' not in selected_bat_club_name:
-        filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
-    
-    # Filter batsman names based on club id
-    batsman_names = ['All'] + list(filtered_data['StrikerName'].unique())
-    selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
-    
+
+    if selected_bat_club_name and 'All' not in selected_bat_club_name:
+        batsman_names = data[data['battingclubid'].isin(selected_bat_club_name)]['StrikerName'].unique()
+    else:
+        batsman_names = data['StrikerName'].unique()
+
+    selected_batsman_name = st.multiselect("Select the batsman's name:", ['All'] + list(batsman_names), default=['All'])
+
     if selected_batsman_name:
         spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
-        
-        bowler_type = []
+
+        pace_types = []
+        spin_types = []
+
         if 'Pace' in spin_or_pace:
-            bowler_type = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
+            pace_types = st.multiselect("Select Pace Type:", ['RAP', 'LAP', 'Both'])
         if 'Spin' in spin_or_pace:
-            bowler_type = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
-        
+            spin_types = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
+
         run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '4s', '6s', 'wickets', 'All'], default=['All'])
-        
-        output_dir = 'output'
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        
-        zip_file = zipfile.ZipFile('pitch_maps.zip', 'w')
-        
-        if 'All' in selected_batsman_name:
-            batsmen_to_plot = filtered_data['StrikerName'].unique()
-        else:
-            batsmen_to_plot = selected_batsman_name
-        
-        for batsman in batsmen_to_plot:
-            filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
-            
-            if 'Pace' in spin_or_pace:
-                filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
-                if 'bowlerType' in filtered_data_batsman.columns:
-                    if 'RAP' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'RAP']
-                    if 'LAP' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'LAP']
-            elif 'Spin' in spin_or_pace:
-                filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
-                if 'bowlerType' in filtered_data_batsman.columns:
-                    if 'RAO' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'RAO']
-                    if 'SLAO' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'SLAO']
-                    if 'RALB' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'RALB']
-                    if 'LAC' in bowler_type:
-                        filtered_data_batsman = filtered_data_batsman[filtered_data_batsman['bowlerType'] == 'LAC']
-            
-            # Filter run types
+
+        # Filter the data based on selections
+        if 'All' not in selected_match_format:
+            filtered_data = filtered_data[filtered_data['Format'].isin(selected_match_format)]
+
+        if 'All' not in selected_competition:
+            filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
+
+        if 'All' not in selected_match_id:
+            filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
+
+        if 'All' not in selected_bat_club_name:
+            filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
+
+        if 'All' not in selected_batsman_name:
+            filtered_data = filtered_data[filtered_data['StrikerName'].isin(selected_batsman_name)]
+
+        if 'Pace' in spin_or_pace:
+            filtered_data = filtered_data[filtered_data['PaceorSpin'] == 1]
+            if 'RAP' in pace_types and 'BowlerType' in filtered_data.columns:
+                filtered_data = filtered_data[filtered_data['BowlerType'] == 'RAP']
+            if 'LAP' in pace_types and 'BowlerType' in filtered_data.columns:
+                filtered_data = filtered_data[filtered_data['BowlerType'] == 'LAP']
+        elif 'Spin' in spin_or_pace:
+            filtered_data = filtered_data[filtered_data['PaceorSpin'] == 2]
+            if 'RAO' in spin_types and 'BowlerType' in filtered_data.columns:
+                filtered_data = filtered_data[filtered_data['BowlerType'] == 'RAO']
+            if 'SLAO' in spin_types and 'BowlerType' in filtered_data.columns:
+                filtered_data = filtered_data[filtered_data['BowlerType'] == 'SLAO']
+            if 'RALB' in spin_types and 'BowlerType' in filtered_data.columns:
+                filtered_data = filtered_data[filtered_data['BowlerType'] == 'RALB']
+            if 'LAC' in spin_types and 'BowlerType' in filtered_data.columns:
+                filtered_data = filtered_data[filtered_data['BowlerType'] == 'LAC']
+
+        filtered_data = filter_data_by_overs(filtered_data, 'All')
+
+        if not filtered_data.empty:
+            # Apply run types filtering
             if 'All' not in run_types:
-                conditions = []
-                if '0s' in run_types:
-                    conditions.append(filtered_data_batsman['0s'] == 1)
-                if '1s' in run_types:
-                    conditions.append(filtered_data_batsman['1s'] == 1)
-                if '2s' in run_types:
-                    conditions.append(filtered_data_batsman['2s'] == 1)
-                if '4s' in run_types:
-                    conditions.append(filtered_data_batsman['4s'] == 1)
-                if '6s' in run_types:
-                    conditions.append(filtered_data_batsman['6s'] == 1)
-                if 'wickets' in run_types:
-                    conditions.append(filtered_data_batsman['Batwkts'] == 1)
-                if conditions:
-                    filtered_data_batsman = filtered_data_batsman[pd.concat(conditions, axis=1).any(axis=1)]
-            
-            if not filtered_data_batsman.empty:
-                batting_type = filtered_data_batsman['StrikerBattingType'].iloc[0]
+                if '0s' not in run_types:
+                    filtered_data = filtered_data[filtered_data['0s'] != 1]
+                if '1s' not in run_types:
+                    filtered_data = filtered_data[filtered_data['1s'] != 1]
+                if '2s' not in run_types:
+                    filtered_data = filtered_data[filtered_data['2s'] != 1]
+                if '4s' not in run_types:
+                    filtered_data = filtered_data[filtered_data['4s'] != 1]
+                if '6s' not in run_types:
+                    filtered_data = filtered_data[filtered_data['6s'] != 1]
+                if 'wickets' not in run_types:
+                    filtered_data = filtered_data[filtered_data['Batwkts'] != 1]
 
-                if batting_type == 1:
-                    image_path = 'pitchR.jpg'
-                elif batting_type == 2:
-                    image_path = 'pitchL.jpg'
-                
-                img = Image.open(image_path)
-                img_array = plt.imread(image_path)
-                height, width, _ = img_array.shape
-                origin_x, origin_y = 0, 0
+            # Proceed with plotting and saving images
+            output_dir = 'output'
+            if not os.path.exists(output_dir):
+                os.makedirs(output_dir)
 
-                fig, ax = plt.subplots()
-                ax.imshow(img_array, extent=[0, width, 0, height])
+            zip_file = zipfile.ZipFile('pitch_maps.zip', 'w')
 
-                for i in range(len(filtered_data_batsman)):
-                    pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
-                        filtered_data_batsman['LengthX'].iloc[i], 
-                        filtered_data_batsman['LengthY'].iloc[i], 
-                        origin_x, 
-                        origin_y, 
-                        filtered_data_batsman['1s'].iloc[i], 
-                        filtered_data_batsman['2s'].iloc[i], 
-                        filtered_data_batsman['4s'].iloc[i], 
-                        filtered_data_batsman['6s'].iloc[i],
-                        filtered_data_batsman['0s'].iloc[i], 
-                        filtered_data_batsman['Batwkts'].iloc[i]
-                    )
-                    ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
+            if 'All' in selected_batsman_name:
+                batsmen_to_plot = filtered_data['StrikerName'].unique()
+            else:
+                batsmen_to_plot = selected_batsman_name
 
-                ax.set_title("PitchMap of " + batsman)
-                ax.set_xticks([])
-                ax.set_yticks([])
+            for batsman in batsmen_to_plot:
+                batsman_data = filtered_data[filtered_data['StrikerName'] == batsman]
+
+                if not batsman_data.empty:
+                    batting_type = batsman_data['StrikerBattingType'].iloc[0]
+
+                    if batting_type == 1:
+                        image_path = 'pitchR.jpg'
+                    elif batting_type == 2:
+                        image_path = 'pitchL.jpg'
+
+                    img = Image.open(image_path)
+                    img_array = plt.imread(image_path)
+                    height, width, _ = img_array.shape
+                    origin_x, origin_y = 0, 0
+
+                    fig, ax = plt.subplots()
+                    ax.imshow(img_array, extent=[0, width, 0, height])
+
+                    for i in range(len(batsman_data)):
+                        pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
+                            batsman_data['LengthX'].iloc[i],
+                            batsman_data['LengthY'].iloc[i],
+                            origin_x, origin_y,
+                            batsman_data['1s'].iloc[i],
+                            batsman_data['2s'].iloc[i],
+                            batsman_data['4s'].iloc[i],
+                            batsman_data['6s'].iloc[i],
+                            batsman_data['0s'].iloc[i],
+                            batsman_data['Batwkts'].iloc[i]
+                        )
+                        ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
+
+                    ax.set_title("PitchMap of " + batsman)
+                    ax.set_xticks([])
+                    ax.set_yticks([])
                     
                 legend_elements = [
                     plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
