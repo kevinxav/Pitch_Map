@@ -56,9 +56,9 @@ match_type_mapping = {
     91: "The 6ixty"
 }
 
-def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
-    x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
-    y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
+def calculate_pitch_map_coordinates(length_x, length_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
+    x_axis = calculate_pitch_map_xaxis(length_x, length_y)
+    y_axis = calculate_pitch_map_yaxis(length_y)
 
     if is_batwkts == 1:
         color = 'azure'
@@ -79,10 +79,10 @@ def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1
 
     return x_axis, y_axis, color
 
-def calculate_pitch_map_xaxis(length_x, length_y, origin_x):
+def calculate_pitch_map_xaxis(length_x, length_y):
     return ((pitch_map_start_x2p - pitch_map_start_x1p) / old_reg_xlen) * length_x + pitch_map_start_x1p
 
-def calculate_pitch_map_yaxis(length_y, origin_y):
+def calculate_pitch_map_yaxis(length_y):
     return pitch_map_height - (((pitch_map_stump_y - pitch_map_start_y) / (old_reg_stump_y - old_reg_start_y)) * (length_y - old_reg_start_y) + pitch_map_start_y)
 
 def filter_data_by_phase(data, phase_column, selected_phase):
@@ -244,8 +244,6 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
                 data['LengthX'].iloc[i], 
                 data['LengthY'].iloc[i], 
-                origin_x,
-                origin_y,
                 data['1s'].iloc[i], 
                 data['2s'].iloc[i], 
                 data['3s'].iloc[i], 
