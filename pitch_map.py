@@ -134,6 +134,44 @@ def main():
     selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
     
     if selected_batsman_name:
+        # Pace or Spin filter
+        pace_or_spin = st.multiselect("Select bowler type (Pace/Spin):", ["All", "Pace", "Spin"], default=["All"])
+        
+        if "All" not in pace_or_spin:
+            pace_or_spin_values = []
+            if "Pace" in pace_or_spin:
+                pace_or_spin_values.append(1)
+            if "Spin" in pace_or_spin:
+                pace_or_spin_values.append(2)
+            filtered_data = filtered_data[filtered_data['PaceorSpin'].isin(pace_or_spin_values)]
+        
+        # Bowling Type Group filter
+        if "Pace" in pace_or_spin:
+            bowling_type_options = ["All", "RAP", "LAP"]
+            selected_bowling_types = st.multiselect("Select Bowling Type Group:", bowling_type_options, default=["All"])
+            if "All" not in selected_bowling_types:
+                bowling_type_values = []
+                if "RAP" in selected_bowling_types:
+                    bowling_type_values.append(1)
+                if "LAP" in selected_bowling_types:
+                    bowling_type_values.append(2)
+                filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
+        
+        if "Spin" in pace_or_spin:
+            bowling_type_options = ["All", "RAO", "SLAO", "RALB", "LAC"]
+            selected_bowling_types = st.multiselect("Select Bowling Type Group:", bowling_type_options, default=["All"])
+            if "All" not in selected_bowling_types:
+                bowling_type_values = []
+                if "RAO" in selected_bowling_types:
+                    bowling_type_values.append(3)
+                if "SLAO" in selected_bowling_types:
+                    bowling_type_values.append(4)
+                if "RALB" in selected_bowling_types:
+                    bowling_type_values.append(5)
+                if "LAC" in selected_bowling_types:
+                    bowling_type_values.append(6)
+                filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
+
         run_types = st.multiselect("Select run types:", ['0s', '1s', '2s','3s', '4s', '6s', 'wickets', 'All'], default=['All'])
         
         output_dir = 'output'
@@ -152,82 +190,57 @@ def main():
                 
                 if not filtered_data_batsman.empty:
                     filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir)
-
-        st.download_button('Download ZIP', data=zip_buffer.getvalue(), file_name='pitch_maps.zip', mime='application/zip')
+        
+        st.download_button(
+            label="Download ZIP",
+            data=zip_buffer.getvalue(),
+            file_name="batsman_pitch_maps.zip",
+            mime="application/zip"
+        )
 
 def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
-    # Filter run types
-    if 'All' not in run_types:
-        conditions = []
-        if '0s' in run_types:
-            conditions.append(data['0s'] == 1)
-        if '1s' in run_types:
-            conditions.append(data['1s'] == 1)
-        if '2s' in run_types:
-            conditions.append(data['2s'] == 1)
-        if '3s' in run_types:
-            conditions.append(data['3s'] == 1)
-        if '4s' in run_types:
-            conditions.append(data['4s'] == 1)
-        if '6s' in run_types:
-            conditions.append(data['6s'] == 1)
-        if 'wickets' in run_types:
-            conditions.append(data['Batwkts'] == 1)
-        data = data[pd.concat(conditions, axis=1).any(axis=1)]
+    fig, ax = plt.subplots()
     
-    if not data.empty:
-        batting_type = data['StrikerBattingType'].iloc[0]
+    pitch_image = Image.open("pitch.png")
+    ax.imshow(pitch_image, extent=[0, 1080, 0, 600])
+    
+    for i in range(len(data)):
+        pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
+            data['PitchMapX'].iloc[i], 
+            data['PitchMapY'].iloc[i], 
+            data['originx'].iloc[i], 
+            data['originy'].iloc[i], 
+            data['1s'].iloc[i], 
+            data['2s'].iloc[i], 
+            data['3s'].iloc[i], 
+            data['4s'].iloc[i], 
+            data['6s'].iloc[i],
+            data['0s'].iloc[i], 
+            data['Batwkts'].iloc[i]
+        )
+        ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
-        if batting_type == 1:
-            image_path = 'pitchR.jpg'
-        elif batting_type == 2:
-            image_path = 'pitchL.jpg'
+    ax.set_title(f"PitchMap of {batsman}")
+    ax.set_xticks([])
+    ax.set_yticks([])
         
-        img = Image.open(image_path)
-        img_array = plt.imread(image_path)
-        height, width, _ = img_array.shape
-        origin_x, origin_y = 0, 0
+    legend_elements = [
+        plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
+        plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
+        plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
+        plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
+        plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
+        plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
+        plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
+    ]
+    ax.legend(handles=legend_elements, loc='upper left')
 
-        fig, ax = plt.subplots()
-        ax.imshow(img_array, extent=[0, width, 0, height])
+    png_filename = f"{output_dir}/{batsman}.png"
+    fig.savefig(png_filename)
+    plt.close(fig)
 
-        for i in range(len(data)):
-            pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
-                data['LengthX'].iloc[i], 
-                data['LengthY'].iloc[i], 
-                origin_x, 
-                origin_y, 
-                data['1s'].iloc[i], 
-                data['2s'].iloc[i], 
-                data['3s'].iloc[i], 
-                data['4s'].iloc[i], 
-                data['6s'].iloc[i],
-                data['0s'].iloc[i], 
-                data['Batwkts'].iloc[i]
-            )
-            ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
+    zip_file.write(png_filename, os.path.basename(png_filename))# Constants for pitch map calculations
 
-        ax.set_title(f"PitchMap of {batsman}")
-        ax.set_xticks([])
-        ax.set_yticks([])
-            
-        legend_elements = [
-            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
-        ]
-        ax.legend(handles=legend_elements, loc='upper left')
-
-        png_filename = f"{output_dir}/{batsman}.png"
-        fig.savefig(png_filename)
-        plt.close(fig)
-
-        zip_file.write(png_filename, os.path.basename(png_filename))
-# Constants for pitch map calculations
 old_reg_start_y = 0
 old_reg_stump_y = 101
 old_reg_2m_y = 263
