@@ -95,6 +95,8 @@ def filter_data_by_overs(data, overs_phase):
     else:  # 'All'
         return data
 
+
+Copy code
 def main():
     st.title("Cricket Pitch Map Visualization")
 
@@ -217,12 +219,12 @@ def main():
                             origin_x, 
                             origin_y, 
                             filtered_data_batsman['1s'].iloc[i], 
-                            filtered_data_batsman['2s'].iloc[i],
-                            filtered_data_batsman['3s'].iloc[i],
+                            filtered_data_batsman['2s'].iloc[i], 
                             filtered_data_batsman['4s'].iloc[i], 
                             filtered_data_batsman['6s'].iloc[i],
                             filtered_data_batsman['0s'].iloc[i], 
-                            filtered_data_batsman['Batwkts'].iloc[i]
+                            filtered_data_batsman['Batwkts'].iloc[i],
+                            filtered_data_batsman['3s'].iloc[i]  # Add this line
                         )
                         ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
