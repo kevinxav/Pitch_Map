@@ -142,7 +142,7 @@ def main():
         if 'Spin' in spin_or_pace:
             spin_type = st.multiselect("Select Spin Type:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'])
         
-        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '4s', '6s', 'wickets', 'All'], default=['All'])
+        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s','3s', '4s', '6s', 'wickets', 'All'], default=['All'])
         
         output_dir = 'output'
         if not os.path.exists(output_dir):
