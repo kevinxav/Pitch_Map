@@ -198,31 +198,62 @@ def main():
             mime="application/zip"
         )
 
-def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
-    fig, ax = plt.subplots()
-    
-    pitch_image = Image.open("pitch.png")
-    ax.imshow(pitch_image, extent=[0, 1080, 0, 600])
-    
-    for i in range(len(data)):
-        pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
-            data['PitchMapX'].iloc[i], 
-            data['PitchMapY'].iloc[i], 
-            data['originx'].iloc[i], 
-            data['originy'].iloc[i], 
-            data['1s'].iloc[i], 
-            data['2s'].iloc[i], 
-            data['3s'].iloc[i], 
-            data['4s'].iloc[i], 
-            data['6s'].iloc[i],
-            data['0s'].iloc[i], 
-            data['Batwkts'].iloc[i]
-        )
-        ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
-    ax.set_title(f"PitchMap of {batsman}")
-    ax.set_xticks([])
-    ax.set_yticks([])
+def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
+    # Filter run types
+    if 'All' not in run_types:
+        conditions = []
+        if '0s' in run_types:
+            conditions.append(data['0s'] == 1)
+        if '1s' in run_types:
+            conditions.append(data['1s'] == 1)
+        if '2s' in run_types:
+            conditions.append(data['2s'] == 1)
+        if '3s' in run_types:
+            conditions.append(data['3s'] == 1)
+        if '4s' in run_types:
+            conditions.append(data['4s'] == 1)
+        if '6s' in run_types:
+            conditions.append(data['6s'] == 1)
+        if 'wickets' in run_types:
+            conditions.append(data['Batwkts'] == 1)
+        data = data[pd.concat(conditions, axis=1).any(axis=1)]
+    
+    if not data.empty:
+        batting_type = data['StrikerBattingType'].iloc[0]
+
+        if batting_type == 1:
+            image_path = 'pitchR.jpg'
+        elif batting_type == 2:
+            image_path = 'pitchL.jpg'
+        
+        img = Image.open(image_path)
+        img_array = plt.imread(image_path)
+        height, width, _ = img_array.shape
+        origin_x, origin_y = 0, 0
+
+        fig, ax = plt.subplots()
+        ax.imshow(img_array, extent=[0, width, 0, height])
+
+        for i in range(len(data)):
+            pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
+                data['LengthX'].iloc[i], 
+                data['LengthY'].iloc[i], 
+                origin_x, 
+                origin_y, 
+                data['1s'].iloc[i], 
+                data['2s'].iloc[i], 
+                data['3s'].iloc[i], 
+                data['4s'].iloc[i], 
+                data['6s'].iloc[i],
+                data['0s'].iloc[i], 
+                data['Batwkts'].iloc[i]
+            )
+            ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
+
+        ax.set_title(f"PitchMap of {batsman}")
+        ax.set_xticks([])
+        ax.set_yticks([])
         
     legend_elements = [
         plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
