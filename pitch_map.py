@@ -60,19 +60,22 @@ def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1
     y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
     
     if is_batwkts == 1:
-        color = 'azure'
-    elif is_4s == 1:
-        color = 'darkblue'
-    elif is_6s == 1:
-        color = 'red'
-    elif is_0s == 1:
-        color = 'black'
-    elif is_1s == 1:
-        color = 'goldenrod'
-    elif is_2s == 1:
-        color = 'blue'
-    else:
-        color = 'brown'
+    color = 'azure'
+elif is_4s == 1:
+    color = 'darkblue'
+elif is_6s == 1:
+    color = 'red'
+elif is_0s == 1:
+    color = 'black'
+elif is_1s == 1:
+    color = 'goldenrod'
+elif is_2s == 1:
+    color = 'blue'
+elif is_3s == 1:
+    color = 'green'
+else:
+    color = 'brown'
+
     
     return x_axis, y_axis, color
 
