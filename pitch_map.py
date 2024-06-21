@@ -225,7 +225,7 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             conditions.append(data['Batwkts'] == 1)
         data = data[pd.concat(conditions, axis=1).any(axis=1)]
     
-if not data.empty:
+    if not data.empty:
         batting_type = data['StrikerBattingType'].iloc[0]
 
         if batting_type == 1:
