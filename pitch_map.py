@@ -95,8 +95,6 @@ def filter_data_by_overs(data, overs_phase):
     else:  # 'All'
         return data
 
-
-Copy code
 def main():
     st.title("Cricket Pitch Map Visualization")
 
