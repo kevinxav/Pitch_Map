@@ -181,6 +181,8 @@ def main():
                         conditions.append(filtered_data_batsman['1s'] == 1)
                     if '2s' in run_types:
                         conditions.append(filtered_data_batsman['2s'] == 1)
+                    if '3s' in run_types:
+                        conditions.append(filtered_data_batsman['3s'] == 1)
                     if '4s' in run_types:
                         conditions.append(filtered_data_batsman['4s'] == 1)
                     if '6s' in run_types:
