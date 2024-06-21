@@ -172,8 +172,19 @@ def main():
                 if "LAC" in selected_bowling_types:
                     bowling_type_values.append(6)
                 filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
+        
+        # Phase selection
+        phase_type = st.selectbox("Select phase type (3Phase/4Phase):", ["3Phase", "4Phase"])
+        if phase_type == "3Phase":
+            phase_options = ["All", 1, 2, 3]
+            selected_phase = st.selectbox("Select Phase:", phase_options, index=0)
+            filtered_data = filter_data_by_phase(filtered_data, 'Phase3idStar', selected_phase)
+        elif phase_type == "4Phase":
+            phase_options = ["All", 1, 2, 3, 4]
+            selected_phase = st.selectbox("Select Phase:", phase_options, index=0)
+            filtered_data = filter_data_by_phase(filtered_data, 'Phase4id', selected_phase)
 
-        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s','3s', '4s', '6s', 'wickets', 'All'], default=['All'])
+        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '3s', '4s', '6s', 'wickets', 'All'], default=['All'])
         
         output_dir = 'output'
         if not os.path.exists(output_dir):
@@ -230,7 +241,6 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         img = Image.open(image_path)
         img_array = plt.imread(image_path)
         height, width, _ = img_array.shape
-        origin_x, origin_y = 0, 0
 
         fig, ax = plt.subplots()
         ax.imshow(img_array, extent=[0, width, 0, height])
@@ -239,8 +249,6 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
                 data['LengthX'].iloc[i], 
                 data['LengthY'].iloc[i], 
-                origin_x, 
-                origin_y, 
                 data['1s'].iloc[i], 
                 data['2s'].iloc[i], 
                 data['3s'].iloc[i], 
@@ -271,7 +279,6 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         plt.close(fig)
 
         zip_file.write(png_filename, os.path.basename(png_filename))
-
 old_reg_start_y = 0
 old_reg_stump_y = 101
 old_reg_2m_y = 263
