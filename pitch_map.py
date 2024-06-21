@@ -270,7 +270,7 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
             plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
         ]
-        ax.legend(handles=legend_elements, loc='upper left')
+        ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
 
         png_filename = f"{output_dir}/{batsman}.png"
         fig.savefig(png_filename)
