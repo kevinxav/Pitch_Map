@@ -95,6 +95,7 @@ def filter_data_by_overs(data, overs_phase):
     else:  # 'All'
         return data
 
+
 def main():
     st.title("Cricket Pitch Map Visualization")
 
@@ -198,7 +199,6 @@ def main():
             mime="application/zip"
         )
 
-
 def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
     # Filter run types
     if 'All' not in run_types:
@@ -255,22 +255,22 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         ax.set_xticks([])
         ax.set_yticks([])
         
-    legend_elements = [
-        plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
-        plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
-        plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
-        plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
-        plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
-        plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
-        plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
-    ]
-    ax.legend(handles=legend_elements, loc='upper left')
+        legend_elements = [
+            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
+        ]
+        ax.legend(handles=legend_elements, loc='upper left')
 
-    png_filename = f"{output_dir}/{batsman}.png"
-    fig.savefig(png_filename)
-    plt.close(fig)
+        png_filename = f"{output_dir}/{batsman}.png"
+        fig.savefig(png_filename)
+        plt.close(fig)
 
-    zip_file.write(png_filename, os.path.basename(png_filename))# Constants for pitch map calculations
+        zip_file.write(png_filename, os.path.basename(png_filename))
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
