@@ -85,16 +85,11 @@ def calculate_pitch_map_xaxis(length_x, length_y, origin_x):
 def calculate_pitch_map_yaxis(length_y, origin_y):
     return pitch_map_height - (((pitch_map_stump_y - pitch_map_start_y) / (old_reg_stump_y - old_reg_start_y)) * (length_y - old_reg_start_y) + pitch_map_start_y)
 
-def filter_data_by_overs(data, overs_phase):
-    if overs_phase == 'Power Play (1-6)':
-        return data[(data['overs'] >= 0.1) & (data['overs'] <= 5.6)]
-    elif overs_phase == 'Middle Overs (7-15)':
-        return data[(data['overs'] >= 6.1) & (data['overs'] <= 14.6)]
-    elif overs_phase == 'Death Overs (16-20)':
-        return data[(data['overs'] >= 15.1) & (data['overs'] <= 19.6)]
-    else:  # 'All'
+def filter_data_by_phase(data, phase_column, selected_phase):
+    if selected_phase == "All":
         return data
-
+    else:
+        return data[data[phase_column] == selected_phase]
 
 def main():
     st.title("Cricket Pitch Map Visualization")
@@ -279,6 +274,7 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         plt.close(fig)
 
         zip_file.write(png_filename, os.path.basename(png_filename))
+
 old_reg_start_y = 0
 old_reg_stump_y = 101
 old_reg_2m_y = 263
