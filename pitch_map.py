@@ -226,21 +226,13 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         data = data[pd.concat(conditions, axis=1).any(axis=1)]
     
 if not data.empty:
-    batting_type = data['StrikerBattingType'].iloc[0]
+        batting_type = data['StrikerBattingType'].iloc[0]
 
-    if batting_type == 1:
-        image_path = 'pitchR.jpg'
-    elif batting_type == 2:
-        image_path = 'pitchL.jpg'
-    
-    bowler_type = data['PaceorSpin'].iloc[0]
-    if bowler_type == 2: 
         if batting_type == 1:
-            image_path = 'Spinner_R.png'
+            image_path = 'pitchR.jpg'
         elif batting_type == 2:
-            image_path = 'Spinner_L.png'
+            image_path = 'pitchL.jpg'
 
-        
         img = Image.open(image_path)
         img_array = plt.imread(image_path)
         height, width, _ = img_array.shape
