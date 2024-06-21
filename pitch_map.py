@@ -55,7 +55,7 @@ match_type_mapping = {
         54: "Other Women's Youth Twenty20",
         91: "The 6ixty"
     }
-def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_4s, is_6s, is_0s, is_batwkts):
+def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s,is_3s, is_4s, is_6s, is_0s, is_batwkts):
     x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
     y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
 
