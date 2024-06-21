@@ -134,8 +134,6 @@ def main():
     selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
     
     if selected_batsman_name:
-        spin_or_pace = st.multiselect("Choose bowler type", ['Pace', 'Spin', 'Both'])
-        
         run_types = st.multiselect("Select run types:", ['0s', '1s', '2s','3s', '4s', '6s', 'wickets', 'All'], default=['All'])
         
         output_dir = 'output'
@@ -152,38 +150,12 @@ def main():
             for batsman in batsmen_to_plot:
                 filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
                 
-                for bowler_type in spin_or_pace:
-                    if bowler_type == 'Pace' and 'BowlerType' in filtered_data_batsman.columns:
-                        pace_types = st.multiselect(f"Select Pace Type for {batsman}:", ['RAP', 'LAP', 'Both'], default=['Both'])
-                        filtered_data_batsman_pace = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 1]
-                        if 'RAP' in pace_types:
-                            filtered_data_batsman_pace = filtered_data_batsman_pace[filtered_data_batsman_pace['BowlerType'] == 'RAP']
-                        if 'LAP' in pace_types:
-                            filtered_data_batsman_pace = filtered_data_batsman_pace[filtered_data_batsman_pace['BowlerType'] == 'LAP']
-                    elif bowler_type == 'Spin' and 'BowlerType' in filtered_data_batsman.columns:
-                        spin_types = st.multiselect(f"Select Spin Type for {batsman}:", ['RAO', 'SLAO', 'RALB', 'LAC', 'Both'], default=['Both'])
-                        filtered_data_batsman_spin = filtered_data_batsman[filtered_data_batsman['PaceorSpin'] == 2]
-                        if 'RAO' in spin_types:
-                            filtered_data_batsman_spin = filtered_data_batsman_spin[filtered_data_batsman_spin['BowlerType'] == 'RAO']
-                        if 'SLAO' in spin_types:
-                            filtered_data_batsman_spin = filtered_data_batsman_spin[filtered_data_batsman_spin['BowlerType'] == 'SLAO']
-                        if 'RALB' in spin_types:
-                            filtered_data_batsman_spin = filtered_data_batsman_spin[filtered_data_batsman_spin['BowlerType'] == 'RALB']
-                        if 'LAC' in spin_types:
-                            filtered_data_batsman_spin = filtered_data_batsman_spin[filtered_data_batsman_spin['BowlerType'] == 'LAC']
-                    else:
-                        filtered_data_batsman_pace = filtered_data_batsman
-                        filtered_data_batsman_spin = filtered_data_batsman
-                    
-                    if not filtered_data_batsman_pace.empty:
-                        filter_and_plot(filtered_data_batsman_pace, batsman, run_types, 'Pace', zip_file, output_dir)
-                    
-                    if not filtered_data_batsman_spin.empty:
-                        filter_and_plot(filtered_data_batsman_spin, batsman, run_types, 'Spin', zip_file, output_dir)
+                if not filtered_data_batsman.empty:
+                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir)
 
         st.download_button('Download ZIP', data=zip_buffer.getvalue(), file_name='pitch_maps.zip', mime='application/zip')
 
-def filter_and_plot(data, batsman, run_types, bowler_type, zip_file, output_dir):
+def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
     # Filter run types
     if 'All' not in run_types:
         conditions = []
@@ -235,7 +207,7 @@ def filter_and_plot(data, batsman, run_types, bowler_type, zip_file, output_dir)
             )
             ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
-        ax.set_title(f"PitchMap of {batsman} - {bowler_type}")
+        ax.set_title(f"PitchMap of {batsman}")
         ax.set_xticks([])
         ax.set_yticks([])
             
@@ -250,12 +222,11 @@ def filter_and_plot(data, batsman, run_types, bowler_type, zip_file, output_dir)
         ]
         ax.legend(handles=legend_elements, loc='upper left')
 
-        png_filename = f"{output_dir}/{batsman}_{bowler_type}.png"
+        png_filename = f"{output_dir}/{batsman}.png"
         fig.savefig(png_filename)
         plt.close(fig)
 
         zip_file.write(png_filename, os.path.basename(png_filename))
-
 # Constants for pitch map calculations
 old_reg_start_y = 0
 old_reg_stump_y = 101
