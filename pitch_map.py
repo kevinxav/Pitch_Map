@@ -221,7 +221,8 @@ def main():
                             filtered_data_batsman['4s'].iloc[i], 
                             filtered_data_batsman['6s'].iloc[i],
                             filtered_data_batsman['0s'].iloc[i], 
-                            filtered_data_batsman['Batwkts'].iloc[i]
+                            filtered_data_batsman['Batwkts'].iloc[i],
+                            filtered_data_batsman['3s'].iloc[i]  # Add this line
                         )
                         ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
 
