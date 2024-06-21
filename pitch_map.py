@@ -244,6 +244,8 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
                 data['LengthX'].iloc[i], 
                 data['LengthY'].iloc[i], 
+                origin_x,
+                origin_y,
                 data['1s'].iloc[i], 
                 data['2s'].iloc[i], 
                 data['3s'].iloc[i], 
