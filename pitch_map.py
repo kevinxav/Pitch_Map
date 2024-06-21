@@ -58,22 +58,22 @@ match_type_mapping = {
 def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_4s, is_6s, is_0s, is_batwkts):
     x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
     y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
-    
-    if is_batwkts == 1:        
+
+    if is_batwkts == 1:
              color = 'azure'
-     elif is_4s == 1:
+    elif is_4s == 1:
              color = 'darkblue'
-     elif is_6s == 1:
+    elif is_6s == 1:
              color = 'red'
-     elif is_0s == 1:
+    elif is_0s == 1:
              color = 'black'
-     elif is_1s == 1:
+    elif is_1s == 1:
              color = 'goldenrod'
-     elif is_2s == 1:
-             color = 'blue'
-     elif is_3s == 1:
+    elif is_2s == 1:
+             color = 'purple'
+    elif is_3s == 1:
              color = 'green'
-      else:
+    else:
              color = 'brown'
 
     
