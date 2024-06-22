@@ -238,13 +238,13 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             elif batting_type == 2:
                 image_path = 'pitchL.jpg'
 
-        img = Image.open(image_path)
-        img_array = plt.imread(image_path)
-        height, width, _ = img_array.shape
-        origin_x, origin_y = 0, 0
+            img = Image.open(image_path)
+            img_array = plt.imread(image_path)
+            height, width, _ = img_array.shape
+            origin_x, origin_y = 0, 0
         
-        fig, ax = plt.subplots()
-        ax.imshow(img_array, extent=[0, width, 0, height])
+            fig, ax = plt.subplots()
+            ax.imshow(img_array, extent=[0, width, 0, height])
 
         for i in range(len(data)):
             pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
