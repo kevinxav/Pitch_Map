@@ -118,11 +118,10 @@ def main():
     if selected_bat_club_name:
         filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
 
-    # Filter match ids based on batsman club id
-    match_ids = list(filtered_data['matchid'].unique())
-    selected_match_id = st.multiselect("Select Match:", match_ids)
+    match_ids = ['All'] + list(filtered_data['matchid'].unique())
+    selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
     
-    if selected_match_id:
+    if 'All' not in selected_match_id:
         filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
     
     # Filter batsman names based on match id
@@ -228,10 +227,16 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
     if not data.empty:
         batting_type = data['StrikerBattingType'].iloc[0]
 
-        if batting_type == 1:
-            image_path = 'pitchR.jpg'
-        elif batting_type == 2:
-            image_path = 'pitchL.jpg'
+        if "Spin" in pace_or_spin:
+            if batting_type == 1:
+                image_path = 'Spinner_R.png'  # Right-handed batsman image for Spin
+            elif batting_type == 2:
+                image_path = 'Spinner_L.png'  # Left-handed batsman image for Spin
+        else:
+            if batting_type == 1:
+                image_path = 'pitchR.jpg'  # Right-handed batsman image for Pace or other
+            elif batting_type == 2:
+                image_path = 'pitchL.jpg'
 
         img = Image.open(image_path)
         img_array = plt.imread(image_path)
