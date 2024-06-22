@@ -289,31 +289,30 @@ old_reg_xlen = 364
 
 pitch_map_height = 600
 pitch_map_weight = 1080
-pitch_map_start_y = 158
-pitch_map_stump_y = 186
-pitch_map_2m_y = 215
-pitch_map_4m_y = 258
-pitch_map_6m_y = 304
-pitch_map_8m_y = 357
-pitch_map_10m_y = 415
-pitch_map_end_y = 493
+pitch_map_start_y = 153
+pitch_map_stump_y = 178
+pitch_map_2m_y = 208
+pitch_map_4m_y = 253
+pitch_map_6m_y = 298
+pitch_map_8m_y = 352
+pitch_map_10m_y = 408
+pitch_map_end_y = 489
 
-pitch_map_start_x1p = 346
-pitch_map_start_x2p = 707
-pitch_map_stump_x1p = 335
-pitch_map_stump_x2p = 715
-pitch_map_2m_x1p = 326
-pitch_map_2m_x2p = 722
-pitch_map_4m_x1p = 317
-pitch_map_4m_x2p = 731
-pitch_map_6m_x1p = 317 
-pitch_map_6m_x2p = 731
+pitch_map_start_x1p = 344
+pitch_map_start_x2p = 704
+pitch_map_stump_x1p = 339
+pitch_map_stump_x2p = 709
+pitch_map_2m_x1p = 332
+pitch_map_2m_x2p = 714
+pitch_map_4m_x1p = 323
+pitch_map_4m_x2p = 722
+pitch_map_6m_x1p = 316 
+pitch_map_6m_x2p = 729
 pitch_map_8m_x1p = 306
 pitch_map_8m_x2p = 742
 pitch_map_10m_x1p = 294
 pitch_map_10m_x2p = 752
-pitch_map_end_x1p = 274
-pitch_map_end_x2p = 766
-
+pitch_map_end_x1p = 277
+pitch_map_end_x2p = 769
 if __name__ == "__main__":
     main()
