@@ -56,9 +56,9 @@ match_type_mapping = {
     91: "The 6ixty"
 }
 
-def calculate_pitch_map_coordinates(length_x, length_y,origin_x,origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
-    x_axis = calculate_pitch_map_xaxis(length_x, length_y,origin_x)
-    y_axis = calculate_pitch_map_yaxis(length_y,origin_y)
+def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
+    x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
+    y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
 
     if is_batwkts == 1:
         color = 'azure'
@@ -79,10 +79,10 @@ def calculate_pitch_map_coordinates(length_x, length_y,origin_x,origin_y, is_1s,
 
     return x_axis, y_axis, color
 
-def calculate_pitch_map_xaxis(length_x, length_y,origin_x):
+def calculate_pitch_map_xaxis(length_x, length_y, origin_x):
     return ((pitch_map_start_x2p - pitch_map_start_x1p) / old_reg_xlen) * length_x + pitch_map_start_x1p
 
-def calculate_pitch_map_yaxis(length_y,origin_y):
+def calculate_pitch_map_yaxis(length_y, origin_y):
     return pitch_map_height - (((pitch_map_stump_y - pitch_map_start_y) / (old_reg_stump_y - old_reg_start_y)) * (length_y - old_reg_start_y) + pitch_map_start_y)
 
 def filter_data_by_phase(data, phase_column, selected_phase):
@@ -186,102 +186,51 @@ def main():
         
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            if 'All' in selected_batsman_name:
-                batsmen_to_plot = filtered_data['StrikerName'].unique()
-            else:
-                batsmen_to_plot = selected_batsman_name
-            
-            for batsman in batsmen_to_plot:
-                filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
+            for batsman_name in selected_batsman_name:
+                if batsman_name == 'All':
+                    batsman_data = filtered_data
+                else:
+                    batsman_data = filtered_data[filtered_data['StrikerName'] == batsman_name]
                 
-                if not filtered_data_batsman.empty:
-                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir)
+                if not batsman_data.empty:
+                    fig, ax = plt.subplots(figsize=(10, 6))
+                    pitch_map_img = Image.open("pitch_map.jpg")
+                    ax.imshow(pitch_map_img, extent=[0, 100, 0, 100])
+                    
+                    for _, row in batsman_data.iterrows():
+                        length_x = row['stumpsx']
+                        length_y = row['stumpsy']
+                        origin_x = row['stumpsx']
+                        origin_y = row['stumpsy']
+                        is_1s = row['is1s']
+                        is_2s = row['is2s']
+                        is_3s = row['is3s']
+                        is_4s = row['is4s']
+                        is_6s = row['is6s']
+                        is_0s = row['is0s']
+                        is_batwkts = row['isbatwkts']
+                        
+                        x_axis, y_axis, color = calculate_pitch_map_coordinates(
+                            length_x, length_y, origin_x, origin_y,
+                            is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts
+                        )
+                        
+                        ax.scatter(x_axis, y_axis, color=color, s=10)
+                    
+                    ax.set_title(f"Pitch Map for {batsman_name}")
+                    plt.axis('off')
+                    
+                    # Save the figure
+                    file_path = os.path.join(output_dir, f"{batsman_name}.png")
+                    plt.savefig(file_path, bbox_inches='tight')
+                    plt.close(fig)
+                    
+                    # Add the figure to the zip file
+                    zip_file.write(file_path, os.path.basename(file_path))
         
-        st.download_button(
-            label="Download ZIP",
-            data=zip_buffer.getvalue(),
-            file_name="batsman_pitch_maps.zip",
-            mime="application/zip"
-        )
-
-def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
-    # Filter run types
-    if 'All' not in run_types:
-        conditions = []
-        if '0s' in run_types:
-            conditions.append(data['0s'] == 1)
-        if '1s' in run_types:
-            conditions.append(data['1s'] == 1)
-        if '2s' in run_types:
-            conditions.append(data['2s'] == 1)
-        if '3s' in run_types:
-            conditions.append(data['3s'] == 1)
-        if '4s' in run_types:
-            conditions.append(data['4s'] == 1)
-        if '6s' in run_types:
-            conditions.append(data['6s'] == 1)
-        if 'wickets' in run_types:
-            conditions.append(data['Batwkts'] == 1)
-        data = data[pd.concat(conditions, axis=1).any(axis=1)]
-    
-    if not data.empty:
-        batting_type = data['StrikerBattingType'].iloc[0]
-
-        if "Spin" in pace_or_spin:
-            if batting_type == 1:
-                image_path = 'Spinner_R.png'  # Right-handed batsman image for Spin
-            elif batting_type == 2:
-                image_path = 'Spinner_L.png'  # Left-handed batsman image for Spin
-        else:
-            if batting_type == 1:
-                image_path = 'pitchR.jpg'  # Right-handed batsman image for Pace or other
-            elif batting_type == 2:
-                image_path = 'pitchL.jpg'
-
-        img = Image.open(image_path)
-        img_array = plt.imread(image_path)
-        height, width, _ = img_array.shape
-        origin_x, origin_y = 0, 0
-        
-        fig, ax = plt.subplots()
-        ax.imshow(img_array, extent=[0, width, 0, height])
-
-        for i in range(len(data)):
-            pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
-                data['LengthX'].iloc[i], 
-                data['LengthY'].iloc[i],
-                origin_x,
-                origin_y,
-                data['1s'].iloc[i], 
-                data['2s'].iloc[i], 
-                data['3s'].iloc[i], 
-                data['4s'].iloc[i], 
-                data['6s'].iloc[i],
-                data['0s'].iloc[i], 
-                data['Batwkts'].iloc[i]
-            )
-            ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
-
-        ax.set_title(f"PitchMap of {batsman}")
-        ax.set_xticks([])
-        ax.set_yticks([])
-        
-        legend_elements = [
-            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
-        ]
-        ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
-
-        png_filename = f"{output_dir}/{batsman}.png"
-        fig.savefig(png_filename)
-        plt.close(fig)
-
-        zip_file.write(png_filename, os.path.basename(png_filename))
+        # Save the zip file
+        zip_buffer.seek(0)
+        st.download_button(label="Download Pitch Maps", data=zip_buffer, file_name="pitch_maps.zip", mime="application/zip")
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
