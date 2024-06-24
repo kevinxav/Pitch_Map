@@ -262,13 +262,13 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         ax.set_yticks([])
         
         legend_elements = [
-            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=8),
-            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=8),
-            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=8),
-            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=8),
-            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=8),
-            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=8),
-            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
         ]
         ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size': 8})
 
