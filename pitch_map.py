@@ -231,9 +231,9 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir,PaceorSpin):
         batting_type = data['StrikerBattingType'].iloc[0]
 
         if batting_type == 1 and PaceorSpin == "Spin":
-            image_path = 'Spinner_R.png'
+            image_path = 'Spinner_R.jpg'
         elif batting_type == 2 and PaceorSpin == "Spin":
-            image_path = 'Spinner_L.png'
+            image_path = 'Spinner_L.jpg'
         elif batting_type == 1 and PaceorSpin == "Pace":
             image_path = 'PitchR.jpg'
         elif batting_type == 2 and PaceorSpin == "Pace":
@@ -278,11 +278,11 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir,PaceorSpin):
         ]
         ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
 
-        png_filename = f"{output_dir}/{batsman}.png"
-        fig.savefig(png_filename)
+        jpg_filename = f"{output_dir}/{batsman}.jpg"
+        fig.savefig(jpg_filename)
         plt.close(fig)
 
-        zip_file.write(png_filename, os.path.basename(png_filename))
+        zip_file.write(jpg_filename, os.path.basename(jpg_filename))
 
 old_reg_start_y = 0
 old_reg_stump_y = 101
