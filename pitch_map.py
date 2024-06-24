@@ -232,11 +232,12 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         if batting_type == 1 and PaceorSpin == 2:
             image_path = 'Spinner_R.png'
         elif batting_type == 2 and PaceorSpin == 2:
-            image_path = 'Spinner_R.png'
-        elif batting_type == 1:
+            image_path = 'Spinner_L.png'
+        elif batting_type == 1 and PaceorSpin == 1:
             image_path == 'PitchR.jpg'
-        else:
+        elif batting_type == 2 and PaceorSpin == 1:
             image_path == 'PitchL.jpg'
+        
         img = Image.open(image_path)
         img_array = plt.imread(image_path)
         height, width, _ = img_array.shape
