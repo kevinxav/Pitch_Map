@@ -185,7 +185,7 @@ def main():
         if st.button("Generate PitchMap"):
             output_dir = "output_directory"
             with zipfile.ZipFile("pitchmaps.zip", "w") as zip_file:
-                filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
+                filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == selected_batsman_name]
                 filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir, pace_or_spin[0])
             with open("pitchmaps.zip", "rb") as f:
                 st.download_button(label="Download PitchMaps", data=f, file_name="pitchmaps.zip")
