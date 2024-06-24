@@ -56,8 +56,6 @@ match_type_mapping = {
     91: "The 6ixty"
 }
 
-data['length_x']=data['length_x']+5
-
 def calculate_pitch_map_coordinates(length_x, length_y,origin_x,origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
     x_axis = calculate_pitch_map_xaxis(length_x, length_y,origin_x)
     y_axis = calculate_pitch_map_yaxis(length_y,origin_y)
@@ -99,6 +97,8 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
+    data['length_x']=data['length_x']+5
+
     
     data['Date'] = pd.to_datetime(data['date'])
     
