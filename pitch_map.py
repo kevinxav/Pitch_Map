@@ -197,7 +197,7 @@ def main():
                 filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
 
                 if not filtered_data_batsman.empty:
-                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir, pace_or_spin[0])
+                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir, pace_or_spin)
 
         st.download_button(
             label="Download ZIP",
