@@ -1,4 +1,3 @@
-
 import streamlit as st
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -57,9 +56,9 @@ match_type_mapping = {
     91: "The 6ixty"
 }
 
-def calculate_pitch_map_coordinates(length_x, length_y,origin_x,origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
-    x_axis = calculate_pitch_map_xaxis(length_x, length_y,origin_x)
-    y_axis = calculate_pitch_map_yaxis(length_y,origin_y)
+def calculate_pitch_map_coordinates(length_x, length_y, origin_x, origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
+    x_axis = calculate_pitch_map_xaxis(length_x, length_y, origin_x)
+    y_axis = calculate_pitch_map_yaxis(length_y, origin_y)
 
     if is_batwkts == 1:
         color = 'azure'
@@ -80,10 +79,10 @@ def calculate_pitch_map_coordinates(length_x, length_y,origin_x,origin_y, is_1s,
 
     return x_axis, y_axis, color
 
-def calculate_pitch_map_xaxis(length_x, length_y,origin_x):
+def calculate_pitch_map_xaxis(length_x, length_y, origin_x):
     return ((pitch_map_start_x2p - pitch_map_start_x1p) / old_reg_xlen) * length_x + pitch_map_start_x1p
 
-def calculate_pitch_map_yaxis(length_y,origin_y):
+def calculate_pitch_map_yaxis(length_y, origin_y):
     return pitch_map_height - (((pitch_map_stump_y - pitch_map_start_y) / (old_reg_stump_y - old_reg_start_y)) * (length_y - old_reg_start_y) + pitch_map_start_y)
 
 def filter_data_by_phase(data, phase_column, selected_phase):
@@ -98,11 +97,10 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
-    data['LengthX']=data['LengthX']+17
+    data['LengthX'] = data['LengthX'] + 17
 
-    
     data['Date'] = pd.to_datetime(data['date'])
-    
+
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
@@ -272,7 +270,7 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=8),
             plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=8),
         ]
-        ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
+        ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size': 8})
 
         png_filename = f"{output_dir}/{batsman}.png"
         fig.savefig(png_filename)
