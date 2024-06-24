@@ -85,11 +85,11 @@ def calculate_pitch_map_xaxis(length_x, length_y, origin_x):
 def calculate_pitch_map_yaxis(length_y, origin_y):
     return pitch_map_height - (((pitch_map_stump_y - pitch_map_start_y) / (old_reg_stump_y - old_reg_start_y)) * (length_y - old_reg_start_y) + pitch_map_start_y)
 
-def filter_data_by_phase(data, phase_column, selected_phase):
-    if selected_phase == "All":
+def filter_data_by_phase(data, phase_column, selected_phases):
+    if "All" in selected_phases:
         return data
     else:
-        return data[data[phase_column] == selected_phase]
+        return data[data[phase_column].isin(selected_phases)]
 
 def main():
     st.title("Cricket Pitch Map Visualization")
@@ -98,7 +98,6 @@ def main():
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
     data['LengthX'] = data['LengthX'] + 17
-
     data['Date'] = pd.to_datetime(data['date'])
 
     # Date range filter
@@ -108,31 +107,31 @@ def main():
     # Filter competitions based on date range
     competitions = list(filtered_data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions)
-    
+
     if selected_competition:
         filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
 
     # Filter batsman club names based on competition
     bat_club_names = list(filtered_data['battingclubid'].unique())
     selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names)
-    
+
     if selected_bat_club_name:
         filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
 
     match_ids = ['All'] + list(filtered_data['matchid'].unique())
     selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
-    
+
     if 'All' not in selected_match_id:
         filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
-    
+
     # Filter batsman names based on match id
     batsman_names = ['All'] + list(filtered_data['StrikerName'].unique())
     selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
-    
+
     if selected_batsman_name:
         # Pace or Spin filter
         pace_or_spin = st.multiselect("Select bowler type (Pace/Spin):", ["All", "Pace", "Spin"], default=["All"])
-        
+
         if "All" not in pace_or_spin:
             pace_or_spin_values = []
             if "Pace" in pace_or_spin:
@@ -140,7 +139,7 @@ def main():
             if "Spin" in pace_or_spin:
                 pace_or_spin_values.append(2)
             filtered_data = filtered_data[filtered_data['PaceorSpin'].isin(pace_or_spin_values)]
-        
+
         # Bowling Type Group filter
         if "Pace" in pace_or_spin:
             bowling_type_options = ["All", "RAP", "LAP"]
@@ -152,7 +151,7 @@ def main():
                 if "LAP" in selected_bowling_types:
                     bowling_type_values.append(2)
                 filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
-        
+
         if "Spin" in pace_or_spin:
             bowling_type_options = ["All", "RAO", "SLAO", "RALB", "LAC"]
             selected_bowling_types = st.multiselect("Select Bowling Type Group:", bowling_type_options, default=["All"])
@@ -167,37 +166,37 @@ def main():
                 if "LAC" in selected_bowling_types:
                     bowling_type_values.append(6)
                 filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
-        
+
         # Phase selection
         phase_type = st.selectbox("Select phase type (3Phase/4Phase):", ["3Phase", "4Phase"])
         if phase_type == "3Phase":
-            phase_options = ["All", 1, 2, 3]
-            selected_phase = st.selectbox("Select Phase:", phase_options, index=0)
-            filtered_data = filter_data_by_phase(filtered_data, 'Phase3idStar', selected_phase)
+            phase_options = ["All", "1 to 6", "7 to 15", "16 to 20"]
+            selected_phases = st.multiselect("Select Phase:", phase_options, default=["All"])
+            filtered_data = filter_data_by_phase(filtered_data, 'Phase3idStarPhrase', selected_phases)
         elif phase_type == "4Phase":
-            phase_options = ["All", 1, 2, 3, 4]
-            selected_phase = st.selectbox("Select Phase:", phase_options, index=0)
-            filtered_data = filter_data_by_phase(filtered_data, 'Phase4id', selected_phase)
+            phase_options = ["All", "1 to 6", "7 to 10", "11-15", "16 to 20"]
+            selected_phases = st.multiselect("Select Phase:", phase_options, default=["All"])
+            filtered_data = filter_data_by_phase(filtered_data, 'Phase4idPhrase', selected_phases)
 
         run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '3s', '4s', '6s', 'wickets', 'All'], default=['All'])
-        
+
         output_dir = 'output'
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-        
+
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
             if 'All' in selected_batsman_name:
                 batsmen_to_plot = filtered_data['StrikerName'].unique()
             else:
                 batsmen_to_plot = selected_batsman_name
-            
+
             for batsman in batsmen_to_plot:
                 filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
-                
+
                 if not filtered_data_batsman.empty:
                     filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir)
-        
+
         st.download_button(
             label="Download ZIP",
             data=zip_buffer.getvalue(),
@@ -224,7 +223,7 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         if 'wickets' in run_types:
             conditions.append(data['Batwkts'] == 1)
         data = data[pd.concat(conditions, axis=1).any(axis=1)]
-    
+
     if not data.empty:
         batting_type = data['StrikerBattingType'].iloc[0]
 
@@ -232,27 +231,27 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
             image_path = 'Pacer_R.png'
         elif batting_type == 2:
             image_path = 'pitchL.jpg'
-            
+
         img = Image.open(image_path)
         img_array = plt.imread(image_path)
         height, width, _ = img_array.shape
         origin_x, origin_y = 0, 0
-        
+
         fig, ax = plt.subplots()
         ax.imshow(img_array, extent=[0, width, 0, height])
 
         for i in range(len(data)):
             pitch_x, pitch_y, point_color = calculate_pitch_map_coordinates(
-                data['LengthX'].iloc[i], 
+                data['LengthX'].iloc[i],
                 data['LengthY'].iloc[i],
                 origin_x,
                 origin_y,
-                data['1s'].iloc[i], 
-                data['2s'].iloc[i], 
-                data['3s'].iloc[i], 
-                data['4s'].iloc[i], 
+                data['1s'].iloc[i],
+                data['2s'].iloc[i],
+                data['3s'].iloc[i],
+                data['4s'].iloc[i],
                 data['6s'].iloc[i],
-                data['0s'].iloc[i], 
+                data['0s'].iloc[i],
                 data['Batwkts'].iloc[i]
             )
             ax.scatter(pitch_x, pitch_y, marker='.', color=point_color)
@@ -260,17 +259,17 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         ax.set_title(f"PitchMap of {batsman}")
         ax.set_xticks([])
         ax.set_yticks([])
-        
+
         legend_elements = [
-            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=10),
-            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=10),
+            plt.Line2D([0], [0], marker='.', color='w', label='0s', markerfacecolor='black', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='1s', markerfacecolor='goldenrod', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='2s', markerfacecolor='purple', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='3s', markerfacecolor='green', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='4s', markerfacecolor='darkblue', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='6s', markerfacecolor='red', markersize=8),
+            plt.Line2D([0], [0], marker='.', color='w', label='Out', markerfacecolor='azure', markersize=8),
         ]
-        ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size': 8})
+        ax.legend(handles=legend_elements, loc='lower center', bbox_to_anchor=(0.48, 0.05), ncol=7, prop={'size':8})
 
         png_filename = f"{output_dir}/{batsman}.png"
         fig.savefig(png_filename)
