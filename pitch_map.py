@@ -132,7 +132,7 @@ def main():
     
     if selected_batsman_name:
         # Pace or Spin filter
-        pace_or_spin = st.multiselectbox("Select bowler type (Pace/Spin):", ["All", "Pace", "Spin"], default=["All"])
+        pace_or_spin = st.multiselect("Select bowler type (Pace/Spin):", ["All", "Pace", "Spin"], default=["All"])
         
         if "All" not in pace_or_spin:
             pace_or_spin_values = []
