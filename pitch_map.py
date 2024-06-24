@@ -97,7 +97,7 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
-    data['LengthX']=data['LengthX']+20
+    data['LengthX']=data['LengthX']+15
 
     
     data['Date'] = pd.to_datetime(data['date'])
