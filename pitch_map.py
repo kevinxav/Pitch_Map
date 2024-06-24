@@ -230,7 +230,7 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
         batting_type = data['StrikerBattingType'].iloc[0]
 
         if batting_type == 1:
-            image_path = 'pitchR.jpg'
+            image_path = 'Pacer_R.png'
         elif batting_type == 2:
             image_path = 'pitchL.jpg'
             
