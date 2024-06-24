@@ -56,7 +56,7 @@ match_type_mapping = {
     91: "The 6ixty"
 }
 
-data['LengthX']=data['LengthX']+5
+data['length_x']=data['length_x']+5
 
 def calculate_pitch_map_coordinates(length_x, length_y,origin_x,origin_y, is_1s, is_2s, is_3s, is_4s, is_6s, is_0s, is_batwkts):
     x_axis = calculate_pitch_map_xaxis(length_x, length_y,origin_x)
