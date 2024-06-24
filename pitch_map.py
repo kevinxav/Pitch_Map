@@ -206,7 +206,7 @@ def main():
             mime="application/zip"
         )
 
-def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
+def filter_and_plot(data, batsman, run_types, zip_file, output_dir,PaceorSpin):
     # Filter run types
     if 'All' not in run_types:
         conditions = []
