@@ -229,13 +229,13 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
     if not data.empty:
         batting_type = data['StrikerBattingType'].iloc[0]
 
-        if batting_type == 1 and PaceorSpin == 2:
+        if batting_type == 1 and pace_or_Spin == 2:
             image_path = 'Spinner_R.png'
-        elif batting_type == 2 and PaceorSpin == 2:
+        elif batting_type == 2 and pace_or_Spin == 2:
             image_path = 'Spinner_L.png'
-        elif batting_type == 1 and PaceorSpin == 1:
+        elif batting_type == 1 and pace_or_Spin == 1:
             image_path == 'PitchR.jpg'
-        elif batting_type == 2 and PaceorSpin == 1:
+        elif batting_type == 2 and pace_or_Spin == 1:
             image_path == 'PitchL.jpg'
         
         img = Image.open(image_path)
