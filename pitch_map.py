@@ -179,7 +179,6 @@ def main():
             selected_phase = st.selectbox("Select Phase:", phase_options, index=0)
             filtered_data = filter_data_by_phase(filtered_data, 'Phase4idStar', selected_phase)
         
-        batsman = st.selectbox("Select batsman:", filtered_data['StrikerName'].unique())
         
         run_types = st.multiselect("Select runs:", ["All", "0s", "1s", "2s", "3s", "4s", "6s", "wickets"], default=["All"])
 
