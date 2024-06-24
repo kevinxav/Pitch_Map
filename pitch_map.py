@@ -635,4 +635,4 @@ pitch_map_end_x1p = 277
 pitch_map_end_x2p = 769
 
 if __name__ == "__main__":
-    main()import
+    main()
