@@ -98,10 +98,11 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
-    data['LengthX'] = data['LengthX'] + 17
+    data['LengthX']=data['LengthX']+17
 
+    
     data['Date'] = pd.to_datetime(data['date'])
-
+    
     # Date range filter
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
@@ -109,31 +110,31 @@ def main():
     # Filter competitions based on date range
     competitions = list(filtered_data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions)
-
+    
     if selected_competition:
         filtered_data = filtered_data[filtered_data['CompName'].isin(selected_competition)]
 
     # Filter batsman club names based on competition
     bat_club_names = list(filtered_data['battingclubid'].unique())
     selected_bat_club_name = st.multiselect("Select the batsman's club id:", bat_club_names)
-
+    
     if selected_bat_club_name:
         filtered_data = filtered_data[filtered_data['battingclubid'].isin(selected_bat_club_name)]
 
     match_ids = ['All'] + list(filtered_data['matchid'].unique())
     selected_match_id = st.multiselect("Select Match:", match_ids, default=['All'])
-
+    
     if 'All' not in selected_match_id:
         filtered_data = filtered_data[filtered_data['matchid'].isin(selected_match_id)]
-
+    
     # Filter batsman names based on match id
     batsman_names = ['All'] + list(filtered_data['StrikerName'].unique())
     selected_batsman_name = st.multiselect("Select the batsman's name:", batsman_names, default=['All'])
-
+    
     if selected_batsman_name:
         # Pace or Spin filter
         pace_or_spin = st.multiselect("Select bowler type (Pace/Spin):", ["All", "Pace", "Spin"], default=["All"])
-
+        
         if "All" not in pace_or_spin:
             pace_or_spin_values = []
             if "Pace" in pace_or_spin:
@@ -141,7 +142,7 @@ def main():
             if "Spin" in pace_or_spin:
                 pace_or_spin_values.append(2)
             filtered_data = filtered_data[filtered_data['PaceorSpin'].isin(pace_or_spin_values)]
-
+        
         # Bowling Type Group filter
         if "Pace" in pace_or_spin:
             bowling_type_options = ["All", "RAP", "LAP"]
@@ -153,7 +154,7 @@ def main():
                 if "LAP" in selected_bowling_types:
                     bowling_type_values.append(2)
                 filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
-
+        
         if "Spin" in pace_or_spin:
             bowling_type_options = ["All", "RAO", "SLAO", "RALB", "LAC"]
             selected_bowling_types = st.multiselect("Select Bowling Type Group:", bowling_type_options, default=["All"])
@@ -168,7 +169,7 @@ def main():
                 if "LAC" in selected_bowling_types:
                     bowling_type_values.append(6)
                 filtered_data = filtered_data[filtered_data['BowlingTypeGroup'].isin(bowling_type_values)]
-
+        
         # Phase selection
         phase_type = st.selectbox("Select phase type (3Phase/4Phase):", ["3Phase", "4Phase"])
         if phase_type == "3Phase":
@@ -181,24 +182,24 @@ def main():
             filtered_data = filter_data_by_phase(filtered_data, 'Phase4id', selected_phase)
 
         run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '3s', '4s', '6s', 'wickets', 'All'], default=['All'])
-
+        
         output_dir = 'output'
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
-
+        
         zip_buffer = BytesIO()
         with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
             if 'All' in selected_batsman_name:
                 batsmen_to_plot = filtered_data['StrikerName'].unique()
             else:
                 batsmen_to_plot = selected_batsman_name
-
+            
             for batsman in batsmen_to_plot:
                 filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
-
+                
                 if not filtered_data_batsman.empty:
-                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir, pace_or_spin)
-
+                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir)
+        
         st.download_button(
             label="Download ZIP",
             data=zip_buffer.getvalue(),
@@ -206,8 +207,7 @@ def main():
             mime="application/zip"
         )
 
-
-def filter_and_plot(data, batsman, run_types, zip_file, output_dir,PaceorSpin):
+def filter_and_plot(data, batsman, run_types, zip_file, output_dir):
     # Filter run types
     if 'All' not in run_types:
         conditions = []
@@ -230,19 +230,10 @@ def filter_and_plot(data, batsman, run_types, zip_file, output_dir,PaceorSpin):
     if not data.empty:
         batting_type = data['StrikerBattingType'].iloc[0]
 
-        if batting_type == 1 and PaceorSpin == "Spin":
-            image_path = 'Spinner_R.png'
-        elif batting_type == 2 and PaceorSpin == "Spin":
-            image_path = 'Spinner_L.png'
-        elif batting_type == 1 and PaceorSpin == "Pace":
-            image_path = 'PitchR.png'
-        elif batting_type == 2 and PaceorSpin == "Pace":
-            image_path = 'PitchL.png'
-        elif batting_type == 1:
-            image_path = 'PitchR.png'
+        if batting_type == 1:
+            image_path = 'Pacer_R.png'
         elif batting_type == 2:
-            image_path = 'PitchL.png'
-            
+            image_path = 'pitchL.jpg'
             
         img = Image.open(image_path)
         img_array = plt.imread(image_path)
