@@ -97,9 +97,8 @@ def main():
     csv_path = "NewData.csv"
     data = pd.read_csv(csv_path)
     data = data.dropna(subset=['overs'])
-    data['LengthX']=data['LengthX']+17
+    data['LengthX'] = data['LengthX'] + 17
 
-    
     data['Date'] = pd.to_datetime(data['date'])
     
     # Date range filter
@@ -178,34 +177,19 @@ def main():
         elif phase_type == "4Phase":
             phase_options = ["All", 1, 2, 3, 4]
             selected_phase = st.selectbox("Select Phase:", phase_options, index=0)
-            filtered_data = filter_data_by_phase(filtered_data, 'Phase4id', selected_phase)
+            filtered_data = filter_data_by_phase(filtered_data, 'Phase4idStar', selected_phase)
+        
+        batsman = st.selectbox("Select batsman:", filtered_data['StrikerName'].unique())
+        
+        run_types = st.multiselect("Select runs:", ["All", "0s", "1s", "2s", "3s", "4s", "6s", "wickets"], default=["All"])
 
-        run_types = st.multiselect("Select run types:", ['0s', '1s', '2s', '3s', '4s', '6s', 'wickets', 'All'], default=['All'])
-        
-        output_dir = 'output'
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        
-        zip_buffer = BytesIO()
-        with zipfile.ZipFile(zip_buffer, 'w') as zip_file:
-            if 'All' in selected_batsman_name:
-                batsmen_to_plot = filtered_data['StrikerName'].unique()
-            else:
-                batsmen_to_plot = selected_batsman_name
-            
-            for batsman in batsmen_to_plot:
+        if st.button("Generate PitchMap"):
+            output_dir = "output_directory"
+            with zipfile.ZipFile("pitchmaps.zip", "w") as zip_file:
                 filtered_data_batsman = filtered_data[filtered_data['StrikerName'] == batsman]
-                
-                if not filtered_data_batsman.empty:
-                    filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir,PaceorSpin)
-        
-        st.download_button(
-            label="Download ZIP",
-            data=zip_buffer.getvalue(),
-            file_name="batsman_pitch_maps.zip",
-            mime="application/zip"
-        )
-
+                filter_and_plot(filtered_data_batsman, batsman, run_types, zip_file, output_dir, pace_or_spin[0])
+            with open("pitchmaps.zip", "rb") as f:
+                st.download_button(label="Download PitchMaps", data=f, file_name="pitchmaps.zip")
 def filter_and_plot(data, batsman, run_types, zip_file, output_dir,PaceorSpin):
     # Filter run types
     if 'All' not in run_types:
