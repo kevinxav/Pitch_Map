@@ -128,7 +128,7 @@ def main():
 
     if "All" not in selected_match_types:
         match_type_ids = [key for key, value in match_type_dict.items() if value in selected_match_types]
-        filtered_data = filtered_data[filtered_data['matchtypeid'].isin(match_type_ids)]
+        filtered_data = filtered_data[filtered_data['MatchtypeId'].isin(match_type_ids)]
     
     # Filter competitions based on date range
     competitions = list(filtered_data['CompName'].unique())
