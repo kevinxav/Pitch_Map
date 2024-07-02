@@ -104,6 +104,32 @@ def main():
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
 
+    match_type_dict = {
+        1: "Test Match", 2: "One-Day International", 3: "Twenty20 International", 
+        4: "First Class Match", 5: "List A Match", 6: "Twenty20 Match", 7: "Others", 
+        8: "Women's Tests", 9: "Women's One-Day Internationals", 10: "Women's Twenty20 Internationals", 
+        11: "Other First Class", 12: "Other List A", 13: "Other Twenty20", 
+        14: "Women's First Class Matches", 15: "Women's List A Matches", 16: "Women's Twenty20", 
+        17: "Others Women's First Class", 18: "Others Women's List A", 19: "Others Women's Twenty20", 
+        20: "Youth Tests", 21: "Youth One-Day Internationals", 22: "Youth Twenty20 Internationals", 
+        26: "Youth First Class", 27: "Youth List A", 28: "Youth Twenty20", 
+        29: "Women's Youth Tests", 30: "Women's Youth One-Day Internationals", 
+        31: "Women's Youth Twenty20 Internationals", 32: "Women's Youth First Class", 
+        33: "Women's Youth List A", 34: "Women's Youth Twenty20", 35: "Other Youth First Class Matches", 
+        36: "Other Youth List A Matches", 37: "Dual Collection Fast Test Format", 
+        38: "Dual Collection Fast ODI Format", 39: "Dual Collection Fast T20 Format", 
+        40: "Other Youth Twenty20 Matches", 41: "International The Hundred", 
+        42: "Domestic The Hundred", 43: "Women's International The Hundred", 
+        44: "Women's Domestic The Hundred", 45: "Youth Women's T20", 50: "T10", 51: "W T10", 
+        53: "Others U19 Women T20", 54: "Other Women's Youth Twenty20", 91: "The 6ixty"
+    }
+    match_types = list(match_type_dict.values())
+    selected_match_types = st.multiselect("Select match type:", match_types, default=["All"])
+
+    if "All" not in selected_match_types:
+        match_type_ids = [key for key, value in match_type_dict.items() if value in selected_match_types]
+        filtered_data = filtered_data[filtered_data['matchtypeid'].isin(match_type_ids)]
+    
     # Filter competitions based on date range
     competitions = list(filtered_data['CompName'].unique())
     selected_competition = st.multiselect("Select competition:", competitions)
