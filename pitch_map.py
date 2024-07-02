@@ -104,7 +104,7 @@ def main():
     start_date, end_date = st.date_input("Select date range:", [data['Date'].min(), data['Date'].max()])
     filtered_data = data[(data['Date'] >= pd.to_datetime(start_date)) & (data['Date'] <= pd.to_datetime(end_date))]
 
-    match_type_dict = {
+    atch_type_dict = {
         1: "Test Match", 2: "One-Day International", 3: "Twenty20 International", 
         4: "First Class Match", 5: "List A Match", 6: "Twenty20 Match", 7: "Others", 
         8: "Women's Tests", 9: "Women's One-Day Internationals", 10: "Women's Twenty20 Internationals", 
@@ -124,9 +124,9 @@ def main():
         53: "Others U19 Women T20", 54: "Other Women's Youth Twenty20", 91: "The 6ixty"
     }
     match_types = list(match_type_dict.values())
-    selected_match_types = st.multiselect("Select match type:", match_types, default=["All"])
+    selected_match_types = st.multiselect("Select match type:", match_types)
 
-    if "All" not in selected_match_types:
+    if selected_match_types:
         match_type_ids = [key for key, value in match_type_dict.items() if value in selected_match_types]
         filtered_data = filtered_data[filtered_data['MatchtypeId'].isin(match_type_ids)]
     
