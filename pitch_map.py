@@ -930,7 +930,7 @@ else:
     #st.write(gameweeks)
 
     # Get user input for GameWeek
-    gameweek = st.selectbox("Select the GameWeek:", gameweeks)
+    gameweek = st.selectbox("Select GameWeek:", gameweeks)
 
     filtered_df = df[df['GameWeek'] == gameweek]
     filtered_df1 = shots_df[shots_df['GameWeek'] == gameweek]
@@ -944,7 +944,8 @@ else:
         #st.write(matchnames)
 
         # Get user input for MatchName
-        matchname = st.selectbox("Select the MatchName:", matchnames)
+        matchnames = ["Please select the match"] + matchnames
+        matchname = st.selectbox("Select Match:", matchnames)
         hteamName, ateamName = matchname.split(' vs ')
 
         # Filter DataFrame by the selected MatchName
