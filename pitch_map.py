@@ -908,7 +908,11 @@ paths = {
 
 # Load the dataframes
 df, shots_df = load_all_dataframes(paths)
+# setting the custom colormap
+pearl_earring_cmaph = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, hcol], N=20)
+pearl_earring_cmapa = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, acol], N=20)
 
+path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
 # Streamlit app
 st.title("Football Dashboard")
 
@@ -1087,11 +1091,7 @@ else:
         away_goalkick['length'] = away_goalkick['qualifiers'].apply(extract_length).astype(float)
         hglkl = round(home_goalkick['length'].mean(),2)
         aglkl = round(away_goalkick['length'].mean(),2)
-        # setting the custom colormap
-        pearl_earring_cmaph = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, hcol], N=20)
-        pearl_earring_cmapa = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, acol], N=20)
         
-        path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
         
         
         # Defensive Stats
