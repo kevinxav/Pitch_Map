@@ -914,8 +914,8 @@ st.title("Football Dashboard")
 
 # Define the directory paths
 paths = {
-    'df': 'New folder\\Events',
-    'shots_df': 'New folder\\Shots'
+    'df': 'New folder/Events',
+    'shots_df': 'New folder/Shots'
 }
 
 # Load the DataFrames
