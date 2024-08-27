@@ -198,7 +198,7 @@ def get_defensive_action_df(events_dict):
 
     return df_defensive_actions
 
-defensive_actions_df = get_defensive_action_df(events_dict)
+
 
 def get_da_count_df(team_name, defensive_actions_df, players_df):
     defensive_actions_df = defensive_actions_df[defensive_actions_df["teamName"] == team_name]
@@ -1109,6 +1109,7 @@ else:
         # away_team_id = list(teams_dict.keys())[1]
         away_passes_between_df, away_average_locs_and_count_df = get_passes_between_df(ateamName, passes_df, players_df)
         events_dict=df
+        defensive_actions_df = get_defensive_action_df(events_dict)
         
         # Apply the function to create the new column
         shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
