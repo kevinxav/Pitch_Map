@@ -902,8 +902,8 @@ def load_all_dataframes(paths):
 
 # Paths
 paths = {
-    'df': r'New folder\\Events',      # Using raw string literal to avoid issues with backslashes
-    'shots_df': r'New folder\\Shots'  # Same here
+    'df': r'New folder/Events',      # Using raw string literal to avoid issues with backslashes
+    'shots_df': r'New folder/Shots'  # Same here
 }
 
 # Load the dataframes
