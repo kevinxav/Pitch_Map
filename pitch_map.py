@@ -181,7 +181,7 @@ def pass_network_visualization(ax, passes_between_df, average_locs_and_count_df,
         'Most_pass_combination_to': most_pass_to,
         'Most_passes_in_combination': most_pass_count,
     } 
-events_dict=df
+
 
 def get_defensive_action_df(events_dict):
     # filter only defensive actions
@@ -1108,7 +1108,7 @@ else:
         home_passes_between_df, home_average_locs_and_count_df = get_passes_between_df(hteamName, passes_df, players_df)
         # away_team_id = list(teams_dict.keys())[1]
         away_passes_between_df, away_average_locs_and_count_df = get_passes_between_df(ateamName, passes_df, players_df)
-
+        events_dict=df
         
         # Apply the function to create the new column
         shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
