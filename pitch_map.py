@@ -908,11 +908,7 @@ paths = {
 
 # Load the dataframes
 df, shots_df = load_all_dataframes(paths)
-# setting the custom colormap
-pearl_earring_cmaph = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, hcol], N=20)
-pearl_earring_cmapa = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, acol], N=20)
 
-path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
 # Streamlit app
 st.title("Football Dashboard")
 
@@ -976,6 +972,16 @@ else:
         defensive_away_average_locs_and_count_df = get_da_count_df(ateamName, defensive_actions_df, players_df)
         defensive_home_average_locs_and_count_df = defensive_home_average_locs_and_count_df[defensive_home_average_locs_and_count_df['position'] != 'GK']
         defensive_away_average_locs_and_count_df = defensive_away_average_locs_and_count_df[defensive_away_average_locs_and_count_df['position'] != 'GK']
+        shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
+        shots_df['playerName'] = shots_df['playerName'].astype(str)
+        shots_df['playerName'] = shots_df['playerName'].apply(unidecode)
+        shots_df = shots_df[shots_df['period']!='PenaltyShootout']
+        
+        # Assigning the home and away team's color
+        hcol= col1 
+        acol= col2
+        
+        
         homedf = df[(df['teamName']==hteamName)]
         awaydf = df[(df['teamName']==ateamName)]
         hxT = homedf['xT'].sum().round(2)
@@ -1092,8 +1098,12 @@ else:
         hglkl = round(home_goalkick['length'].mean(),2)
         aglkl = round(away_goalkick['length'].mean(),2)
         
+        # setting the custom colormap
+        pearl_earring_cmaph = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, hcol], N=20)
+        pearl_earring_cmapa = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, acol], N=20)
         
-        
+        path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
+                
         # Defensive Stats
         
         #Tackles
