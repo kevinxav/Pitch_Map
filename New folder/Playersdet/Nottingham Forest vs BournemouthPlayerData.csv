@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,78386,26,Matz Sels,GK,True
+1,386969,7,Neco Williams,DR,True
+2,445424,5,Murillo,DC,True
+3,97587,30,Willy-Arnaud Boly,DC,True
+4,315543,34,Ola Aina,DL,True
+5,328075,6,Ibrahim Sangaré,DMC,True
+6,399250,28,Danilo,DMC,True
+7,413211,21,Anthony Elanga,AMR,True
+8,332867,10,Morgan Gibbs-White,AMC,True
+9,350088,14,Callum Hudson-Odoi,AML,True
+10,73380,11,Chris Wood,FW,True
+11,334653,16,Nicolás Domínguez,Sub,
+12,281049,9,Taiwo Awoniyi,Sub,
+13,342830,22,Ryan Yates,Sub,
+14,298659,15,Harry Toffolo,Sub,
+15,402596,8,Elliot Anderson,Sub,
+16,442459,33,Carlos Miguel,Sub,
+17,518913,17,Eric da Silva Moreira,Sub,
+18,399490,12,Andrew Omobamidele,Sub,
+19,444826,20,Jota Silva,Sub,
+20,76202,1,Neto,GK,True
+21,69877,15,Adam Smith,DR,True
+22,468852,2,Dean Huijsen,DC,True
+23,399826,27,Illia Zabarnyi,DC,True
+24,424273,3,Milos Kerkez,DL,True
+25,410998,14,Alex Scott,DMC,True
+26,136456,4,Lewis Cook,DMC,True
+27,422183,11,Dango Ouattara,AMR,True
+28,344314,16,Marcus Tavernier,AMC,True
+29,361879,17,Luis Sinisterra,AML,True
+30,357073,24,Antoine Semenyo,FW,True
+31,145277,29,Philip Billing,Sub,
+32,371039,28,Julián Araujo,Sub,
+33,331579,19,Justin Kluivert,Sub,
+34,415163,21,Daniel Jebbison,Sub,
+35,128882,10,Ryan Christie,Sub,
+36,362806,42,Mark Travers,Sub,
+37,400610,32,Jaidon Anthony,Sub,
+38,362837,23,James Hill,Sub,
+39,362551,22,Hamed Traorè,Sub,

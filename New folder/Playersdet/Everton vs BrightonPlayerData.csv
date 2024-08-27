@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,110189,1,Jordan Pickford,GK,True
+1,8166,18,Ashley Young,DR,True
+2,107941,5,Michael Keane,DC,True
+3,131464,6,James Tarkowski,DC,True
+4,345516,19,Vitalii Mykolenko,DL,True
+5,80464,27,Idrissa Gueye,DMC,True
+6,416208,42,Tim Iroegbunam,DMC,True
+7,317896,11,Jack Harrison,AMR,True
+8,116317,16,Abdoulaye Doucouré,AMC,True
+9,357427,7,Dwight McNeil,AML,True
+10,141469,9,Dominic Calvert-Lewin,FW,True
+11,380546,14,Beto,Sub,
+12,366116,10,Iliman Ndiaye,Sub,
+13,297544,4,Mason Holgate,Sub,
+14,403646,29,Jesper Lindstrøm,Sub,
+15,119822,21,Neal Maupay,Sub,
+16,424495,15,Jake O'Brien,Sub,
+17,362852,12,João Virgínia,Sub,
+18,512228,44,Jenson Metcalfe,Sub,
+19,535879,45,Harrison Armstrong,Sub,
+20,33532,23,Jason Steele,GK,True
+21,110290,34,Joël Veltman,DR,True
+22,365402,29,Jan Paul van Hecke,DC,True
+23,86441,5,Lewis Dunk,DC,True
+24,469629,41,Jack Hinshelwood,DL,True
+25,445059,27,Mats Wieffer,DMC,True
+26,4511,6,James Milner,DMC,True
+27,484175,17,Yankuba Minteh,AMR,True
+28,373525,9,João Pedro,AMC,True
+29,425142,22,Kaoru Mitoma,AML,True
+30,39308,18,Danny Welbeck,FW,True
+31,425603,16,Jeremy Sarmiento,Sub,
+32,470690,26,Yasin Ayari,Sub,
+33,109922,4,Adam Webster,Sub,
+34,381255,11,Billy Gilmour,Sub,
+35,443004,24,Simon Adingra,Sub,
+36,419341,19,Valentín Barco,Sub,
+37,436048,20,Carlos Baleba,Sub,
+38,421944,39,Carl Rushworth,Sub,
+39,509424,51,Mark O’Mahony,Sub,

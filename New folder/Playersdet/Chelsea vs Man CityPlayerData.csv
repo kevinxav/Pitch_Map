@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,362151,1,Robert Sánchez,GK,True
+1,403850,27,Malo Gusto,DR,True
+2,373946,29,Wesley Fofana,DC,True
+3,421351,6,Levi Colwill,DC,True
+4,363496,3,Marc Cucurella,DL,True
+5,425319,45,Roméo Lavia,DMC,True
+6,410175,25,Moisés Caicedo,DMC,True
+7,395692,20,Cole Palmer,AMR,True
+8,369430,8,Enzo Fernández,AMC,True
+9,300945,18,Christopher Nkunku,AML,True
+10,426050,15,Nicolas Jackson,FW,True
+11,434077,40,Renato Veiga,Sub,
+12,337916,19,Pedro Neto,Sub,
+13,391256,22,Kiernan Dewsbury-Hall,Sub,
+14,483208,38,Marc Guiu,Sub,
+15,404749,12,Filip Jørgensen,Sub,
+16,365406,5,Benoît Badiashile,Sub,
+17,409376,10,Mykhailo Mudryk,Sub,
+18,136464,4,Tosin Adarabioyo,Sub,
+19,389935,11,Noni Madueke,Sub,
+20,121774,31,Ederson,GK,True
+21,402664,24,Josko Gvardiol,DC,True
+22,313171,3,Rúben Dias,DC,True
+23,297390,25,Manuel Akanji,DC,True
+24,93894,8,Mateo Kovacic,DMC,True
+25,444791,82,Rico Lewis,DMC,True
+26,388098,11,Jérémy Doku,AMR,True
+27,73084,17,Kevin De Bruyne,AMC,True
+28,136741,20,Bernardo Silva,AMC,True
+29,397821,26,Savinho,AML,True
+30,315227,9,Erling Haaland,FW,True
+31,331254,47,Phil Foden,Sub,
+32,133569,18,Stefan Ortega,Sub,
+33,122945,6,Nathan Aké,Sub,
+34,394933,27,Matheus Nunes,Sub,
+35,69778,2,Kyle Walker,Sub,
+36,101374,5,John Stones,Sub,
+37,113069,10,Jack Grealish,Sub,
+38,425576,87,James McAtee,Sub,
+39,468847,75,Nico O'Reilly,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,121774,31,Ederson,GK,True
+1,402664,24,Josko Gvardiol,DC,True
+2,313171,3,Rúben Dias,DC,True
+3,297390,25,Manuel Akanji,DC,True
+4,93894,8,Mateo Kovacic,DMC,True
+5,444791,82,Rico Lewis,DMC,True
+6,397821,26,Savinho,AMR,True
+7,73084,17,Kevin De Bruyne,AMC,True
+8,136741,20,Bernardo Silva,AMC,True
+9,388098,11,Jérémy Doku,AML,True
+10,315227,9,Erling Haaland,FW,True
+11,77464,19,Ilkay Gündogan,Sub,
+12,394933,27,Matheus Nunes,Sub,
+13,101374,5,John Stones,Sub,
+14,113069,10,Jack Grealish,Sub,
+15,425576,87,James McAtee,Sub,
+16,399955,78,Issa Kaboré,Sub,
+17,133569,18,Stefan Ortega,Sub,
+18,122945,6,Nathan Aké,Sub,
+19,69778,2,Kyle Walker,Sub,
+20,362426,1,Arijanet Muric,GK,True
+21,349484,18,Ben Johnson,DR,True
+22,381161,24,Jacob Greaves,DC,True
+23,299271,40,Axel Tuanzebe,DC,True
+24,356599,6,Luke Woolfenden,DC,True
+25,366211,3,Leif Davis,DL,True
+26,430908,20,Omari Hutchinson,MR,True
+27,110555,25,Massimo Luongo,MC,True
+28,134666,5,Sam Morsy,MC,True
+29,138686,23,Sam Szmodics,ML,True
+30,401254,19,Liam Delap,FW,True
+31,429636,16,Ali Al-Hamadi,Sub,
+32,135714,11,Marcus Harness,Sub,
+33,256129,10,Conor Chaplin,Sub,
+34,287300,4,George Edmundson,Sub,
+35,323713,14,Jack Taylor,Sub,
+36,231118,15,Cameron Burgess,Sub,
+37,108640,22,Conor Townsend,Sub,
+38,140906,28,Christian Walton,Sub,
+39,404108,12,Jens Cajuste,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,92173,1,Bernd Leno,GK,True
+1,145996,2,Kenny Tete,DR,True
+2,300359,31,Issa Diop,DC,True
+3,396976,3,Calvin Bassey,DC,True
+4,306581,33,Antonee Robinson,DL,True
+5,243254,18,Andreas Pereira,DMC,True
+6,297395,20,Sasa Lukic,DMC,True
+7,140088,11,Adama Traoré,AMR,True
+8,363686,32,Emile Smith Rowe,AMC,True
+9,136824,17,Alex Iwobi,AML,True
+10,403649,9,Rodrigo Muniz,FW,True
+11,108186,7,Raúl Jiménez,Sub,
+12,135724,6,Harrison Reed,Sub,
+13,79583,10,Tom Cairney,Sub,
+14,333044,8,Harry Wilson,Sub,
+15,141169,21,Timothy Castagne,Sub,
+16,333182,15,Jorge Cuenca,Sub,
+17,322611,30,Ryan Sessegnon,Sub,
+18,390214,28,Jay Stansfield,Sub,
+19,362371,23,Steven Benda,Sub,
+20,409426,30,Mads Hermansen,GK,True
+21,299693,3,Wout Faes,DC,True
+22,87182,23,Jannik Vestergaard,DC,True
+23,301441,2,James Justin,DC,True
+24,430985,7,Abdul Fatawu,DMR,True
+25,416970,16,Victor Kristiansen,DML,True
+26,327683,6,Wilfred Ndidi,MC,True
+27,143990,8,Harry Winks,MC,True
+28,432384,40,Facundo Buonanotte,FWR,True
+29,106981,9,Jamie Vardy,FW,True
+30,134332,14,Bobby De Cordova-Reid,FWL,True
+31,67491,18,Jordan Ayew,Sub,
+32,364215,22,Oliver Skipp,Sub,
+33,318750,10,Stephy Mavididi,Sub,
+34,429531,35,Kasey McAteer,Sub,
+35,345664,24,Boubakary Soumaré,Sub,
+36,368312,5,Caleb Okoli,Sub,
+37,120763,21,Ricardo Pereira,Sub,
+38,312670,17,Hamza Choudhury,Sub,
+39,99165,1,Danny Ward,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,33532,23,Jason Steele,GK,True
+1,110290,34,Joël Veltman,DR,True
+2,365402,29,Jan Paul van Hecke,DC,True
+3,86441,5,Lewis Dunk,DC,True
+4,469629,41,Jack Hinshelwood,DL,True
+5,4511,6,James Milner,DMC,True
+6,381255,11,Billy Gilmour,DMC,True
+7,484175,17,Yankuba Minteh,AMR,True
+8,373525,9,João Pedro,AMC,True
+9,425142,22,Kaoru Mitoma,AML,True
+10,39308,18,Danny Welbeck,FW,True
+11,436048,20,Carlos Baleba,Sub,
+12,362433,14,Georginio Rutter,Sub,
+13,417747,10,Julio Enciso,Sub,
+14,470690,26,Yasin Ayari,Sub,
+15,443004,24,Simon Adingra,Sub,
+16,386979,2,Tariq Lamptey,Sub,
+17,421944,39,Carl Rushworth,Sub,
+18,109922,4,Adam Webster,Sub,
+19,382241,3,Igor Julio,Sub,
+20,260843,24,André Onana,GK,True
+21,349932,3,Noussair Mazraoui,DR,True
+22,340105,6,Lisandro Martínez,DC,True
+23,99487,5,Harry Maguire,DC,True
+24,353418,20,Diogo Dalot,DL,True
+25,88526,18,Casemiro,DMC,True
+26,460260,37,Kobbie Mainoo,DMC,True
+27,386634,16,Amad Diallo,AMR,True
+28,343346,7,Mason Mount,AMC,True
+29,300299,10,Marcus Rashford,AML,True
+30,123761,8,Bruno Fernandes,FW,True
+31,437022,17,Alejandro Garnacho,Sub,
+32,364315,21,Antony,Sub,
+33,383956,11,Joshua Zirkzee,Sub,
+34,320374,4,Matthijs de Ligt,Sub,
+35,336915,39,Scott McTominay,Sub,
+36,69344,14,Christian Eriksen,Sub,
+37,361707,1,Altay Bayindir,Sub,
+38,491384,43,Toby Collyer,Sub,
+39,22079,35,Jonny Evans,Sub,

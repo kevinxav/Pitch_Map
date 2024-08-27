@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,140906,28,Christian Walton,GK,True
+1,299271,40,Axel Tuanzebe,DR,True
+2,381161,24,Jacob Greaves,DC,True
+3,356599,6,Luke Woolfenden,DC,True
+4,366211,3,Leif Davis,DL,True
+5,110555,25,Massimo Luongo,DMC,True
+6,134666,5,Sam Morsy,DMC,True
+7,135729,7,Wes Burns,AMR,True
+8,256129,10,Conor Chaplin,AMC,True
+9,430908,20,Omari Hutchinson,AML,True
+10,401254,19,Liam Delap,FW,True
+11,429636,16,Ali Al-Hamadi,Sub,
+12,138686,23,Sam Szmodics,Sub,
+13,135714,11,Marcus Harness,Sub,
+14,323713,14,Jack Taylor,Sub,
+15,349484,18,Ben Johnson,Sub,
+16,231118,15,Cameron Burgess,Sub,
+17,108640,22,Conor Townsend,Sub,
+18,270446,8,Kalvin Phillips,Sub,
+19,425320,13,Cieran Slicker,Sub,
+20,114147,1,Alisson Becker,GK,True
+21,318871,66,Trent Alexander-Arnold,DR,True
+22,95408,4,Virgil van Dijk,DC,True
+23,430019,78,Jarell Quansah,DC,True
+24,115726,26,Andy Robertson,DL,True
+25,345319,10,Alexis Mac Allister,DMC,True
+26,363884,38,Ryan Gravenberch,DMC,True
+27,108226,11,Mohamed Salah,AMR,True
+28,369875,8,Dominik Szoboszlai,AMC,True
+29,377168,7,Luis Díaz,AML,True
+30,235755,20,Diogo Jota,FW,True
+31,345957,5,Ibrahima Konaté,Sub,
+32,301455,21,Kostas Tsimikas,Sub,
+33,352825,18,Cody Gakpo,Sub,
+34,424945,84,Conor Bradley,Sub,
+35,322176,62,Caoimhín Kelleher,Sub,
+36,86829,3,Wataru Endo,Sub,
+37,400828,9,Darwin Núñez,Sub,
+38,363982,19,Harvey Elliott,Sub,
+39,355354,17,Curtis Jones,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,76202,1,Neto,GK,True
+1,371039,28,Julián Araujo,DR,True
+2,328330,5,Marcos Senesi,DC,True
+3,399826,27,Illia Zabarnyi,DC,True
+4,424273,3,Milos Kerkez,DL,True
+5,136456,4,Lewis Cook,DMC,True
+6,128882,10,Ryan Christie,DMC,True
+7,357073,24,Antoine Semenyo,AMR,True
+8,331579,19,Justin Kluivert,AMC,True
+9,344314,16,Marcus Tavernier,AML,True
+10,384430,9,Evanilson,FW,True
+11,422183,11,Dango Ouattara,Sub,
+12,361879,17,Luis Sinisterra,Sub,
+13,410998,14,Alex Scott,Sub,
+14,415163,21,Daniel Jebbison,Sub,
+15,69877,15,Adam Smith,Sub,
+16,362806,42,Mark Travers,Sub,
+17,468852,2,Dean Huijsen,Sub,
+18,400610,32,Jaidon Anthony,Sub,
+19,362837,23,James Hill,Sub,
+20,105720,22,Nick Pope,GK,True
+21,415174,21,Tino Livramento,DR,True
+22,100599,17,Emil Krafth,DC,True
+23,82277,33,Dan Burn,DC,True
+24,332419,25,Lloyd Kelly,DL,True
+25,201755,7,Joelinton,MC,True
+26,338780,39,Bruno Guimarães,MC,True
+27,342811,36,Sean Longstaff,MC,True
+28,141486,23,Jacob Murphy,FWR,True
+29,299254,14,Alexander Isak,FW,True
+30,349669,10,Anthony Gordon,FWL,True
+31,303924,24,Miguel Almirón,Sub,
+32,83078,2,Kieran Trippier,Sub,
+33,331382,11,Harvey Barnes,Sub,
+34,430294,20,Lewis Hall,Sub,
+35,342563,28,Joe Willock,Sub,
+36,416209,18,William Osula,Sub,
+37,492690,37,Alex Murphy,Sub,
+38,8643,26,John Ruddy,Sub,
+39,136776,13,Matt Targett,Sub,

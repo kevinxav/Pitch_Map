@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,38577,1,Alex McCarthy,GK,True
+1,136742,35,Jan Bednarek,DC,True
+2,92550,5,Jack Stephens,DC,True
+3,384061,6,Taylor Harwood-Bellis,DC,True
+4,379783,16,Yukinari Sugawara,DMR,True
+5,313672,2,Kyle Walker-Peters,DML,True
+6,390036,8,Will Smallbone,MC,True
+7,342877,7,Joe Aribo,MC,True
+8,337428,4,Flynn Downes,MC,True
+9,332839,17,Ben Brereton,FW,True
+10,136460,9,Adam Armstrong,FW,True
+11,447231,18,Mateus Fernandes,Sub,
+12,107462,21,Charlie Taylor,Sub,
+13,421974,23,Samuel Edozie,Sub,
+14,382363,19,Cameron Archer,Sub,
+15,438067,33,Tyler Dibling,Sub,
+16,404616,26,Lesley Ugochukwu,Sub,
+17,148474,14,James Bree,Sub,
+18,288788,13,Joe Lumley,Sub,
+19,482895,27,Sam Amo-Ameyaw,Sub,
+20,78386,26,Matz Sels,GK,True
+21,386969,7,Neco Williams,DR,True
+22,445424,5,Murillo,DC,True
+23,319785,31,Nikola Milenkovic,DC,True
+24,315543,34,Ola Aina,DL,True
+25,402596,8,Elliot Anderson,DMC,True
+26,328075,6,Ibrahim Sangaré,DMC,True
+27,413211,21,Anthony Elanga,AMR,True
+28,332867,10,Morgan Gibbs-White,AMC,True
+29,350088,14,Callum Hudson-Odoi,AML,True
+30,73380,11,Chris Wood,FW,True
+31,334653,16,Nicolás Domínguez,Sub,
+32,281049,9,Taiwo Awoniyi,Sub,
+33,444826,20,Jota Silva,Sub,
+34,342830,22,Ryan Yates,Sub,
+35,97587,30,Willy-Arnaud Boly,Sub,
+36,442459,33,Carlos Miguel,Sub,
+37,518913,17,Eric da Silva Moreira,Sub,
+38,399490,12,Andrew Omobamidele,Sub,
+39,298659,15,Harry Toffolo,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,260843,24,André Onana,GK,True
+1,349932,3,Noussair Mazraoui,DR,True
+2,340105,6,Lisandro Martínez,DC,True
+3,99487,5,Harry Maguire,DC,True
+4,353418,20,Diogo Dalot,DL,True
+5,88526,18,Casemiro,DMC,True
+6,460260,37,Kobbie Mainoo,DMC,True
+7,386634,16,Amad Diallo,AMR,True
+8,343346,7,Mason Mount,AMC,True
+9,300299,10,Marcus Rashford,AML,True
+10,123761,8,Bruno Fernandes,FW,True
+11,437022,17,Alejandro Garnacho,Sub,
+12,320374,4,Matthijs de Ligt,Sub,
+13,383956,11,Joshua Zirkzee,Sub,
+14,336915,39,Scott McTominay,Sub,
+15,22079,35,Jonny Evans,Sub,
+16,364315,21,Antony,Sub,
+17,69344,14,Christian Eriksen,Sub,
+18,361707,1,Altay Bayindir,Sub,
+19,491384,43,Toby Collyer,Sub,
+20,92173,1,Bernd Leno,GK,True
+21,145996,2,Kenny Tete,DR,True
+22,300359,31,Issa Diop,DC,True
+23,396976,3,Calvin Bassey,DC,True
+24,306581,33,Antonee Robinson,DL,True
+25,243254,18,Andreas Pereira,DMC,True
+26,297395,20,Sasa Lukic,DMC,True
+27,140088,11,Adama Traoré,AMR,True
+28,363686,32,Emile Smith Rowe,AMC,True
+29,136824,17,Alex Iwobi,AML,True
+30,403649,9,Rodrigo Muniz,FW,True
+31,108186,7,Raúl Jiménez,Sub,
+32,390214,28,Jay Stansfield,Sub,
+33,135724,6,Harrison Reed,Sub,
+34,79583,10,Tom Cairney,Sub,
+35,333044,8,Harry Wilson,Sub,
+36,141169,21,Timothy Castagne,Sub,
+37,333182,15,Jorge Cuenca,Sub,
+38,515865,24,Josh King,Sub,
+39,362371,23,Steven Benda,Sub,
