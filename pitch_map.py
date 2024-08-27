@@ -1172,7 +1172,7 @@ else:
         st.write(f"Match Summary: {hteamName} vs {ateamName}")
 
 
-        fig, axs = plt.subplots(4,3, figsize=(35,35), facecolor=bg_color)
+        fig, axs = plt.subplots(7,6, figsize=(35,35), facecolor=bg_color)
 
         pass_network_stats_home = pass_network_visualization(axs[0,0], home_passes_between_df, home_average_locs_and_count_df, hcol, hteamName)
         shooting_stats = plot_shotmap(axs[0,1])
