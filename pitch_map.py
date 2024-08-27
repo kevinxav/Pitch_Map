@@ -758,11 +758,7 @@ def Final_third_entry(ax, team_name, col):
         'Entry_By_Carry': len(dfcarry)
     }
 
-# setting the custom colormap
-pearl_earring_cmaph = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, hcol], N=20)
-pearl_earring_cmapa = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, acol], N=20)
 
-path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
 
 # Getting heatmap of all the end point of the successful Passes
 def Pass_end_zone(ax, team_name, cm):
@@ -1055,6 +1051,11 @@ else:
         away_goalkick['length'] = away_goalkick['qualifiers'].apply(extract_length).astype(float)
         hglkl = round(home_goalkick['length'].mean(),2)
         aglkl = round(away_goalkick['length'].mean(),2)
+        # setting the custom colormap
+        pearl_earring_cmaph = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, hcol], N=20)
+        pearl_earring_cmapa = LinearSegmentedColormap.from_list("Pearl Earring - 10 colors",  [bg_color, acol], N=20)
+        
+        path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
         
         
         # Defensive Stats
