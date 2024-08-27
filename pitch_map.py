@@ -1170,6 +1170,7 @@ else:
 
         # Further processing and visualization (example)
         st.write(f"Match Summary: {hteamName} vs {ateamName}")
+        st.write("Please Wait, It might take a while")
 
 
         fig, axs = plt.subplots(4,3, figsize=(35,35), facecolor=bg_color)
