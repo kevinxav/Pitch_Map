@@ -960,7 +960,7 @@ else:
             else:
                 return None
         passes_df = get_passes_df(df)
-        players_df=pd.read_csv(f"New folder\\Playersdet\\{matchname}PlayerData.csv")
+        players_df=pd.read_csv(f"New folder/Playersdet/{matchname}PlayerData.csv")
         path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
         # home_team_id = list(teams_dict.keys())[0]
         home_passes_between_df, home_average_locs_and_count_df = get_passes_between_df(hteamName, passes_df, players_df)
