@@ -855,23 +855,59 @@ def plot_congestion(ax):
     
     return
 
-# Define the function to load CSV files
+# # Define the function to load CSV files
+# def load_csv_files_from_directory(directory_path):
+#     """Load all CSV files from a given directory into a DataFrame."""
+#     dataframes = []
+#     for filename in os.listdir(directory_path):
+#         if filename.endswith('.csv'):
+#             file_path = os.path.join(directory_path, filename)
+#             df = pd.read_csv(file_path)
+#             dataframes.append(df)
+#     return pd.concat(dataframes, ignore_index=True) if dataframes else pd.DataFrame()
+
+# def load_all_dataframes(paths):
+#     """Load CSV files from different directories into distinct DataFrames."""
+#     df = load_csv_files_from_directory(paths['df'])
+#     shots_df = load_csv_files_from_directory(paths['shots_df'])
+    
+#     return df, shots_df
+
 def load_csv_files_from_directory(directory_path):
     """Load all CSV files from a given directory into a DataFrame."""
+    if not os.path.exists(directory_path):
+        raise FileNotFoundError(f"The directory {directory_path} does not exist.")
+    
     dataframes = []
-    for filename in os.listdir(directory_path):
-        if filename.endswith('.csv'):
-            file_path = os.path.join(directory_path, filename)
-            df = pd.read_csv(file_path)
-            dataframes.append(df)
+    try:
+        for filename in os.listdir(directory_path):
+            if filename.endswith('.csv'):
+                file_path = os.path.join(directory_path, filename)
+                df = pd.read_csv(file_path)
+                dataframes.append(df)
+    except FileNotFoundError as e:
+        raise FileNotFoundError(f"Error loading files from directory {directory_path}: {e}")
+    
     return pd.concat(dataframes, ignore_index=True) if dataframes else pd.DataFrame()
 
 def load_all_dataframes(paths):
     """Load CSV files from different directories into distinct DataFrames."""
+    if 'df' not in paths or 'shots_df' not in paths:
+        raise ValueError("The 'paths' dictionary must contain 'df' and 'shots_df' keys.")
+    
     df = load_csv_files_from_directory(paths['df'])
     shots_df = load_csv_files_from_directory(paths['shots_df'])
     
     return df, shots_df
+
+# Paths
+paths = {
+    'df': r'New folder\\Events',      # Using raw string literal to avoid issues with backslashes
+    'shots_df': r'New folder\\Shots'  # Same here
+}
+
+# Load the dataframes
+df, shots_df = load_all_dataframes(paths)
 
 # Streamlit app
 st.title("Football Dashboard")
