@@ -57,7 +57,7 @@ def get_passes_df(df):
     return df_passes
 
 passes_df = get_passes_df(df)
-players_df=pd.read_csv(f"D:\\Kevin\\football dashboard\\New folder\\Playersdet\\{matchname}PlayerData.csv")
+players_df=pd.read_csv(f"New folder\\Playersdet\\{matchname}PlayerData.csv")
 path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
 def get_passes_between_df(teamName, passes_df, players_df):
     passes_df = passes_df[(passes_df["teamName"] == teamName)]
@@ -1062,8 +1062,8 @@ st.title("Football Dashboard")
 
 # Define the directory paths
 paths = {
-    'df': 'D:\\Kevin\\football dashboard\\New folder\\Events',
-    'shots_df': 'D:\\Kevin\\football dashboard\\New folder\\Shots'
+    'df': 'New folder\\Events',
+    'shots_df': 'New folder\\Shots'
 }
 
 # Load the DataFrames
@@ -1153,12 +1153,12 @@ else:
         # I download any team's png logo from google and then save that file as .html, then open that html file and copy paste the url here
         
         # himage_url = himage_url.replace(' ', '%20')
-        himage_path = f"D:\\Kevin\\football dashboard\\Logos\\{hteamName}.png"
+        himage_path = f"Logos\\{hteamName}.png"
         himage = Image.open(himage_path)
         ax_himage = add_image(himage, fig, left=0.125, bottom=0.94, width=0.05, height=0.05)
         
         # aimage_url = aimage_url.replace(' ', '%20')
-        aimage_path = f"D:\\Kevin\\football dashboard\\Logos\\{ateamName}.png"
+        aimage_path = f"Logos\\{ateamName}.png"
         aimage = Image.open(aimage_path)
         ax_aimage = add_image(aimage, fig, left=0.85, bottom=0.94, width=0.05, height=0.05)
         
