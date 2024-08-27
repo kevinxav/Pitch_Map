@@ -554,131 +554,7 @@ def plot_goalPost(ax):
 
 # Passing Stats
 
-#Possession%
-hpossdf = df[(df['teamName']==hteamName) & (df['type']=='Pass')]
-apossdf = df[(df['teamName']==ateamName) & (df['type']=='Pass')]
-hposs = round((len(hpossdf)/(len(hpossdf)+len(apossdf)))*100,2)
-aposs = round((len(apossdf)/(len(hpossdf)+len(apossdf)))*100,2)
-#Field Tilt%
-hftdf = df[(df['teamName']==hteamName) & (df['isTouch']==1) & (df['x']>=70)]
-aftdf = df[(df['teamName']==ateamName) & (df['isTouch']==1) & (df['x']>=70)]
-hft = round((len(hftdf)/(len(hftdf)+len(aftdf)))*100,2)
-aft = round((len(aftdf)/(len(hftdf)+len(aftdf)))*100,2)
-#Total Passes
-htotalPass = len(df[(df['teamName']==hteamName) & (df['type']=='Pass')])
-atotalPass = len(df[(df['teamName']==ateamName) & (df['type']=='Pass')])
-#Accurate Pass
-hAccPass = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful')])
-aAccPass = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful')])
-#Accurate Pass (without defensive third)
-hAccPasswdt = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['endX']>35)])
-aAccPasswdt = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['endX']>35)])
-#LongBall
-hLongB = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
-aLongB = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
-#Accurate LongBall
-hAccLongB = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (df['outcomeType']=='Successful') & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
-aAccLongB = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (df['outcomeType']=='Successful') & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
-#Crosses
-hCrss= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross'))])
-aCrss= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross'))])
-#Accurate Crosses
-hAccCrss= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross')) & (df['outcomeType']=='Successful')])
-aAccCrss= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross')) & (df['outcomeType']=='Successful')])
-#Freekick
-hfk= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Freekick'))])
-afk= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Freekick'))])
-#Corner
-hCor= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Corner'))])
-aCor= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Corner'))])
-#ThrowIn
-htins= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('ThrowIn'))])
-atins= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('ThrowIn'))])
-#GoalKicks
-hglkk= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))])
-aglkk= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))])
-#Dribbling
-htotalDrb = len(df[(df['teamName']==hteamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive'))])
-atotalDrb = len(df[(df['teamName']==ateamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive'))])
-#Accurate TakeOn
-hAccDrb = len(df[(df['teamName']==hteamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive')) & (df['outcomeType']=='Successful')])
-aAccDrb = len(df[(df['teamName']==ateamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive')) & (df['outcomeType']=='Successful')])
-#GoalKick Length
-home_goalkick = df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))]
-away_goalkick = df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))]
-import ast
-# Convert 'qualifiers' column from string to list of dictionaries
-home_goalkick['qualifiers'] = home_goalkick['qualifiers'].apply(ast.literal_eval)
-away_goalkick['qualifiers'] = away_goalkick['qualifiers'].apply(ast.literal_eval)
-# Function to extract value of 'Length'
-def extract_length(qualifiers):
-    for item in qualifiers:
-        if 'displayName' in item['type'] and item['type']['displayName'] == 'Length':
-            return float(item['value'])
-    return None
-# Apply the function to the 'qualifiers' column
-home_goalkick['length'] = home_goalkick['qualifiers'].apply(extract_length).astype(float)
-away_goalkick['length'] = away_goalkick['qualifiers'].apply(extract_length).astype(float)
-hglkl = round(home_goalkick['length'].mean(),2)
-aglkl = round(away_goalkick['length'].mean(),2)
 
-
-# Defensive Stats
-
-#Tackles
-htkl = len(df[(df['teamName']==hteamName) & (df['type']=='Tackle')])
-atkl = len(df[(df['teamName']==ateamName) & (df['type']=='Tackle')])
-#Tackles Won
-htklw = len(df[(df['teamName']==hteamName) & (df['type']=='Tackle') & (df['outcomeType']=='Successful')])
-atklw = len(df[(df['teamName']==ateamName) & (df['type']=='Tackle') & (df['outcomeType']=='Successful')])
-#Interceptions
-hintc= len(df[(df['teamName']==hteamName) & (df['type']=='Interception')])
-aintc= len(df[(df['teamName']==ateamName) & (df['type']=='Interception')])
-#Clearances
-hclr= len(df[(df['teamName']==hteamName) & (df['type']=='Clearance')])
-aclr= len(df[(df['teamName']==ateamName) & (df['type']=='Clearance')])
-#Aerials
-harl= len(df[(df['teamName']==hteamName) & (df['type']=='Aerial')])
-aarl= len(df[(df['teamName']==ateamName) & (df['type']=='Aerial')])
-#Aerials Wins
-harlw= len(df[(df['teamName']==hteamName) & (df['type']=='Aerial') & (df['outcomeType']=='Successful')])
-aarlw= len(df[(df['teamName']==ateamName) & (df['type']=='Aerial') & (df['outcomeType']=='Successful')])
-#BallRecovery
-hblrc= len(df[(df['teamName']==hteamName) & (df['type']=='BallRecovery')])
-ablrc= len(df[(df['teamName']==ateamName) & (df['type']=='BallRecovery')])
-#BlockedPass
-hblkp= len(df[(df['teamName']==hteamName) & (df['type']=='BlockedPass')])
-ablkp= len(df[(df['teamName']==ateamName) & (df['type']=='BlockedPass')])
-#OffsideGiven
-hofs= len(df[(df['teamName']==hteamName) & (df['type']=='OffsideGiven')])
-aofs= len(df[(df['teamName']==ateamName) & (df['type']=='OffsideGiven')])
-#Fouls
-hfoul= len(df[(df['teamName']==hteamName) & (df['type']=='Foul')])
-afoul= len(df[(df['teamName']==ateamName) & (df['type']=='Foul')])
-
-# PPDA
-home_def_acts = df[(df['teamName']==hteamName) & (df['type'].str.contains('Interception|Foul|Challenge|BlockedPass|Tackle')) & (df['x']>35)]
-away_def_acts = df[(df['teamName']==ateamName) & (df['type'].str.contains('Interception|Foul|Challenge|BlockedPass|Tackle')) & (df['x']>35)]
-home_pass = df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['x']<70)]
-away_pass = df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['x']<70)]
-home_ppda = round((len(away_pass)/len(home_def_acts)), 2)
-away_ppda = round((len(home_pass)/len(away_def_acts)), 2)
-
-# Average Passes per Sequence
-pass_df_home = df[(df['type'] == 'Pass') & (df['teamName']==hteamName)]
-pass_counts_home = pass_df_home.groupby('possession_id').size()
-PPS_home = pass_counts_home.mean().round()
-pass_df_away = df[(df['type'] == 'Pass') & (df['teamName']==ateamName)]
-pass_counts_away = pass_df_away.groupby('possession_id').size()
-PPS_away = pass_counts_away.mean().round()
-
-# Number of Sequence with 10+ Passes
-possessions_with_10_or_more_passes = pass_counts_home[pass_counts_home >= 10]
-pass_seq_10_more_home = possessions_with_10_or_more_passes.count()
-possessions_with_10_or_more_passes = pass_counts_away[pass_counts_away >= 10]
-pass_seq_10_more_away = possessions_with_10_or_more_passes.count()
-
-path_eff1 = [path_effects.Stroke(linewidth=1.5, foreground=line_color), path_effects.Normal()]
 
 def plotting_match_stats(ax):
     pitch = Pitch(pitch_type='uefa', corner_arcs=True, pitch_color=bg_color, line_color=bg_color, linewidth=2)
@@ -1111,6 +987,132 @@ else:
         home_average_shot_distance = round(home_shot_distances.mean(),2)
         away_shot_distances = np.sqrt((aShotsdf['x'] - given_point[0])**2 + (aShotsdf['y'] - given_point[1])**2)
         away_average_shot_distance = round(away_shot_distances.mean(),2)
+
+        #Possession%
+        hpossdf = df[(df['teamName']==hteamName) & (df['type']=='Pass')]
+        apossdf = df[(df['teamName']==ateamName) & (df['type']=='Pass')]
+        hposs = round((len(hpossdf)/(len(hpossdf)+len(apossdf)))*100,2)
+        aposs = round((len(apossdf)/(len(hpossdf)+len(apossdf)))*100,2)
+        #Field Tilt%
+        hftdf = df[(df['teamName']==hteamName) & (df['isTouch']==1) & (df['x']>=70)]
+        aftdf = df[(df['teamName']==ateamName) & (df['isTouch']==1) & (df['x']>=70)]
+        hft = round((len(hftdf)/(len(hftdf)+len(aftdf)))*100,2)
+        aft = round((len(aftdf)/(len(hftdf)+len(aftdf)))*100,2)
+        #Total Passes
+        htotalPass = len(df[(df['teamName']==hteamName) & (df['type']=='Pass')])
+        atotalPass = len(df[(df['teamName']==ateamName) & (df['type']=='Pass')])
+        #Accurate Pass
+        hAccPass = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful')])
+        aAccPass = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful')])
+        #Accurate Pass (without defensive third)
+        hAccPasswdt = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['endX']>35)])
+        aAccPasswdt = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['endX']>35)])
+        #LongBall
+        hLongB = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
+        aLongB = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
+        #Accurate LongBall
+        hAccLongB = len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (df['outcomeType']=='Successful') & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
+        aAccLongB = len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Longball')) & (df['outcomeType']=='Successful') & (~df['qualifiers'].str.contains('Corner')) & (~df['qualifiers'].str.contains('Cross'))])
+        #Crosses
+        hCrss= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross'))])
+        aCrss= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross'))])
+        #Accurate Crosses
+        hAccCrss= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross')) & (df['outcomeType']=='Successful')])
+        aAccCrss= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Cross')) & (df['outcomeType']=='Successful')])
+        #Freekick
+        hfk= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Freekick'))])
+        afk= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Freekick'))])
+        #Corner
+        hCor= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Corner'))])
+        aCor= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('Corner'))])
+        #ThrowIn
+        htins= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('ThrowIn'))])
+        atins= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('ThrowIn'))])
+        #GoalKicks
+        hglkk= len(df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))])
+        aglkk= len(df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))])
+        #Dribbling
+        htotalDrb = len(df[(df['teamName']==hteamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive'))])
+        atotalDrb = len(df[(df['teamName']==ateamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive'))])
+        #Accurate TakeOn
+        hAccDrb = len(df[(df['teamName']==hteamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive')) & (df['outcomeType']=='Successful')])
+        aAccDrb = len(df[(df['teamName']==ateamName) & (df['type']=='TakeOn') & (df['qualifiers'].str.contains('Offensive')) & (df['outcomeType']=='Successful')])
+        #GoalKick Length
+        home_goalkick = df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))]
+        away_goalkick = df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['qualifiers'].str.contains('GoalKick'))]
+        import ast
+        # Convert 'qualifiers' column from string to list of dictionaries
+        home_goalkick['qualifiers'] = home_goalkick['qualifiers'].apply(ast.literal_eval)
+        away_goalkick['qualifiers'] = away_goalkick['qualifiers'].apply(ast.literal_eval)
+        # Function to extract value of 'Length'
+        def extract_length(qualifiers):
+            for item in qualifiers:
+                if 'displayName' in item['type'] and item['type']['displayName'] == 'Length':
+                    return float(item['value'])
+            return None
+        # Apply the function to the 'qualifiers' column
+        home_goalkick['length'] = home_goalkick['qualifiers'].apply(extract_length).astype(float)
+        away_goalkick['length'] = away_goalkick['qualifiers'].apply(extract_length).astype(float)
+        hglkl = round(home_goalkick['length'].mean(),2)
+        aglkl = round(away_goalkick['length'].mean(),2)
+        
+        
+        # Defensive Stats
+        
+        #Tackles
+        htkl = len(df[(df['teamName']==hteamName) & (df['type']=='Tackle')])
+        atkl = len(df[(df['teamName']==ateamName) & (df['type']=='Tackle')])
+        #Tackles Won
+        htklw = len(df[(df['teamName']==hteamName) & (df['type']=='Tackle') & (df['outcomeType']=='Successful')])
+        atklw = len(df[(df['teamName']==ateamName) & (df['type']=='Tackle') & (df['outcomeType']=='Successful')])
+        #Interceptions
+        hintc= len(df[(df['teamName']==hteamName) & (df['type']=='Interception')])
+        aintc= len(df[(df['teamName']==ateamName) & (df['type']=='Interception')])
+        #Clearances
+        hclr= len(df[(df['teamName']==hteamName) & (df['type']=='Clearance')])
+        aclr= len(df[(df['teamName']==ateamName) & (df['type']=='Clearance')])
+        #Aerials
+        harl= len(df[(df['teamName']==hteamName) & (df['type']=='Aerial')])
+        aarl= len(df[(df['teamName']==ateamName) & (df['type']=='Aerial')])
+        #Aerials Wins
+        harlw= len(df[(df['teamName']==hteamName) & (df['type']=='Aerial') & (df['outcomeType']=='Successful')])
+        aarlw= len(df[(df['teamName']==ateamName) & (df['type']=='Aerial') & (df['outcomeType']=='Successful')])
+        #BallRecovery
+        hblrc= len(df[(df['teamName']==hteamName) & (df['type']=='BallRecovery')])
+        ablrc= len(df[(df['teamName']==ateamName) & (df['type']=='BallRecovery')])
+        #BlockedPass
+        hblkp= len(df[(df['teamName']==hteamName) & (df['type']=='BlockedPass')])
+        ablkp= len(df[(df['teamName']==ateamName) & (df['type']=='BlockedPass')])
+        #OffsideGiven
+        hofs= len(df[(df['teamName']==hteamName) & (df['type']=='OffsideGiven')])
+        aofs= len(df[(df['teamName']==ateamName) & (df['type']=='OffsideGiven')])
+        #Fouls
+        hfoul= len(df[(df['teamName']==hteamName) & (df['type']=='Foul')])
+        afoul= len(df[(df['teamName']==ateamName) & (df['type']=='Foul')])
+        
+        # PPDA
+        home_def_acts = df[(df['teamName']==hteamName) & (df['type'].str.contains('Interception|Foul|Challenge|BlockedPass|Tackle')) & (df['x']>35)]
+        away_def_acts = df[(df['teamName']==ateamName) & (df['type'].str.contains('Interception|Foul|Challenge|BlockedPass|Tackle')) & (df['x']>35)]
+        home_pass = df[(df['teamName']==hteamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['x']<70)]
+        away_pass = df[(df['teamName']==ateamName) & (df['type']=='Pass') & (df['outcomeType']=='Successful') & (df['x']<70)]
+        home_ppda = round((len(away_pass)/len(home_def_acts)), 2)
+        away_ppda = round((len(home_pass)/len(away_def_acts)), 2)
+        
+        # Average Passes per Sequence
+        pass_df_home = df[(df['type'] == 'Pass') & (df['teamName']==hteamName)]
+        pass_counts_home = pass_df_home.groupby('possession_id').size()
+        PPS_home = pass_counts_home.mean().round()
+        pass_df_away = df[(df['type'] == 'Pass') & (df['teamName']==ateamName)]
+        pass_counts_away = pass_df_away.groupby('possession_id').size()
+        PPS_away = pass_counts_away.mean().round()
+        
+        # Number of Sequence with 10+ Passes
+        possessions_with_10_or_more_passes = pass_counts_home[pass_counts_home >= 10]
+        pass_seq_10_more_home = possessions_with_10_or_more_passes.count()
+        possessions_with_10_or_more_passes = pass_counts_away[pass_counts_away >= 10]
+        pass_seq_10_more_away = possessions_with_10_or_more_passes.count()
+        
+        path_eff1 = [path_effects.Stroke(linewidth=1.5, foreground=line_color), path_effects.Normal()]
 
         
         # Apply the function to create the new column
