@@ -1,9 +1,50 @@
 import streamlit as st
 import pandas as pd
-import os
-from PIL import Image
-from unidecode import unidecode
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import to_rgba
+from pprint import pprint
+import matplotlib.image as mpimg
+import matplotlib.patches as patches
+from io import BytesIO
+import matplotlib as mpl
+from matplotlib.gridspec import GridSpec
+from matplotlib.markers import MarkerStyle
+from mplsoccer import Pitch, VerticalPitch, FontManager, Sbopen, add_image
+from matplotlib.font_manager import FontProperties
+from matplotlib import rcParams
+from matplotlib.patheffects import withStroke, Normal
+from matplotlib.colors import LinearSegmentedColormap
+from mplsoccer.utils import FontManager
+import matplotlib.patheffects as path_effects
+from matplotlib.offsetbox import OffsetImage, AnnotationBbox
+from matplotlib.cbook import get_sample_data
+from sklearn.cluster import KMeans
+import warnings
+from highlight_text import ax_text, fig_text
+from PIL import Image
+from urllib.request import urlopen
+import os
+import time
+from unidecode import unidecode
+from scipy.spatial import ConvexHull
+
+# Print the modified DataFrame
+pd.set_option('display.max_columns', None)
+pd.set_option('display.max_rows', None)
+
+# specify some custom colors to use
+green = '#69f900'
+red = '#ff4b44'
+blue = '#00a0de'
+violet = '#a369ff'
+bg_color= '#f5f5f5'
+line_color= '#000000'
+# bg_color= '#000000'
+# line_color= '#ffffff'
+col1 = '#ff4b44'
+col2 = '#00a0de'
+
 
 
 def get_passes_df(df):
