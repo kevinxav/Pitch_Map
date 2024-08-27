@@ -56,9 +56,7 @@ def get_passes_df(df):
 
     return df_passes
 
-passes_df = get_passes_df(df)
-players_df=pd.read_csv(f"New folder\\Playersdet\\{matchname}PlayerData.csv")
-path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
+
 def get_passes_between_df(teamName, passes_df, players_df):
     passes_df = passes_df[(passes_df["teamName"] == teamName)]
     # df = pd.DataFrame(events_dict)
@@ -1107,7 +1105,9 @@ else:
                 return hteamName
             else:
                 return None
-
+        passes_df = get_passes_df(df)
+        players_df=pd.read_csv(f"New folder\\Playersdet\\{matchname}PlayerData.csv")
+        path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
         # Apply the function to create the new column
         shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
         shots_df['playerName'] = shots_df['playerName'].astype(str)
