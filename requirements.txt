@@ -1,1 +1,10 @@
-
+streamlit
+pandas
+matplotlib
+numpy
+mplsoccer
+scikit-learn
+highlight-text
+Pillow
+unidecode
+scipy
