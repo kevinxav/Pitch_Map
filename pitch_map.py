@@ -40,7 +40,7 @@ blue = '#00a0de'
 violet = '#a369ff'
 bg_color= '#f5f5f5'
 line_color= '#000000'
-# bg_color= '#000000'
+bg_color= '#000000'
 # line_color= '#ffffff'
 col1 = '#ff4b44'
 col2 = '#00a0de'
@@ -1172,7 +1172,7 @@ else:
         st.write(f"Match Summary: {hteamName} vs {ateamName}")
 
 
-        fig, axs = plt.subplots(7,6, figsize=(35,35), facecolor=bg_color)
+        fig, axs = plt.subplots(4,3, figsize=(50,50), facecolor=bg_color)
 
         pass_network_stats_home = pass_network_visualization(axs[0,0], home_passes_between_df, home_average_locs_and_count_df, hcol, hteamName)
         shooting_stats = plot_shotmap(axs[0,1])
