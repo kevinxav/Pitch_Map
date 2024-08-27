@@ -924,10 +924,10 @@ df, shots_df = load_all_dataframes(paths)
 if df.empty or shots_df.empty:
     st.warning("No data found in the specified directories.")
 else:
-    # # Display available GameWeeks
-    # st.write("Available GameWeeks:")
-    # gameweeks = df['GameWeek'].unique()
-    # st.write(gameweeks)
+    # Display available GameWeeks
+    st.write("Available GameWeeks:")
+    gameweeks = df['GameWeek'].unique()
+    st.write(gameweeks)
 
     # Get user input for GameWeek
     gameweek = st.selectbox("Select the GameWeek:", gameweeks)
@@ -938,10 +938,10 @@ else:
     if filtered_df.empty:
         st.warning(f"No data found for GameWeek {gameweek}")
     else:
-        # Display unique MatchNames in the filtered DataFrame
-        # matchnames = filtered_df['MatchName'].unique()
-        # st.write("Available MatchNames for the selected GameWeek:")
-        # st.write(matchnames)
+        Display unique MatchNames in the filtered DataFrame
+        matchnames = filtered_df['MatchName'].unique()
+        st.write("Available MatchNames for the selected GameWeek:")
+        st.write(matchnames)
 
         # Get user input for MatchName
         matchname = st.selectbox("Select the MatchName:", matchnames)
