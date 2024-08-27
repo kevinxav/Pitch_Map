@@ -291,53 +291,6 @@ def defensive_block(ax, average_locs_and_count_df, team_name, col):
         'Forward_Line_Pressing_Height': fwd_line_h
     }
 
-homedf = df[(df['teamName']==hteamName)]
-awaydf = df[(df['teamName']==ateamName)]
-hxT = homedf['xT'].sum().round(2)
-axT = awaydf['xT'].sum().round(2)
-
-
-# Getting the Score of the match
-hgoal_count = len(homedf[(homedf['teamName']==hteamName) & (homedf['type']=='Goal') & (~homedf['qualifiers'].str.contains('OwnGoal'))])
-agoal_count = len(awaydf[(awaydf['teamName']==ateamName) & (awaydf['type']=='Goal') & (~awaydf['qualifiers'].str.contains('OwnGoal'))])
-hgoal_count = hgoal_count + len(awaydf[(awaydf['teamName']==ateamName) & (awaydf['type']=='Goal') & (awaydf['qualifiers'].str.contains('OwnGoal'))])
-agoal_count = agoal_count + len(homedf[(homedf['teamName']==hteamName) & (homedf['type']=='Goal') & (homedf['qualifiers'].str.contains('OwnGoal'))])
-
-hshots_xgdf = shots_df[shots_df['teamName']==hteamName]
-ashots_xgdf = shots_df[shots_df['teamName']==ateamName]
-hxg = round(hshots_xgdf['expectedGoals'].sum(), 2)
-axg = round(ashots_xgdf['expectedGoals'].sum(), 2)
-hxgot = round(hshots_xgdf['expectedGoalsOnTarget'].sum(), 2)
-axgot = round(ashots_xgdf['expectedGoalsOnTarget'].sum(), 2)
-
-
-# filtering the shots only
-mask4 = (df['type'] == 'Goal') | (df['type'] == 'MissedShots') | (df['type'] == 'SavedShot') | (df['type'] == 'ShotOnPost')
-Shotsdf = df[mask4]
-Shotsdf.reset_index(drop=True, inplace=True)
-
-# filtering according to the types of shots
-hShotsdf = Shotsdf[Shotsdf['teamName']==hteamName]
-aShotsdf = Shotsdf[Shotsdf['teamName']==ateamName]
-hSavedf = hShotsdf[(hShotsdf['type']=='SavedShot') & (~hShotsdf['qualifiers'].str.contains(': 82,'))]
-aSavedf = aShotsdf[(aShotsdf['type']=='SavedShot') & (~aShotsdf['qualifiers'].str.contains(': 82,'))]
-hogdf = hShotsdf[(hShotsdf['teamName']==hteamName) & (hShotsdf['qualifiers'].str.contains('OwnGoal'))]
-aogdf = aShotsdf[(aShotsdf['teamName']==ateamName) & (aShotsdf['qualifiers'].str.contains('OwnGoal'))]
-
-#shooting stats
-hTotalShots = len(hShotsdf)
-aTotalShots = len(aShotsdf)
-hShotsOnT = len(hSavedf) + hgoal_count
-aShotsOnT = len(aSavedf) + agoal_count
-hxGpSh = round(hxg/hTotalShots, 2)
-axGpSh = round(axg/hTotalShots, 2)
-# Center Goal point
-given_point = (105, 34)
-# Calculate shot distances
-home_shot_distances = np.sqrt((hShotsdf['x'] - given_point[0])**2 + (hShotsdf['y'] - given_point[1])**2)
-home_average_shot_distance = round(home_shot_distances.mean(),2)
-away_shot_distances = np.sqrt((aShotsdf['x'] - given_point[0])**2 + (aShotsdf['y'] - given_point[1])**2)
-away_average_shot_distance = round(away_shot_distances.mean(),2)
 
 def plot_shotmap(ax):
     pitch = Pitch(pitch_type='uefa', corner_arcs=True, pitch_color=bg_color, linewidth=2, line_color=line_color)
@@ -1111,6 +1064,54 @@ else:
         defensive_away_average_locs_and_count_df = get_da_count_df(ateamName, defensive_actions_df, players_df)
         defensive_home_average_locs_and_count_df = defensive_home_average_locs_and_count_df[defensive_home_average_locs_and_count_df['position'] != 'GK']
         defensive_away_average_locs_and_count_df = defensive_away_average_locs_and_count_df[defensive_away_average_locs_and_count_df['position'] != 'GK']
+        homedf = df[(df['teamName']==hteamName)]
+        awaydf = df[(df['teamName']==ateamName)]
+        hxT = homedf['xT'].sum().round(2)
+        axT = awaydf['xT'].sum().round(2)
+        
+        
+        # Getting the Score of the match
+        hgoal_count = len(homedf[(homedf['teamName']==hteamName) & (homedf['type']=='Goal') & (~homedf['qualifiers'].str.contains('OwnGoal'))])
+        agoal_count = len(awaydf[(awaydf['teamName']==ateamName) & (awaydf['type']=='Goal') & (~awaydf['qualifiers'].str.contains('OwnGoal'))])
+        hgoal_count = hgoal_count + len(awaydf[(awaydf['teamName']==ateamName) & (awaydf['type']=='Goal') & (awaydf['qualifiers'].str.contains('OwnGoal'))])
+        agoal_count = agoal_count + len(homedf[(homedf['teamName']==hteamName) & (homedf['type']=='Goal') & (homedf['qualifiers'].str.contains('OwnGoal'))])
+        
+        hshots_xgdf = shots_df[shots_df['teamName']==hteamName]
+        ashots_xgdf = shots_df[shots_df['teamName']==ateamName]
+        hxg = round(hshots_xgdf['expectedGoals'].sum(), 2)
+        axg = round(ashots_xgdf['expectedGoals'].sum(), 2)
+        hxgot = round(hshots_xgdf['expectedGoalsOnTarget'].sum(), 2)
+        axgot = round(ashots_xgdf['expectedGoalsOnTarget'].sum(), 2)
+        
+        
+        # filtering the shots only
+        mask4 = (df['type'] == 'Goal') | (df['type'] == 'MissedShots') | (df['type'] == 'SavedShot') | (df['type'] == 'ShotOnPost')
+        Shotsdf = df[mask4]
+        Shotsdf.reset_index(drop=True, inplace=True)
+        
+        # filtering according to the types of shots
+        hShotsdf = Shotsdf[Shotsdf['teamName']==hteamName]
+        aShotsdf = Shotsdf[Shotsdf['teamName']==ateamName]
+        hSavedf = hShotsdf[(hShotsdf['type']=='SavedShot') & (~hShotsdf['qualifiers'].str.contains(': 82,'))]
+        aSavedf = aShotsdf[(aShotsdf['type']=='SavedShot') & (~aShotsdf['qualifiers'].str.contains(': 82,'))]
+        hogdf = hShotsdf[(hShotsdf['teamName']==hteamName) & (hShotsdf['qualifiers'].str.contains('OwnGoal'))]
+        aogdf = aShotsdf[(aShotsdf['teamName']==ateamName) & (aShotsdf['qualifiers'].str.contains('OwnGoal'))]
+        
+        #shooting stats
+        hTotalShots = len(hShotsdf)
+        aTotalShots = len(aShotsdf)
+        hShotsOnT = len(hSavedf) + hgoal_count
+        aShotsOnT = len(aSavedf) + agoal_count
+        hxGpSh = round(hxg/hTotalShots, 2)
+        axGpSh = round(axg/hTotalShots, 2)
+        # Center Goal point
+        given_point = (105, 34)
+        # Calculate shot distances
+        home_shot_distances = np.sqrt((hShotsdf['x'] - given_point[0])**2 + (hShotsdf['y'] - given_point[1])**2)
+        home_average_shot_distance = round(home_shot_distances.mean(),2)
+        away_shot_distances = np.sqrt((aShotsdf['x'] - given_point[0])**2 + (aShotsdf['y'] - given_point[1])**2)
+        away_average_shot_distance = round(away_shot_distances.mean(),2)
+
         
         # Apply the function to create the new column
         shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
