@@ -81,10 +81,6 @@ def get_passes_between_df(teamName, passes_df, players_df):
 
     return passes_between_df, average_locs_and_count_df
 
-# home_team_id = list(teams_dict.keys())[0]
-home_passes_between_df, home_average_locs_and_count_df = get_passes_between_df(hteamName, passes_df, players_df)
-# away_team_id = list(teams_dict.keys())[1]
-away_passes_between_df, away_average_locs_and_count_df = get_passes_between_df(ateamName, passes_df, players_df)
 
 def pass_network_visualization(ax, passes_between_df, average_locs_and_count_df, col, teamName, flipped=False):
     MAX_LINE_WIDTH = 15
@@ -1108,6 +1104,12 @@ else:
         passes_df = get_passes_df(df)
         players_df=pd.read_csv(f"New folder\\Playersdet\\{matchname}PlayerData.csv")
         path_eff = [path_effects.Stroke(linewidth=3, foreground=bg_color), path_effects.Normal()]
+        # home_team_id = list(teams_dict.keys())[0]
+        home_passes_between_df, home_average_locs_and_count_df = get_passes_between_df(hteamName, passes_df, players_df)
+        # away_team_id = list(teams_dict.keys())[1]
+        away_passes_between_df, away_average_locs_and_count_df = get_passes_between_df(ateamName, passes_df, players_df)
+
+        
         # Apply the function to create the new column
         shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
         shots_df['playerName'] = shots_df['playerName'].astype(str)
