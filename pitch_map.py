@@ -212,10 +212,7 @@ def get_da_count_df(team_name, defensive_actions_df, players_df):
 
     return  average_locs_and_count_df
 
-defensive_home_average_locs_and_count_df = get_da_count_df(hteamName, defensive_actions_df, players_df)
-defensive_away_average_locs_and_count_df = get_da_count_df(ateamName, defensive_actions_df, players_df)
-defensive_home_average_locs_and_count_df = defensive_home_average_locs_and_count_df[defensive_home_average_locs_and_count_df['position'] != 'GK']
-defensive_away_average_locs_and_count_df = defensive_away_average_locs_and_count_df[defensive_away_average_locs_and_count_df['position'] != 'GK']
+
 
 def defensive_block(ax, average_locs_and_count_df, team_name, col):
     defensive_actions_team_df = defensive_actions_df[defensive_actions_df["teamName"] == team_name]
@@ -1110,6 +1107,10 @@ else:
         away_passes_between_df, away_average_locs_and_count_df = get_passes_between_df(ateamName, passes_df, players_df)
         events_dict=df
         defensive_actions_df = get_defensive_action_df(events_dict)
+        defensive_home_average_locs_and_count_df = get_da_count_df(hteamName, defensive_actions_df, players_df)
+        defensive_away_average_locs_and_count_df = get_da_count_df(ateamName, defensive_actions_df, players_df)
+        defensive_home_average_locs_and_count_df = defensive_home_average_locs_and_count_df[defensive_home_average_locs_and_count_df['position'] != 'GK']
+        defensive_away_average_locs_and_count_df = defensive_away_average_locs_and_count_df[defensive_away_average_locs_and_count_df['position'] != 'GK']
         
         # Apply the function to create the new column
         shots_df['oppositeTeam'] = shots_df['teamName'].apply(get_opposite_teamName)
