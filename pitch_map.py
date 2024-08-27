@@ -944,7 +944,6 @@ else:
         #st.write(matchnames)
 
         # Get user input for MatchName
-        matchnames = ["Please select the match"] + matchnames
         matchname = st.selectbox("Select Match:", matchnames)
         hteamName, ateamName = matchname.split(' vs ')
 
