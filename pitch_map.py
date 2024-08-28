@@ -897,7 +897,7 @@ def load_all_dataframes(paths):
     
     shots_df = load_csv_files_from_directory(paths['shots_df'])
     
-    return df, shots_df
+    return shots_df
 
 # # Paths
 # paths = {
