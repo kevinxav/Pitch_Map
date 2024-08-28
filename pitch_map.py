@@ -914,14 +914,13 @@ st.title("Premier League Post Match Dashboard 2024-25")
 
 # Define the directory paths
 paths = {
-    'df': 'New folder/Events',
     'shots_df': 'New folder/Shots'
 }
 
 # Load the DataFrames
-df, shots_df = load_all_dataframes(paths)
+shots_df = load_all_dataframes(paths)
 
-if df.empty or shots_df.empty:
+if shots_df.empty:
     st.warning("No data found in the specified directories.")
 else:
     # Display available GameWeeks
