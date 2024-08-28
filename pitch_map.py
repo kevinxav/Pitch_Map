@@ -900,14 +900,14 @@ def load_all_dataframes(paths):
     
     return df, shots_df
 
-# Paths
-paths = {
-    'df': r'New folder/Events',      # Using raw string literal to avoid issues with backslashes
-    'shots_df': r'New folder/Shots'  # Same here
-}
+# # Paths
+# paths = {
+#     'df': r'New folder/Events',      # Using raw string literal to avoid issues with backslashes
+#     'shots_df': r'New folder/Shots'  # Same here
+# }
 
-# Load the dataframes
-df, shots_df = load_all_dataframes(paths)
+# # Load the dataframes
+# df, shots_df = load_all_dataframes(paths)
 
 # Streamlit app
 st.title("Premier League Post Match Dashboard 2024-25")
@@ -926,7 +926,7 @@ if df.empty or shots_df.empty:
 else:
     # Display available GameWeeks
     #st.write("Available GameWeeks:")
-    gameweeks = df['GameWeek'].unique()
+    gameweeks = shots_df['GameWeek'].unique()
     #st.write(gameweeks)
 
     # Get user input for GameWeek
@@ -934,8 +934,8 @@ else:
     # Create the selectbox with a blank default option
     gameweek = st.selectbox("Select GameWeek:", gameweeks)
 
-    filtered_df = df[df['GameWeek'] == gameweek]
-    filtered_df1 = shots_df[shots_df['GameWeek'] == gameweek]
+    filtered_df = shots_df[shots_df['GameWeek'] == gameweek]
+    # filtered_df1 = shots_df[shots_df['GameWeek'] == gameweek]
 
     if filtered_df.empty:
         st.warning(f"No data found for GameWeek {gameweek}")
@@ -949,9 +949,10 @@ else:
         hteamName, ateamName = matchname.split(' vs ')
 
         # Filter DataFrame by the selected MatchName
-        df = filtered_df[filtered_df['MatchName'] == matchname]
-        shots_df = filtered_df1[filtered_df1['MatchName'] == matchname]
-
+        # df = filtered_df[filtered_df['MatchName'] == matchname]
+        # shots_df = filtered_df1[filtered_df1['MatchName'] == matchname]
+        df=pd.read_csv(f"New folder/Events/{matchname}EventsData.csv")
+        players_df=pd.read_csv(f"New folder/Shots/{matchname}ShotsData.csv")
         # Define a function to get the opposite team name
         def get_opposite_teamName(team):
             if team == hteamName:
