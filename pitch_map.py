@@ -930,6 +930,9 @@ else:
     #st.write(gameweeks)
 
     # Get user input for GameWeek
+    gameweeks.insert(0, "")
+
+    # Create the selectbox with a blank default option
     gameweek = st.selectbox("Select GameWeek:", gameweeks)
 
     filtered_df = df[df['GameWeek'] == gameweek]
@@ -942,7 +945,7 @@ else:
         matchnames = filtered_df['MatchName'].unique()
         #st.write("Available MatchNames for the selected GameWeek:")
         #st.write(matchnames)
-
+        matchnames.insert(0, "")
         # Get user input for MatchName
         matchname = st.selectbox("Select Match:", matchnames)
         hteamName, ateamName = matchname.split(' vs ')
@@ -1170,7 +1173,17 @@ else:
 
         # Further processing and visualization (example)
         st.write(f"Match Summary: {hteamName} vs {ateamName}")
-        st.write("Please Wait, It might take a while")
+        placeholder = st.empty()
+
+        # Display the "Please Wait" message
+        with placeholder.container():
+            st.write("Please Wait, It might take a while...")
+        
+        # Simulate a long process
+        time.sleep(50)  # Replace this with your actual function
+        
+        # Clear the placeholder and show the actual output
+        placeholder.empty()
 
 
         fig, axs = plt.subplots(4,3, figsize=(35,35), facecolor=bg_color)
