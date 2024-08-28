@@ -892,10 +892,9 @@ def load_csv_files_from_directory(directory_path):
 
 def load_all_dataframes(paths):
     """Load CSV files from different directories into distinct DataFrames."""
-    if 'df' not in paths or 'shots_df' not in paths:
+    if 'shots_df' not in paths:
         raise ValueError("The 'paths' dictionary must contain 'df' and 'shots_df' keys.")
     
-    df = load_csv_files_from_directory(paths['df'])
     shots_df = load_csv_files_from_directory(paths['shots_df'])
     
     return df, shots_df
