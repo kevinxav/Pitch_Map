@@ -1175,10 +1175,10 @@ else:
 
         # Display the "Please Wait" message
         with placeholder.container():
-            st.write("Please Wait, It might take a while...")
+            st.write("Retrieving Data...Kindly hold on for a minute..")
         
         # Simulate a long process
-        time.sleep(50)  # Replace this with your actual function
+        time.sleep(70)  # Replace this with your actual function
         
         # Clear the placeholder and show the actual output
         placeholder.empty()
