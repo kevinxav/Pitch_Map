@@ -951,8 +951,8 @@ else:
         # Filter DataFrame by the selected MatchName
         # df = filtered_df[filtered_df['MatchName'] == matchname]
         # shots_df = filtered_df1[filtered_df1['MatchName'] == matchname]
-        df=pd.read_csv(f"New folder/Events/{matchname}EventsData.csv")
-        players_df=pd.read_csv(f"New folder/Shots/{matchname}ShotsData.csv")
+        df=pd.read_csv(f"New folder/Events/{matchname}_EventsData.csv")
+        players_df=pd.read_csv(f"New folder/Shots/{matchname}_ShotsData.csv")
         # Define a function to get the opposite team name
         def get_opposite_teamName(team):
             if team == hteamName:
