@@ -1199,6 +1199,7 @@ else:
         
         # Subtitles
         fig.text(0.5, 0.95, f"EPL 2024-25 | Post Match Report", color=line_color, fontsize=30, ha='center', va='center')
+        fig.text(0.5, 0.93, f"Dashboard by @kevin_xaviour", color=line_color, fontsize=22.5, ha='center', va='center')
         
         fig.text(0.125,0.1, 'Attacking Direction ------->', color=hcol, fontsize=25, ha='left', va='center')
         fig.text(0.9,0.1, '<------- Attacking Direction', color=acol, fontsize=25, ha='right', va='center')
