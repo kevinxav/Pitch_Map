@@ -910,7 +910,7 @@ paths = {
 df, shots_df = load_all_dataframes(paths)
 
 # Streamlit app
-st.title("Premier League Match Dashboard 2024-25")
+st.title("Premier League Post Match Dashboard 2024-25")
 
 # Define the directory paths
 paths = {
@@ -930,7 +930,6 @@ else:
     #st.write(gameweeks)
 
     # Get user input for GameWeek
-    gameweeks.insert(0, "")
 
     # Create the selectbox with a blank default option
     gameweek = st.selectbox("Select GameWeek:", gameweeks)
@@ -945,7 +944,6 @@ else:
         matchnames = filtered_df['MatchName'].unique()
         #st.write("Available MatchNames for the selected GameWeek:")
         #st.write(matchnames)
-        matchnames.insert(0, "")
         # Get user input for MatchName
         matchname = st.selectbox("Select Match:", matchnames)
         hteamName, ateamName = matchname.split(' vs ')
