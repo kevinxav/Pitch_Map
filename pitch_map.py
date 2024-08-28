@@ -1179,7 +1179,7 @@ else:
             st.write("Retrieving Data...Kindly hold on for a minute..")
         
         # Simulate a long process
-        time.sleep(70)  # Replace this with your actual function
+        time.sleep(90)  # Replace this with your actual function
         
         # Clear the placeholder and show the actual output
         placeholder.empty()
