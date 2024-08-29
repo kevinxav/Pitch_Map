@@ -1170,17 +1170,17 @@ else:
 
         # Further processing and visualization (example)
         st.write(f"Match Summary: {hteamName} vs {ateamName}")
-        placeholder = st.empty()
+        # placeholder = st.empty()
 
-        # Display the "Please Wait" message
-        with placeholder.container():
-            st.write("Retrieving Data...Kindly hold on for a minute..")
+        # # Display the "Please Wait" message
+        # with placeholder.container():
+        #     st.write("Retrieving Data...Kindly hold on for a minute..")
         
-        # Simulate a long process
-        time.sleep(90)  # Replace this with your actual function
+        # # Simulate a long process
+        # time.sleep(90)  # Replace this with your actual function
         
-        # Clear the placeholder and show the actual output
-        placeholder.empty()
+        # # Clear the placeholder and show the actual output
+        # placeholder.empty()
 
 
         fig, axs = plt.subplots(4,3, figsize=(35,35), facecolor=bg_color)
