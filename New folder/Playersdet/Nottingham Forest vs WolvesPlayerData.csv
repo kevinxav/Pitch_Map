@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,78386,26,Matz Sels,GK,True
+1,386969,7,Neco Williams,DR,True
+2,445424,5,Murillo,DC,True
+3,319785,31,Nikola Milenkovic,DC,True
+4,315543,34,Ola Aina,DL,True
+5,402596,8,Elliot Anderson,DMC,True
+6,328075,6,Ibrahim Sangaré,DMC,True
+7,413211,21,Anthony Elanga,AMR,True
+8,332867,10,Morgan Gibbs-White,AMC,True
+9,350088,14,Callum Hudson-Odoi,AML,True
+10,73380,11,Chris Wood,FW,True
+11,281049,9,Taiwo Awoniyi,Sub,
+12,432672,24,Ramón Sosa,Sub,
+13,444826,20,Jota Silva,Sub,
+14,342830,22,Ryan Yates,Sub,
+15,334653,16,Nicolás Domínguez,Sub,
+16,442459,33,Carlos Miguel,Sub,
+17,518913,17,Eric da Silva Moreira,Sub,
+18,135374,19,Álex Moreno,Sub,
+19,97587,30,Willy-Arnaud Boly,Sub,
+20,105603,31,Sam Johnstone,GK,True
+21,296363,22,Nélson Semedo,DR,True
+22,425060,14,Yerson Mosquera,DC,True
+23,73063,15,Craig Dawson,DC,True
+24,431283,24,Toti Gomes,DL,True
+25,320242,27,Jean-Ricner Bellegarde,MR,True
+26,403693,8,João Gomes,MC,True
+27,123481,5,Mario Lemina,MC,True
+28,355401,3,Rayan Aït-Nouri,ML,True
+29,362758,12,Matheus Cunha,AMC,True
+30,333048,9,Jørgen Strand Larsen,FW,True
+31,397585,7,André,Sub,
+32,94042,2,Matt Doherty,Sub,
+33,247995,29,Gonçalo Guedes,Sub,
+34,262854,11,Hwang Hee-Chan,Sub,
+35,386856,20,Tommy Doyle,Sub,
+36,402823,19,Rodrigo Gomes,Sub,
+37,94868,21,Pablo Sarabia,Sub,
+38,444241,4,Santiago Bueno,Sub,
+39,134543,25,Dan Bentley,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,110189,1,Jordan Pickford,GK,True
+1,31826,23,Séamus Coleman,DR,True
+2,107941,5,Michael Keane,DC,True
+3,131464,6,James Tarkowski,DC,True
+4,345516,19,Vitalii Mykolenko,DL,True
+5,80464,27,Idrissa Gueye,DMC,True
+6,416208,42,Tim Iroegbunam,DMC,True
+7,317896,11,Jack Harrison,AMR,True
+8,357427,7,Dwight McNeil,AMC,True
+9,366116,10,Iliman Ndiaye,AML,True
+10,141469,9,Dominic Calvert-Lewin,FW,True
+11,116317,16,Abdoulaye Doucouré,Sub,
+12,380546,14,Beto,Sub,
+13,403646,29,Jesper Lindstrøm,Sub,
+14,424495,15,Jake O'Brien,Sub,
+15,362852,12,João Virgínia,Sub,
+16,367781,37,James Garner,Sub,
+17,8166,18,Ashley Young,Sub,
+18,535878,75,Roman Dixon,Sub,
+19,535879,45,Harrison Armstrong,Sub,
+20,113880,13,Kepa,GK,True
+21,371039,22,Julián Araujo,DR,True
+22,328330,5,Marcos Senesi,DC,True
+23,399826,27,Illia Zabarnyi,DC,True
+24,424273,3,Milos Kerkez,DL,True
+25,136456,4,Lewis Cook,DMC,True
+26,128882,10,Ryan Christie,DMC,True
+27,357073,24,Antoine Semenyo,AMR,True
+28,331579,19,Justin Kluivert,AMC,True
+29,344314,16,Marcus Tavernier,AML,True
+30,384430,9,Evanilson,FW,True
+31,422183,11,Dango Ouattara,Sub,
+32,361879,17,Luis Sinisterra,Sub,
+33,468852,2,Dean Huijsen,Sub,
+34,410998,8,Alex Scott,Sub,
+35,69877,15,Adam Smith,Sub,
+36,362806,42,Mark Travers,Sub,
+37,362837,23,James Hill,Sub,
+38,362103,37,Max Aarons,Sub,
+39,295084,7,David Brooks,Sub,
