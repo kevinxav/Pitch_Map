@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,304008,1,Dean Henderson,GK,True
+1,401130,5,Maxence Lacroix,DC,True
+2,69375,17,Nathaniel Clyne,DC,True
+3,374631,6,Marc Guéhi,DC,True
+4,400496,12,Daniel Muñoz,DMR,True
+5,389579,3,Tyrick Mitchell,DML,True
+6,374993,28,Cheick Doucouré,MC,True
+7,430774,20,Adam Wharton,MC,True
+8,345845,9,Eddie Nketiah,AMC,True
+9,332403,10,Eberechi Eze,AMC,True
+10,328096,14,Jean-Philippe Mateta,FW,True
+11,91822,15,Jeffrey Schlupp,Sub,
+12,344166,18,Daichi Kamada,Sub,
+13,322670,7,Ismaïla Sarr,Sub,
+14,108638,19,Will Hughes,Sub,
+15,133464,8,Jefferson Lerma,Sub,
+16,517286,46,Franco Umeh-Chibueze,Sub,
+17,319712,30,Matt Turner,Sub,
+18,395401,26,Chris Richards,Sub,
+19,43105,2,Joel Ward,Sub,
+20,409426,30,Mads Hermansen,GK,True
+21,301441,2,James Justin,DR,True
+22,299693,3,Wout Faes,DC,True
+23,368312,5,Caleb Okoli,DC,True
+24,416970,16,Victor Kristiansen,DL,True
+25,143990,8,Harry Winks,DMC,True
+26,364215,22,Oliver Skipp,DMC,True
+27,67491,18,Jordan Ayew,AMR,True
+28,327683,6,Wilfred Ndidi,AMC,True
+29,318750,10,Stephy Mavididi,AML,True
+30,106981,9,Jamie Vardy,FW,True
+31,430985,7,Abdul Fatawu,Sub,
+32,97710,4,Conor Coady,Sub,
+33,312670,17,Hamza Choudhury,Sub,
+34,432384,40,Facundo Buonanotte,Sub,
+35,433572,11,Bilal El Khannouss,Sub,
+36,345664,24,Boubakary Soumaré,Sub,
+37,134332,14,Bobby De Cordova-Reid,Sub,
+38,120763,21,Ricardo Pereira,Sub,
+39,99165,1,Danny Ward,Sub,

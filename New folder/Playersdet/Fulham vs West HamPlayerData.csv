@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,92173,1,Bernd Leno,GK,True
+1,145996,2,Kenny Tete,DR,True
+2,231135,5,Joachim Andersen,DC,True
+3,396976,3,Calvin Bassey,DC,True
+4,306581,33,Antonee Robinson,DL,True
+5,243254,18,Andreas Pereira,DMC,True
+6,297395,20,Sasa Lukic,DMC,True
+7,140088,11,Adama Traoré,AMR,True
+8,363686,32,Emile Smith Rowe,AMC,True
+9,136824,17,Alex Iwobi,AML,True
+10,108186,7,Raúl Jiménez,FW,True
+11,403649,9,Rodrigo Muniz,Sub,
+12,321020,16,Sander Berge,Sub,
+13,342564,19,Reiss Nelson,Sub,
+14,135724,6,Harrison Reed,Sub,
+15,79583,10,Tom Cairney,Sub,
+16,141169,21,Timothy Castagne,Sub,
+17,300359,31,Issa Diop,Sub,
+18,333044,8,Harry Wilson,Sub,
+19,362371,23,Steven Benda,Sub,
+20,92516,23,Alphonse Areola,GK,True
+21,331924,29,Aaron Wan-Bissaka,DR,True
+22,351127,15,Konstantinos Mavropanos,DC,True
+23,368310,26,Maximilian Kilman,DC,True
+24,101955,33,Emerson,DL,True
+25,303876,24,Guido Rodríguez,DMC,True
+26,322696,19,Edson Álvarez,DMC,True
+27,322596,20,Jarrod Bowen,AMR,True
+28,143595,28,Tomás Soucek,AMC,True
+29,400166,14,Mohammed Kudus,AML,True
+30,69517,9,Michail Antonio,FW,True
+31,319756,10,Lucas Paquetá,Sub,
+32,111372,5,Vladimír Coufal,Sub,
+33,382564,7,Crysencio Summerville,Sub,
+34,313542,4,Carlos Soler,Sub,
+35,91762,18,Danny Ings,Sub,
+36,361710,25,Jean-Clair Todibo,Sub,
+37,20973,1,Lukasz Fabianski,Sub,
+38,68049,3,Aaron Cresswell,Sub,
+39,451945,39,Andy Irving,Sub,

@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,121774,31,Ederson,GK,True
+1,69778,2,Kyle Walker,DR,True
+2,297390,25,Manuel Akanji,DC,True
+3,101374,5,John Stones,DC,True
+4,444791,82,Rico Lewis,DL,True
+5,93894,8,Mateo Kovacic,DMC,True
+6,77464,19,Ilkay Gündogan,DMC,True
+7,397821,26,Savinho,AMR,True
+8,73084,17,Kevin De Bruyne,AMC,True
+9,113069,10,Jack Grealish,AML,True
+10,315227,9,Erling Haaland,FW,True
+11,402664,24,Josko Gvardiol,Sub,
+12,136741,20,Bernardo Silva,Sub,
+13,394933,27,Matheus Nunes,Sub,
+14,313171,3,Rúben Dias,Sub,
+15,303139,16,Rodri,Sub,
+16,388098,11,Jérémy Doku,Sub,
+17,133569,18,Stefan Ortega,Sub,
+18,331254,47,Phil Foden,Sub,
+19,425576,87,James McAtee,Sub,
+20,115131,1,Mark Flekken,GK,True
+21,321085,20,Kristoffer Ajer,DR,True
+22,372724,22,Nathan Collins,DC,True
+23,342499,5,Ethan Pinnock,DC,True
+24,351705,4,Sepp van den Berg,DC,True
+25,368512,23,Keane Lewis-Potter,DL,True
+26,101856,6,Christian Nørgaard,MC,True
+27,401168,24,Mikkel Damsgaard,MC,True
+28,298689,27,Vitaly Janelt,MC,True
+29,353377,19,Bryan Mbeumo,FW,True
+30,296240,11,Yoane Wissa,FW,True
+31,329554,30,Mads Roerslev,Sub,
+32,407260,7,Kevin Schade,Sub,
+33,401385,14,Fábio Carvalho,Sub,
+34,444304,18,Yehor Yarmoliuk,Sub,
+35,412313,12,Hákon Valdimarsson,Sub,
+36,94935,16,Ben Mee,Sub,
+37,454756,28,Ryan Trevitt,Sub,
+38,495584,26,Yunus Konak,Sub,
+39,496356,21,Jayden Meghoma,Sub,
