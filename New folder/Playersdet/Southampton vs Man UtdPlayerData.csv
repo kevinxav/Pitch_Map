@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,316858,30,Aaron Ramsdale,GK,True
+1,379783,16,Yukinari Sugawara,DR,True
+2,136742,35,Jan Bednarek,DC,True
+3,92550,5,Jack Stephens,DC,True
+4,313672,2,Kyle Walker-Peters,DL,True
+5,404616,26,Lesley Ugochukwu,DMC,True
+6,337428,4,Flynn Downes,DMC,True
+7,438067,33,Tyler Dibling,AMR,True
+8,447231,18,Mateus Fernandes,AMC,True
+9,332839,17,Ben Brereton,AML,True
+10,382363,19,Cameron Archer,FW,True
+11,21683,10,Adam Lallana,Sub,
+12,384061,6,Taylor Harwood-Bellis,Sub,
+13,397143,11,Ross Stewart,Sub,
+14,93160,24,Ryan Fraser,Sub,
+15,125004,22,Maxwel Cornet,Sub,
+16,342877,7,Joe Aribo,Sub,
+17,107462,21,Charlie Taylor,Sub,
+18,38577,1,Alex McCarthy,Sub,
+19,136460,9,Adam Armstrong,Sub,
+20,260843,24,André Onana,GK,True
+21,349932,3,Noussair Mazraoui,DR,True
+22,340105,6,Lisandro Martínez,DC,True
+23,320374,4,Matthijs de Ligt,DC,True
+24,353418,20,Diogo Dalot,DL,True
+25,69344,14,Christian Eriksen,DMC,True
+26,460260,37,Kobbie Mainoo,DMC,True
+27,386634,16,Amad Diallo,AMR,True
+28,123761,8,Bruno Fernandes,AMC,True
+29,300299,10,Marcus Rashford,AML,True
+30,383956,11,Joshua Zirkzee,FW,True
+31,437022,17,Alejandro Garnacho,Sub,
+32,88526,18,Casemiro,Sub,
+33,408962,25,Manuel Ugarte,Sub,
+34,99487,5,Harry Maguire,Sub,
+35,22079,35,Jonny Evans,Sub,
+36,364315,21,Antony,Sub,
+37,361707,1,Altay Bayindir,Sub,
+38,491384,43,Toby Collyer,Sub,
+39,523346,36,Ethan Wheatley,Sub,
