@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,147863,1,Guglielmo Vicario,GK,True
+1,362352,23,Pedro Porro,DR,True
+2,323663,17,Cristian Romero,DC,True
+3,425229,37,Micky van de Ven,DC,True
+4,401044,13,Destiny Udogie,DL,True
+5,355855,21,Dejan Kulusevski,MC,True
+6,303657,30,Rodrigo Bentancur,MC,True
+7,137015,10,James Maddison,MC,True
+8,379688,22,Brennan Johnson,FWR,True
+9,136459,19,Dominic Solanke,FW,True
+10,91909,7,Son Heung-Min,FWL,True
+11,444751,28,Wilson Odobert,Sub,
+12,130903,16,Timo Werner,Sub,
+13,403859,29,Pape Sarr,Sub,
+14,400097,6,Radu Dragusin,Sub,
+15,505295,15,Lucas Bergvall,Sub,
+16,362219,24,Djed Spence,Sub,
+17,29796,20,Fraser Forster,Sub,
+18,429922,14,Archie Gray,Sub,
+19,103837,33,Ben Davies,Sub,
+20,276366,22,David Raya,GK,True
+21,322036,4,Ben White,DR,True
+22,334087,6,Gabriel Magalhães,DC,True
+23,361822,2,William Saliba,DC,True
+24,388650,12,Jurriën Timber,DL,True
+25,380706,11,Gabriel Martinelli,MC,True
+26,238940,5,Thomas Partey,MC,True
+27,106968,20,Jorginho,MC,True
+28,367185,7,Bukayo Saka,FWR,True
+29,326413,29,Kai Havertz,FW,True
+30,113994,19,Leandro Trossard,FWL,True
+31,279379,9,Gabriel Jesus,Sub,
+32,97692,30,Raheem Sterling,Sub,
+33,456771,53,Ethan Nwaneri,Sub,
+34,76202,32,Neto,Sub,
+35,424462,15,Jakub Kiwior,Sub,
+36,467918,49,Myles Lewis-Skelly,Sub,
+37,517341,76,Ayden Heaven,Sub,
+38,539715,47,Maldini Kacurri,Sub,
+39,539716,46,Ismeal Kabia,Sub,
