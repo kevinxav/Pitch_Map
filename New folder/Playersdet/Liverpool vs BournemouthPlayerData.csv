@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,322176,62,Caoimhín Kelleher,GK,True
+1,318871,66,Trent Alexander-Arnold,DR,True
+2,345957,5,Ibrahima Konaté,DC,True
+3,95408,4,Virgil van Dijk,DC,True
+4,115726,26,Andy Robertson,DL,True
+5,345319,10,Alexis Mac Allister,DMC,True
+6,363884,38,Ryan Gravenberch,DMC,True
+7,108226,11,Mohamed Salah,AMR,True
+8,369875,8,Dominik Szoboszlai,AMC,True
+9,377168,7,Luis Díaz,AML,True
+10,400828,9,Darwin Núñez,FW,True
+11,322971,14,Federico Chiesa,Sub,
+12,352825,18,Cody Gakpo,Sub,
+13,355354,17,Curtis Jones,Sub,
+14,391831,56,Vítezslav Jaros,Sub,
+15,301455,21,Kostas Tsimikas,Sub,
+16,235755,20,Diogo Jota,Sub,
+17,136451,2,Joe Gomez,Sub,
+18,430019,78,Jarell Quansah,Sub,
+19,424945,84,Conor Bradley,Sub,
+20,113880,13,Kepa,GK,True
+21,371039,22,Julián Araujo,DR,True
+22,468852,2,Dean Huijsen,DC,True
+23,399826,27,Illia Zabarnyi,DC,True
+24,424273,3,Milos Kerkez,DL,True
+25,136456,4,Lewis Cook,DMC,True
+26,128882,10,Ryan Christie,DMC,True
+27,357073,24,Antoine Semenyo,AMR,True
+28,331579,19,Justin Kluivert,AMC,True
+29,344314,16,Marcus Tavernier,AML,True
+30,384430,9,Evanilson,FW,True
+31,422183,11,Dango Ouattara,Sub,
+32,361879,17,Luis Sinisterra,Sub,
+33,134695,26,Enes Ünal,Sub,
+34,410998,8,Alex Scott,Sub,
+35,69877,15,Adam Smith,Sub,
+36,328330,5,Marcos Senesi,Sub,
+37,362806,42,Mark Travers,Sub,
+38,362837,23,James Hill,Sub,
+39,295084,7,David Brooks,Sub,
