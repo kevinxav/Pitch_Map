@@ -1,0 +1,41 @@
+,playerId,shirtNo,name,position,isFirstEleven
+0,102248,23,Emiliano Martínez,GK,True
+1,301440,4,Ezri Konsa,DR,True
+2,134984,3,Diego Carlos,DC,True
+3,344259,14,Pau Torres,DC,True
+4,89925,12,Lucas Digne,DL,True
+5,136345,8,Youri Tielemans,DMC,True
+6,400815,24,Amadou Onana,DMC,True
+7,318449,7,John McGinn,AMR,True
+8,362824,27,Morgan Rogers,AMC,True
+9,369813,41,Jacob Ramsey,AML,True
+10,148503,11,Ollie Watkins,FW,True
+11,260592,10,Emiliano Buendía,Sub,
+12,433517,9,Jhon Durán,Sub,
+13,327682,31,Leon Bailey,Sub,
+14,384134,22,Ian Maatsen,Sub,
+15,92547,6,Ross Barkley,Sub,
+16,476543,18,Joe Gauci,Sub,
+17,408946,26,Lamare Bogarde,Sub,
+18,468162,72,Kadan Young,Sub,
+19,492955,20,Kosta Nedeljkovic,Sub,
+20,105603,31,Sam Johnstone,GK,True
+21,296363,22,Nélson Semedo,DR,True
+22,425060,14,Yerson Mosquera,DC,True
+23,73063,15,Craig Dawson,DC,True
+24,355401,3,Rayan Aït-Nouri,DL,True
+25,397585,7,André,DMC,True
+26,320242,27,Jean-Ricner Bellegarde,MR,True
+27,403693,8,João Gomes,MC,True
+28,123481,5,Mario Lemina,MC,True
+29,362758,10,Matheus Cunha,ML,True
+30,333048,9,Jørgen Strand Larsen,FW,True
+31,402823,19,Rodrigo Gomes,Sub,
+32,247995,29,Gonçalo Guedes,Sub,
+33,444241,4,Santiago Bueno,Sub,
+34,386856,20,Tommy Doyle,Sub,
+35,94042,2,Matt Doherty,Sub,
+36,122714,1,José Sá,Sub,
+37,468850,26,Carlos Forbs,Sub,
+38,94868,21,Pablo Sarabia,Sub,
+39,262854,11,Hwang Hee-Chan,Sub,
